@@ -41,6 +41,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -94,7 +95,7 @@ public class PlayerControlsPanel extends JPanel
 	MediaList mediaList;
 
 	JPanel windowPanel; 
-	
+	Canvas canvasMovie;
 	MediaPlayerFactory mediaFactoryHmm;
 	EmbeddedMediaPlayerComponent mediaPlayerComponent;
 	// ******
@@ -270,32 +271,16 @@ public class PlayerControlsPanel extends JPanel
 		add(bottomPanel, BorderLayout.SOUTH);
 		
 		
-//		Tutaj docelowo chce zeby by³ odtwarzacz
-
-		// dO JFrame dzia³a do JPanela nie ;/ 
-		windowPanel = new JPanel();
-		add(windowPanel, BorderLayout.CENTER);
-		windowPanel.setBackground(Color.DARK_GRAY);
+		// Dodanie kontenera zawierajacego odtwarzane wideo
+		canvasMovie = new Canvas();
+		//TODO Tutaj ustawimy jakieœ zdjêcie jednoznacznie okreslaj¹ce ze plik nie ma obrazu / albo nie zosta³ odczytany ( jak leci sama mp3 to jakos tak pusto jest, a jak bêdzie film to przykryje ten obrazek !);
+		canvasMovie.setBackground(Color.DARK_GRAY);
+        add(canvasMovie, BorderLayout.CENTER);
+        
+        mediaPlayer.setVideoSurface(mediaFactoryHmm.newVideoSurface(canvasMovie));
 		
-		Canvas canvas = new Canvas();
-		CanvasVideoSurface videoSurface = mediaFactoryHmm.newVideoSurface(canvas);
-		mediaPlayer.setVideoSurface(videoSurface);
-		
-		//TODO w internalFramie dziala w jpanelu nie dziala cos krzysiu musisz wymyslec 
-		//windowPanel.add(canvas);
-		JInternalFrame internalFrame = new JInternalFrame();
-		windowPanel.add(internalFrame);
-		internalFrame.add(canvas);
-		internalFrame.setVisible(true);
-		internalFrame.setPreferredSize(new Dimension(300,300));
-		internalFrame.setResizable(true);
-		internalFrame.moveToBack();
-		
-//		windowPanel.add(canvas);
-		
-		//JFrame a = new JFrame();
-		//a.add(canvas);
-		//a.setVisible(true);
+        //TODO dopisaæ fullscrean
+//        GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(f);
 		
 		
 

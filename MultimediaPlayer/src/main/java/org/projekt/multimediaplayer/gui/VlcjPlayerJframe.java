@@ -1,5 +1,4 @@
 package org.projekt.multimediaplayer.gui;
-
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -33,8 +32,7 @@ public class VlcjPlayerJframe extends JFrame
 
 		// dowi¹zanie bibliotek z programu VLC
 		NativeLibrary.addSearchPath("libvlc", "C:/Program Files/VideoLAN/VLC");
-		//System.setProperty("jna.library.path", "C:/Program Files/VideoLAN/VLC");
-
+	
 		// Init JFrame elements
 		this.setLocation(100, 100);
 		this.setSize(1050, 600);
@@ -76,6 +74,7 @@ public class VlcjPlayerJframe extends JFrame
 		MediaList mediaList = mediaPlayerFactory.newMediaList();
 		//Zdefiniowanie przyk³adowej listy odtwarzania
 		mediaList.addMedia("\\a.mp3");
+		//mediaList.addMedia("C:\\b.avi");
 		mediaList.addMedia("\\x.wmv");
 		
 		mediaListPlayer.setMediaList(mediaList);
