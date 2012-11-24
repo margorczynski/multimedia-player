@@ -64,7 +64,7 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
 public class PlayerControlsPanel extends JPanel
 {
-
+//..
 	private static final long serialVersionUID = 1L;
 
 	private static final int SKIP_TIME_MS = 10 * 1000; // 10 sekund
@@ -591,6 +591,7 @@ public class PlayerControlsPanel extends JPanel
 				{
 					if (mediaPlayer.isPlaying())
 					{
+						//asd
 						updateTime(time);
 						updatePosition(position);
 						updateChapter(chapter, chapterCount);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="2.734" errors="1" skipped="0" tests="1" name="org.projekt.multimediaplayer.test.persistence.MultimediaFileTest">
+<testsuite failures="0" time="4.474" errors="1" skipped="0" tests="1" name="org.projekt.multimediaplayer.test.persistence.MultimediaFileTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jre7\bin"/>
@@ -26,7 +26,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 7"/>
-    <property name="classworlds.conf" value="D:\SEMESTR V\PrgoramowanieZdarzeniowe\.metadata\.plugins\org.eclipse.m2e.core\launches\m2conf5287842500444351482.tmp"/>
+    <property name="classworlds.conf" value="D:\SEMESTR V\PrgoramowanieZdarzeniowe\.metadata\.plugins\org.eclipse.m2e.core\launches\m2conf2937241620705915062.tmp"/>
     <property name="sun.jnu.encoding" value="Cp1250"/>
     <property name="java.library.path" value="C:\Program Files\Java\jre7\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\NVIDIA Corporation\PhysX\Common;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Windows Live\Shared;C:\Program Files\Common Files\Ulead Systems\MPEG;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\Java\jdk1.7.0_04\bin;C:\Program Files\QuickTime\QTSystem\;C:\Eclipse_Juno\eclipse\Spring\apache-maven-3.0.4\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;M2_HOME\bin;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
@@ -60,7 +60,7 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86"/>
   </properties>
-  <testcase time="2.675" classname="org.projekt.multimediaplayer.test.persistence.MultimediaFileTest" name="runTests">
+  <testcase time="4.382" classname="org.projekt.multimediaplayer.test.persistence.MultimediaFileTest" name="runTests">
     <error message="not-null property references a null or transient value: org.projekt.multimediaplayer.model.MultimediaFile.schedule; nested exception is org.hibernate.PropertyValueException: not-null property references a null or transient value: org.projekt.multimediaplayer.model.MultimediaFile.schedule" type="org.springframework.dao.DataIntegrityViolationException">org.springframework.dao.DataIntegrityViolationException: not-null property references a null or transient value: org.projekt.multimediaplayer.model.MultimediaFile.schedule; nested exception is org.hibernate.PropertyValueException: not-null property references a null or transient value: org.projekt.multimediaplayer.model.MultimediaFile.schedule
 	at org.springframework.orm.hibernate3.SessionFactoryUtils.convertHibernateAccessException(SessionFactoryUtils.java:648)
 	at org.springframework.orm.hibernate3.HibernateAccessor.convertHibernateAccessException(HibernateAccessor.java:412)
@@ -123,93 +123,93 @@ Saving testMultimediaFile to database
 Removing testMultimediaFile from database
 Ending Schedule model class unit test...
 </system-out>
-    <system-err>lis 24, 2012 5:49:29 PM org.springframework.context.support.AbstractApplicationContext prepareRefresh
-INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@25bd56: startup date [Sat Nov 24 17:49:29 CET 2012]; root of context hierarchy
-lis 24, 2012 5:49:29 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+    <system-err>lis 24, 2012 6:08:30 PM org.springframework.context.support.AbstractApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@1b18235: startup date [Sat Nov 24 18:08:30 CET 2012]; root of context hierarchy
+lis 24, 2012 6:08:30 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
 INFO: Loading XML bean definitions from class path resource [application-context.xml]
-lis 24, 2012 5:49:30 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
-INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1cf0283: defining beans [dataSource,sessionFactory,userDao,scheduleDao,multimediaFileDao]; root of factory hierarchy
-lis 24, 2012 5:49:30 PM org.hibernate.cfg.Environment &lt;clinit&gt;
+lis 24, 2012 6:08:31 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
+INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1ae0107: defining beans [dataSource,sessionFactory,userDao,scheduleDao,multimediaFileDao]; root of factory hierarchy
+lis 24, 2012 6:08:32 PM org.hibernate.cfg.Environment &lt;clinit&gt;
 INFO: Hibernate 3.2.6
-lis 24, 2012 5:49:30 PM org.hibernate.cfg.Environment &lt;clinit&gt;
+lis 24, 2012 6:08:32 PM org.hibernate.cfg.Environment &lt;clinit&gt;
 INFO: hibernate.properties not found
-lis 24, 2012 5:49:30 PM org.hibernate.cfg.Environment buildBytecodeProvider
+lis 24, 2012 6:08:32 PM org.hibernate.cfg.Environment buildBytecodeProvider
 INFO: Bytecode provider name : cglib
-lis 24, 2012 5:49:30 PM org.hibernate.cfg.Environment &lt;clinit&gt;
+lis 24, 2012 6:08:32 PM org.hibernate.cfg.Environment &lt;clinit&gt;
 INFO: using JDK 1.4 java.sql.Timestamp handling
-lis 24, 2012 5:49:30 PM org.hibernate.cfg.HbmBinder bindRootPersistentClassCommonValues
+lis 24, 2012 6:08:33 PM org.hibernate.cfg.HbmBinder bindRootPersistentClassCommonValues
 INFO: Mapping class: org.projekt.multimediaplayer.model.User -&gt; USER
-lis 24, 2012 5:49:30 PM org.hibernate.cfg.HbmBinder bindRootPersistentClassCommonValues
+lis 24, 2012 6:08:33 PM org.hibernate.cfg.HbmBinder bindRootPersistentClassCommonValues
 INFO: Mapping class: org.projekt.multimediaplayer.model.Schedule -&gt; SCHEDULE
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.HbmBinder bindRootPersistentClassCommonValues
+lis 24, 2012 6:08:33 PM org.hibernate.cfg.HbmBinder bindRootPersistentClassCommonValues
 INFO: Mapping class: org.projekt.multimediaplayer.model.MultimediaFile -&gt; MULTIMEDIA_FILE
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.HbmBinder bindCollectionSecondPass
+lis 24, 2012 6:08:33 PM org.hibernate.cfg.HbmBinder bindCollectionSecondPass
 INFO: Mapping collection: org.projekt.multimediaplayer.model.User.userSchedules -&gt; SCHEDULE
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.HbmBinder bindCollectionSecondPass
+lis 24, 2012 6:08:33 PM org.hibernate.cfg.HbmBinder bindCollectionSecondPass
 INFO: Mapping collection: org.projekt.multimediaplayer.model.Schedule.scheduleMultimediaFiles -&gt; MULTIMEDIA_FILE
-lis 24, 2012 5:49:31 PM org.springframework.orm.hibernate3.LocalSessionFactoryBean buildSessionFactory
+lis 24, 2012 6:08:33 PM org.springframework.orm.hibernate3.LocalSessionFactoryBean buildSessionFactory
 INFO: Building new Hibernate SessionFactory
-lis 24, 2012 5:49:31 PM org.hibernate.connection.ConnectionProviderFactory newConnectionProvider
+lis 24, 2012 6:08:33 PM org.hibernate.connection.ConnectionProviderFactory newConnectionProvider
 INFO: Initializing connection provider: org.springframework.orm.hibernate3.LocalDataSourceConnectionProvider
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:33 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: RDBMS: SQLite, version: 3.7.2
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:33 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: JDBC driver: SQLiteJDBC, version: native
-lis 24, 2012 5:49:31 PM org.hibernate.dialect.Dialect &lt;init&gt;
+lis 24, 2012 6:08:33 PM org.hibernate.dialect.Dialect &lt;init&gt;
 INFO: Using dialect: com.applerao.hibernatesqlite.dialect.SQLiteDialect
-lis 24, 2012 5:49:31 PM org.hibernate.transaction.TransactionFactoryFactory buildTransactionFactory
+lis 24, 2012 6:08:33 PM org.hibernate.transaction.TransactionFactoryFactory buildTransactionFactory
 INFO: Transaction strategy: org.springframework.orm.hibernate3.SpringTransactionFactory
-lis 24, 2012 5:49:31 PM org.hibernate.transaction.TransactionManagerLookupFactory getTransactionManagerLookup
+lis 24, 2012 6:08:34 PM org.hibernate.transaction.TransactionManagerLookupFactory getTransactionManagerLookup
 INFO: No TransactionManagerLookup configured (in JTA environment, use of read-write or transactional second-level cache is not recommended)
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: Automatic flush during beforeCompletion(): disabled
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: Automatic session close at end of transaction: disabled
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: Scrollable result sets: disabled
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: JDBC3 getGeneratedKeys(): disabled
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: Connection release mode: auto
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: Default batch fetch size: 1
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: Generate SQL with comments: disabled
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: Order SQL updates by primary key: disabled
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: Order SQL inserts for batching: disabled
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory createQueryTranslatorFactory
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory createQueryTranslatorFactory
 INFO: Query translator: org.hibernate.hql.ast.ASTQueryTranslatorFactory
-lis 24, 2012 5:49:31 PM org.hibernate.hql.ast.ASTQueryTranslatorFactory &lt;init&gt;
+lis 24, 2012 6:08:34 PM org.hibernate.hql.ast.ASTQueryTranslatorFactory &lt;init&gt;
 INFO: Using ASTQueryTranslatorFactory
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: Query language substitutions: {}
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: JPA-QL strict compliance: disabled
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: Second-level cache: enabled
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: Query cache: disabled
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory createCacheProvider
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory createCacheProvider
 INFO: Cache provider: org.hibernate.cache.NoCacheProvider
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: Optimize cache for minimal puts: disabled
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: Structured second-level cache entries: disabled
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: Statistics: disabled
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: Deleted entity synthetic identifier rollback: disabled
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: Default entity-mode: pojo
-lis 24, 2012 5:49:31 PM org.hibernate.cfg.SettingsFactory buildSettings
+lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
 INFO: Named query checking : enabled
-lis 24, 2012 5:49:31 PM org.hibernate.impl.SessionFactoryImpl &lt;init&gt;
+lis 24, 2012 6:08:34 PM org.hibernate.impl.SessionFactoryImpl &lt;init&gt;
 INFO: building session factory
-lis 24, 2012 5:49:31 PM org.hibernate.impl.SessionFactoryObjectFactory addInstance
+lis 24, 2012 6:08:34 PM org.hibernate.impl.SessionFactoryObjectFactory addInstance
 INFO: Not binding factory to JNDI, no JNDI name configured
-lis 24, 2012 5:49:31 PM org.hibernate.event.def.DefaultDeleteEventListener deleteTransientEntity
+lis 24, 2012 6:08:34 PM org.hibernate.event.def.DefaultDeleteEventListener deleteTransientEntity
 INFO: handling transient entity in delete processing
 </system-err>
   </testcase>

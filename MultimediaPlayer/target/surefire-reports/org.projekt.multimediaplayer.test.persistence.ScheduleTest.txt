@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: org.projekt.multimediaplayer.test.persistence.ScheduleTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.136 sec <<< FAILURE!
-runTests(org.projekt.multimediaplayer.test.persistence.ScheduleTest)  Time elapsed: 0.135 sec  <<< ERROR!
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.177 sec <<< FAILURE!
+runTests(org.projekt.multimediaplayer.test.persistence.ScheduleTest)  Time elapsed: 0.177 sec  <<< ERROR!
 org.springframework.dao.DataIntegrityViolationException: not-null property references a null or transient value: org.projekt.multimediaplayer.model.Schedule.user; nested exception is org.hibernate.PropertyValueException: not-null property references a null or transient value: org.projekt.multimediaplayer.model.Schedule.user
 	at org.springframework.orm.hibernate3.SessionFactoryUtils.convertHibernateAccessException(SessionFactoryUtils.java:648)
 	at org.springframework.orm.hibernate3.HibernateAccessor.convertHibernateAccessException(HibernateAccessor.java:412)

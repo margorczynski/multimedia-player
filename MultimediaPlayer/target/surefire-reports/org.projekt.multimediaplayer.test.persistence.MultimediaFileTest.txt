@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: org.projekt.multimediaplayer.test.persistence.MultimediaFileTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 2.734 sec <<< FAILURE!
-runTests(org.projekt.multimediaplayer.test.persistence.MultimediaFileTest)  Time elapsed: 2.675 sec  <<< ERROR!
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 4.474 sec <<< FAILURE!
+runTests(org.projekt.multimediaplayer.test.persistence.MultimediaFileTest)  Time elapsed: 4.382 sec  <<< ERROR!
 org.springframework.dao.DataIntegrityViolationException: not-null property references a null or transient value: org.projekt.multimediaplayer.model.MultimediaFile.schedule; nested exception is org.hibernate.PropertyValueException: not-null property references a null or transient value: org.projekt.multimediaplayer.model.MultimediaFile.schedule
 	at org.springframework.orm.hibernate3.SessionFactoryUtils.convertHibernateAccessException(SessionFactoryUtils.java:648)
 	at org.springframework.orm.hibernate3.HibernateAccessor.convertHibernateAccessException(HibernateAccessor.java:412)
