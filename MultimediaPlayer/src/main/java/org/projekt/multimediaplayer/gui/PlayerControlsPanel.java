@@ -65,7 +65,7 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
 public class PlayerControlsPanel extends JPanel
 {
-//..
+	// ..
 	private static final long serialVersionUID = 1L;
 
 	private static final int SKIP_TIME_MS = 10 * 1000; // 10 sekund
@@ -92,11 +92,9 @@ public class PlayerControlsPanel extends JPanel
 
 	// *****
 	MediaListPlayer mediaListPlayer;
-	MediaList mediaList;
-
-	JPanel windowPanel; 
+	JPanel windowPanel;
 	Canvas canvasMovie;
-	MediaPlayerFactory mediaFactoryHmm;
+	MediaPlayerFactory mediaPlayerFactory;
 	EmbeddedMediaPlayerComponent mediaPlayerComponent;
 	// ******
 
@@ -113,12 +111,11 @@ public class PlayerControlsPanel extends JPanel
 
 	private boolean mousePressedPlaying = false;
 
-	public PlayerControlsPanel(EmbeddedMediaPlayer mediaPlayer, MediaListPlayer mediaListPlayer, MediaList mediaList,  MediaPlayerFactory mediaFactoryHmm, EmbeddedMediaPlayerComponent mediaPlayerComponent)
+	public PlayerControlsPanel(EmbeddedMediaPlayer mediaPlayer, MediaListPlayer mediaListPlayer, MediaPlayerFactory mediaPlayerFactory, EmbeddedMediaPlayerComponent mediaPlayerComponent)
 	{
 		this.mediaPlayer = mediaPlayer;
 		this.mediaListPlayer = mediaListPlayer;
-		this.mediaList = mediaList;
-		this.mediaFactoryHmm = mediaFactoryHmm;
+		this.mediaPlayerFactory = mediaPlayerFactory;
 		this.mediaPlayerComponent = mediaPlayerComponent;
 
 		createUI();
@@ -269,24 +266,22 @@ public class PlayerControlsPanel extends JPanel
 		// bottomPanel.add(subTitlesButton);
 
 		add(bottomPanel, BorderLayout.SOUTH);
-		
-		
+
 		// Dodanie kontenera zawierajacego odtwarzane wideo
 		canvasMovie = new Canvas();
-		//TODO Tutaj ustawimy jakieœ zdjêcie jednoznacznie okreslaj¹ce ze plik nie ma obrazu / albo nie zosta³ odczytany ( jak leci sama mp3 to jakos tak pusto jest, a jak bêdzie film to przykryje ten obrazek !);
+		// TODO Tutaj ustawimy jakieœ zdjêcie jednoznacznie okreslaj¹ce ze plik
+		// nie ma obrazu / albo nie zosta³ odczytany ( jak leci sama mp3 to
+		// jakos tak pusto jest, a jak bêdzie film to przykryje ten obrazek !);
 		canvasMovie.setBackground(Color.DARK_GRAY);
-        add(canvasMovie, BorderLayout.CENTER);
-        
-        mediaPlayer.setVideoSurface(mediaFactoryHmm.newVideoSurface(canvasMovie));
-		
-        //TODO dopisaæ fullscrean
-//        GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(f);
-		
-		
+		add(canvasMovie, BorderLayout.CENTER);
 
-//		
-		
-		
+		mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(canvasMovie));
+
+		// TODO dopisaæ fullscrean
+		// GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(f);
+
+		//
+
 	}
 
 	/**
@@ -551,7 +546,6 @@ public class PlayerControlsPanel extends JPanel
 			this.mediaPlayer = mediaPlayer;
 		}
 
-
 		public void run()
 		{
 			final long time = mediaPlayer.getTime();
@@ -576,7 +570,7 @@ public class PlayerControlsPanel extends JPanel
 				{
 					if (mediaPlayer.isPlaying())
 					{
-						//asd
+						// asd
 						updateTime(time);
 						updatePosition(position);
 						updateChapter(chapter, chapterCount);
