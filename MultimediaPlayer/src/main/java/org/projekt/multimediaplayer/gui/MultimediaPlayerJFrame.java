@@ -6,10 +6,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import javax.swing.*;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.medialist.MediaList;
@@ -26,26 +23,27 @@ public class MultimediaPlayerJFrame extends JFrame
 	public MultimediaPlayerJFrame()
 	{
 		super();
-		this.setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
-		this.setTitle("test vlcj");
 
 		initComponents();
 		initMenus();
+		initMenuActionListener();
+		thisFrame = this;
 	}
 
 	public void initComponents()
 	{
 
 		// dowi¹zanie bibliotek z programu VLC
-		
-		// Marcin Twoje chyba  xd ?
-		//NativeLibrary.addSearchPath("libvlc", "D:/VLC64/");
-		
-		//Krzysiek
+
+		// Marcin Twoje chyba xd ?
+		// NativeLibrary.addSearchPath("libvlc", "D:/VLC64/");
+
+		// Krzysiek
 		NativeLibrary.addSearchPath("libvlc", "C:/Program Files/VideoLAN/VLC");
-		
 
 		// Init JFrame elements
+		this.setMinimumSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
+		this.setTitle("Odtwarzacz multimedialny");
 		this.setLocation(100, 100);
 		this.setSize(1050, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -118,12 +116,12 @@ public class MultimediaPlayerJFrame extends JFrame
 
 		// Init sub menus
 		jMenuFile = new JMenu("Plik");
-		jMenuBD = new JMenu("Baza Danych");
+		jMenuUzytkownik = new JMenu("U¿ytkownik");
 		jMenuHarmonogram = new JMenu("Harmonogram");
 		jMenuHelp = new JMenu("Pomoc");
 
 		menuBar.add(jMenuFile);
-		menuBar.add(jMenuBD);
+		menuBar.add(jMenuUzytkownik);
 		menuBar.add(jMenuHarmonogram);
 		menuBar.add(jMenuHelp);
 
@@ -138,10 +136,11 @@ public class MultimediaPlayerJFrame extends JFrame
 		jMenuItemCreateAccount = new JMenuItem("Za³ó¿ konto");
 		jMenuItemDeleteAccount = new JMenuItem("Usuñ konto");
 
-		jMenuBD.add(jMenuItemLogIn);
-		jMenuBD.add(jMenuItemLogIn);
-		jMenuBD.add(jMenuItemLogOut);
-		jMenuBD.add(jMenuItemDeleteAccount);
+		jMenuUzytkownik.add(jMenuItemLogIn);
+		jMenuUzytkownik.add(jMenuItemLogOut);
+		jMenuUzytkownik.add(new JSeparator());
+		jMenuUzytkownik.add(jMenuItemCreateAccount);
+		jMenuUzytkownik.add(jMenuItemDeleteAccount);
 
 		// jMenuHarmonogram
 		jMenuItemShowHarmo = new JMenuItem("Poka¿ harmonogramy");
@@ -194,6 +193,9 @@ public class MultimediaPlayerJFrame extends JFrame
 			public void actionPerformed(ActionEvent arg0)
 			{
 
+				System.out.println( "no i tak");
+				if (newUserDialog == null) newUserDialog = new AddNewUserJDialog(thisFrame);
+				newUserDialog.setVisible(true);
 			}
 		});
 
@@ -243,7 +245,7 @@ public class MultimediaPlayerJFrame extends JFrame
 	JMenuBar menuBar;
 
 	JMenu jMenuFile;
-	JMenu jMenuBD;
+	JMenu jMenuUzytkownik;
 	JMenu jMenuHarmonogram;
 	JMenu jMenuHelp;
 
@@ -262,11 +264,16 @@ public class MultimediaPlayerJFrame extends JFrame
 	JMenuItem jMenuItemAboutProgram;
 	// End Menu var
 
+	// JDialog
+	AddNewUserJDialog newUserDialog;
+
+	JFrame thisFrame;
+
 	MediaPlayerFactory mediaPlayerFactory;
 	EmbeddedMediaPlayerComponent mediaPlayerComponent;
 	EmbeddedMediaPlayer mediaPlayer;
 	FullScreenStrategy fullScreenStrategy;
-
+	
 	private static int WINDOW_WIDTH = 700;
 	private static int WINDOW_HEIGHT = 700;
 

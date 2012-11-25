@@ -65,7 +65,6 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
 public class MultimediaPlayerJPanel extends JPanel
 {
-	// ..
 	private static final long serialVersionUID = 1L;
 
 	private static final int SKIP_TIME_MS = 10 * 1000; // 10 sekund
@@ -86,17 +85,19 @@ public class MultimediaPlayerJPanel extends JPanel
 	private JButton playButton;
 	private JButton fastForwardButton;
 	private JButton nextChapterButton;
+	private JButton ejectButton;
 
 	private JButton toggleMuteButton;
 	private JSlider volumeSlider;
 
+	private JFileChooser fileChooser;
 	// *****
 	private MediaListPlayer mediaListPlayer;
 	private JPanel windowPanel;
 	private Canvas canvasMovie;
 	private MediaPlayerFactory mediaPlayerFactory;
 	private EmbeddedMediaPlayerComponent mediaPlayerComponent;
-	
+
 	private JButton fullScreenButton;
 	private boolean mousePressedPlaying = false;
 
@@ -122,12 +123,6 @@ public class MultimediaPlayerJPanel extends JPanel
 	private void createControls()
 	{
 		timeLabel = new JLabel("hh:mm:ss");
-
-		// positionProgressBar = new JProgressBar();
-		// positionProgressBar.setMinimum(0);
-		// positionProgressBar.setMaximum(1000);
-		// positionProgressBar.setValue(0);
-		// positionProgressBar.setToolTipText("Time");
 
 		positionSlider = new JSlider();
 		positionSlider.setMinimum(0);
@@ -176,65 +171,65 @@ public class MultimediaPlayerJPanel extends JPanel
 		volumeSlider.setPreferredSize(new Dimension(100, 40));
 		volumeSlider.setToolTipText("Change volume");
 
-		
+		ejectButton = new JButton();
+		ejectButton.setIcon(new ImageIcon("multimedia/buttons_icons/control_eject_blue.png"));
+		ejectButton.setToolTipText("Load/eject media");
+
 		fullScreenButton = new JButton();
 		fullScreenButton.setIcon(new ImageIcon("multimedia/buttons_icons/image.png"));
 		fullScreenButton.setToolTipText("Toggle full-screen");
 
+		fileChooser = new JFileChooser();
+		fileChooser.setApproveButtonText("Play");
+		fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newVideoFileFilter());
+		fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newAudioFileFilter());
+		fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newPlayListFileFilter());
+		FileFilter defaultFilter = SwingFileFilterFactory.newMediaFileFilter();
+		fileChooser.addChoosableFileFilter(defaultFilter);
+		fileChooser.setFileFilter(defaultFilter);
 	}
 
 	private void layoutControls()
 	{
 		setBorder(new EmptyBorder(4, 4, 4, 4));
-
 		setLayout(new BorderLayout());
 
 		JPanel positionPanel = new JPanel();
 		positionPanel.setLayout(new GridLayout(1, 1));
-		// positionPanel.add(positionProgressBar);
 		positionPanel.add(positionSlider);
 
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new BorderLayout(8, 0));
-
 		topPanel.add(timeLabel, BorderLayout.WEST);
 		topPanel.add(positionPanel, BorderLayout.CENTER);
 		topPanel.add(chapterLabel, BorderLayout.EAST);
 
 		add(topPanel, BorderLayout.NORTH);
 
-		JPanel bottomPanel = new JPanel();
+		JPanel buttonControlPanel = new JPanel();
+		buttonControlPanel.setLayout(new FlowLayout());
+		buttonControlPanel.add(previousChapterButton);
+		buttonControlPanel.add(rewindButton);
+		buttonControlPanel.add(stopButton);
+		buttonControlPanel.add(pauseButton);
+		buttonControlPanel.add(playButton);
+		buttonControlPanel.add(fastForwardButton);
+		buttonControlPanel.add(nextChapterButton);
+		buttonControlPanel.add(volumeSlider);
+		buttonControlPanel.add(toggleMuteButton);
+		buttonControlPanel.add(fullScreenButton);
+		buttonControlPanel.add(ejectButton);
 
-		bottomPanel.setLayout(new FlowLayout());
-
-		bottomPanel.add(previousChapterButton);
-		bottomPanel.add(rewindButton);
-		bottomPanel.add(stopButton);
-		bottomPanel.add(pauseButton);
-		bottomPanel.add(playButton);
-		bottomPanel.add(fastForwardButton);
-		bottomPanel.add(nextChapterButton);
-
-		bottomPanel.add(volumeSlider);
-		bottomPanel.add(toggleMuteButton);
-
-		
-
-		bottomPanel.add(fullScreenButton);
-
-		
-
-		add(bottomPanel, BorderLayout.SOUTH);
+		add(buttonControlPanel, BorderLayout.SOUTH);
 
 		// Dodanie kontenera zawierajacego odtwarzane wideo
-		canvasMovie = new Canvas();
 		// TODO Tutaj ustawimy jakieœ zdjêcie jednoznacznie okreslaj¹ce ze plik
 		// nie ma obrazu / albo nie zosta³ odczytany ( jak leci sama mp3 to
 		// jakos tak pusto jest, a jak bêdzie film to przykryje ten obrazek !);
+		canvasMovie = new Canvas();
 		canvasMovie.setBackground(Color.DARK_GRAY);
-		add(canvasMovie, BorderLayout.CENTER);
-
 		mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(canvasMovie));
+		add(canvasMovie, BorderLayout.CENTER);
 
 		// TODO dopisaæ fullscrean
 		// GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(f);
@@ -434,7 +429,6 @@ public class MultimediaPlayerJPanel extends JPanel
 			}
 		});
 
-
 		fullScreenButton.addActionListener(new ActionListener()
 		{
 
@@ -444,7 +438,19 @@ public class MultimediaPlayerJPanel extends JPanel
 			}
 		});
 
-		
+		ejectButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				mediaPlayer.enableOverlay(false);
+				if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(MultimediaPlayerJPanel.this))
+				{
+					mediaPlayer.playMedia(fileChooser.getSelectedFile().getAbsolutePath());
+				}
+				mediaPlayer.enableOverlay(true);		
+			}
+		});
+
 	}
 
 	private final class UpdateRunnable implements Runnable
