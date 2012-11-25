@@ -35,6 +35,16 @@ public final class Schedule
 		this.active = active;
 	}
 
+	public User getUser()
+	{
+		return user;
+	}
+
+	public void setUser(User user)
+	{
+		this.user = user;
+	}
+
 	public Set<MultimediaFile> getScheduleMultimediaFiles()
 	{
 		return scheduleMultimediaFiles;

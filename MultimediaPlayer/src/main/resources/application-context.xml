@@ -40,4 +40,8 @@
 		class="org.projekt.multimediaplayer.dao.MultimediaFileDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
+	
+	<bean id="config"
+		class="org.projekt.multimediaplayer.main.Configuration" scope="singleton">
+	</bean>
 </beans>

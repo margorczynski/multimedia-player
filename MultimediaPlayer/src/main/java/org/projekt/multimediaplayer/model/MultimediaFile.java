@@ -44,6 +44,16 @@ public final class MultimediaFile
 		this.playbackDate = playbackDate;
 	}
 
+	public Schedule getSchedule()
+	{
+		return schedule;
+	}
+
+	public void setSchedule(Schedule schedule)
+	{
+		this.schedule = schedule;
+	}
+
 	private int id;
 	
 	private String filename;

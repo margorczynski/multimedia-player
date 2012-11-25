@@ -1,216 +1,66 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="4.474" errors="1" skipped="0" tests="1" name="org.projekt.multimediaplayer.test.persistence.MultimediaFileTest">
+<testsuite failures="0" time="1.939" errors="0" skipped="0" tests="1" name="org.projekt.multimediaplayer.test.persistence.MultimediaFileTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
-    <property name="sun.boot.library.path" value="C:\Program Files\Java\jre7\bin"/>
-    <property name="java.vm.version" value="23.5-b02"/>
+    <property name="sun.boot.library.path" value="D:\glassfish3\jdk7\jre\bin"/>
+    <property name="java.vm.version" value="23.3-b01"/>
+    <property name="user.country.format" value="PL"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="java.vendor.url" value="http://java.oracle.com/"/>
     <property name="path.separator" value=";"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
-    <property name="java.vm.name" value="Java HotSpot(TM) Client VM"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
     <property name="file.encoding.pkg" value="sun.io"/>
     <property name="user.script" value=""/>
-    <property name="user.country" value="PL"/>
+    <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value="Service Pack 1"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="D:\SEMESTR V\PrgoramowanieZdarzeniowe\multimedia-player\MultimediaPlayer"/>
-    <property name="java.runtime.version" value="1.7.0_09-b05"/>
+    <property name="user.dir" value="C:\Users\Joseph\workspace\code\MultimediaPlayer"/>
+    <property name="java.runtime.version" value="1.7.0_07-b11"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jre7\lib\endorsed"/>
-    <property name="os.arch" value="x86"/>
-    <property name="java.io.tmpdir" value="C:\Users\jaguar\AppData\Local\Temp\"/>
+    <property name="java.endorsed.dirs" value="D:\glassfish3\jdk7\jre\lib\endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\Joseph\AppData\Local\Temp\"/>
     <property name="line.separator" value="
 "/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 7"/>
-    <property name="classworlds.conf" value="D:\SEMESTR V\PrgoramowanieZdarzeniowe\.metadata\.plugins\org.eclipse.m2e.core\launches\m2conf2937241620705915062.tmp"/>
+    <property name="classworlds.conf" value="C:\Users\Joseph\workspace\.metadata\.plugins\org.eclipse.m2e.core\launches\m2conf9065126224503877274.tmp"/>
     <property name="sun.jnu.encoding" value="Cp1250"/>
-    <property name="java.library.path" value="C:\Program Files\Java\jre7\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\NVIDIA Corporation\PhysX\Common;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Windows Live\Shared;C:\Program Files\Common Files\Ulead Systems\MPEG;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\Java\jdk1.7.0_04\bin;C:\Program Files\QuickTime\QTSystem\;C:\Eclipse_Juno\eclipse\Spring\apache-maven-3.0.4\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;M2_HOME\bin;."/>
+    <property name="java.library.path" value="D:\glassfish3\jdk7\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;D:\Program Files\scicoslab-4.4.1\bin;C:\Program Files (x86)\Haskell\bin;C:\Program Files (x86)\Haskell Platform\2011.2.0.1\lib\extralibs\bin;C:\Program Files (x86)\Haskell Platform\2011.2.0.1\bin;C:\Program Files (x86)\ActiveState Komodo Edit 6\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files\Microsoft Windows Performance Toolkit\;C:\Program Files (x86)\doxygen\bin;D:\Program Files\SQL Anywhere 12\bin64;D:\Program Files\SQL Anywhere 12\bin32;C:\GNAT\bin;D:\ghc\ghc-7.4.1\bin;C:\GNAT\2011\bin;C:\Users\Joseph\AppData\Roaming\cabal\bin;C:\GNAT\2010\bin;D:\Python2.6;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="51.0"/>
-    <property name="sun.management.compiler" value="HotSpot Client Compiler"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="os.version" value="6.1"/>
-    <property name="user.home" value="C:\Users\jaguar"/>
+    <property name="user.home" value="C:\Users\Joseph"/>
     <property name="user.timezone" value="Europe/Belgrade"/>
     <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
     <property name="java.specification.version" value="1.7"/>
     <property name="file.encoding" value="Cp1250"/>
-    <property name="user.name" value="jaguar"/>
-    <property name="java.class.path" value="/C:/Eclipse_Juno/eclipse/Spring/sts-3.1.0.RELEASE/configuration/org.eclipse.osgi/bundles/572/1/.cp/jars/plexus-classworlds-2.4.jar"/>
+    <property name="user.name" value="Joseph"/>
+    <property name="java.class.path" value="/D:/eclipse-jee-juno-SR1-win32-x86_64/eclipse/configuration/org.eclipse.osgi/bundles/809/1/.cp/jars/plexus-classworlds-2.4.jar"/>
     <property name="java.vm.specification.version" value="1.7"/>
-    <property name="sun.arch.data.model" value="32"/>
-    <property name="java.home" value="C:\Program Files\Java\jre7"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="D:\glassfish3\jdk7\jre"/>
     <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -B install"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
-    <property name="user.language" value="pl"/>
+    <property name="user.language" value="en"/>
+    <property name="user.language.format" value="pl"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
-    <property name="java.vm.info" value="mixed mode, sharing"/>
-    <property name="java.version" value="1.7.0_09"/>
-    <property name="java.ext.dirs" value="C:\Program Files\Java\jre7\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
-    <property name="sun.boot.class.path" value="C:\Program Files\Java\jre7\lib\resources.jar;C:\Program Files\Java\jre7\lib\rt.jar;C:\Program Files\Java\jre7\lib\sunrsasign.jar;C:\Program Files\Java\jre7\lib\jsse.jar;C:\Program Files\Java\jre7\lib\jce.jar;C:\Program Files\Java\jre7\lib\charsets.jar;C:\Program Files\Java\jre7\lib\jfr.jar;C:\Program Files\Java\jre7\classes"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.7.0_07"/>
+    <property name="java.ext.dirs" value="D:\glassfish3\jdk7\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="D:\glassfish3\jdk7\jre\lib\resources.jar;D:\glassfish3\jdk7\jre\lib\rt.jar;D:\glassfish3\jdk7\jre\lib\sunrsasign.jar;D:\glassfish3\jdk7\jre\lib\jsse.jar;D:\glassfish3\jdk7\jre\lib\jce.jar;D:\glassfish3\jdk7\jre\lib\charsets.jar;D:\glassfish3\jdk7\jre\lib\jfr.jar;D:\glassfish3\jdk7\jre\classes"/>
     <property name="java.vendor" value="Oracle Corporation"/>
-    <property name="maven.home" value="D:\SEMESTR V\PrgoramowanieZdarzeniowe\multimedia-player\MultimediaPlayer\EMBEDDED"/>
+    <property name="maven.home" value="C:\Users\Joseph\workspace\code\MultimediaPlayer\EMBEDDED"/>
     <property name="file.separator" value="\"/>
     <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.desktop" value="windows"/>
-    <property name="sun.cpu.isalist" value="pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase time="4.382" classname="org.projekt.multimediaplayer.test.persistence.MultimediaFileTest" name="runTests">
-    <error message="not-null property references a null or transient value: org.projekt.multimediaplayer.model.MultimediaFile.schedule; nested exception is org.hibernate.PropertyValueException: not-null property references a null or transient value: org.projekt.multimediaplayer.model.MultimediaFile.schedule" type="org.springframework.dao.DataIntegrityViolationException">org.springframework.dao.DataIntegrityViolationException: not-null property references a null or transient value: org.projekt.multimediaplayer.model.MultimediaFile.schedule; nested exception is org.hibernate.PropertyValueException: not-null property references a null or transient value: org.projekt.multimediaplayer.model.MultimediaFile.schedule
-	at org.springframework.orm.hibernate3.SessionFactoryUtils.convertHibernateAccessException(SessionFactoryUtils.java:648)
-	at org.springframework.orm.hibernate3.HibernateAccessor.convertHibernateAccessException(HibernateAccessor.java:412)
-	at org.springframework.orm.hibernate3.HibernateTemplate.doExecute(HibernateTemplate.java:411)
-	at org.springframework.orm.hibernate3.HibernateTemplate.executeWithNativeSession(HibernateTemplate.java:374)
-	at org.springframework.orm.hibernate3.HibernateTemplate.save(HibernateTemplate.java:683)
-	at org.projekt.multimediaplayer.dao.MultimediaFileDaoImpl.saveMultimediaFile(MultimediaFileDaoImpl.java:11)
-	at org.projekt.multimediaplayer.test.persistence.MultimediaFileTest.runTests(MultimediaFileTest.java:31)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
-	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
-	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:76)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
-	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
-	at org.apache.maven.surefire.junit4.JUnit4TestSet.execute(JUnit4TestSet.java:53)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:123)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:104)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:164)
-	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:110)
-	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:175)
-	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcessWhenForked(SurefireStarter.java:107)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:68)
-Caused by: org.hibernate.PropertyValueException: not-null property references a null or transient value: org.projekt.multimediaplayer.model.MultimediaFile.schedule
-	at org.hibernate.engine.Nullability.checkNullability(Nullability.java:72)
-	at org.hibernate.event.def.AbstractSaveEventListener.performSaveOrReplicate(AbstractSaveEventListener.java:290)
-	at org.hibernate.event.def.AbstractSaveEventListener.performSave(AbstractSaveEventListener.java:181)
-	at org.hibernate.event.def.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:107)
-	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.saveWithGeneratedOrRequestedId(DefaultSaveOrUpdateEventListener.java:187)
-	at org.hibernate.event.def.DefaultSaveEventListener.saveWithGeneratedOrRequestedId(DefaultSaveEventListener.java:33)
-	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.entityIsTransient(DefaultSaveOrUpdateEventListener.java:172)
-	at org.hibernate.event.def.DefaultSaveEventListener.performSaveOrUpdate(DefaultSaveEventListener.java:27)
-	at org.hibernate.event.def.DefaultSaveOrUpdateEventListener.onSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:70)
-	at org.hibernate.impl.SessionImpl.fireSave(SessionImpl.java:535)
-	at org.hibernate.impl.SessionImpl.save(SessionImpl.java:523)
-	at org.hibernate.impl.SessionImpl.save(SessionImpl.java:519)
-	at org.springframework.orm.hibernate3.HibernateTemplate$12.doInHibernate(HibernateTemplate.java:686)
-	at org.springframework.orm.hibernate3.HibernateTemplate$12.doInHibernate(HibernateTemplate.java:1)
-	at org.springframework.orm.hibernate3.HibernateTemplate.doExecute(HibernateTemplate.java:406)
-	... 34 more
-</error>
-    <system-out>Starting MultimediaFile model class unit test...
-Setting up example MultimediaFile object for test named testMultimediaFile
-Saving testMultimediaFile to database
-Removing testMultimediaFile from database
-Ending Schedule model class unit test...
-</system-out>
-    <system-err>lis 24, 2012 6:08:30 PM org.springframework.context.support.AbstractApplicationContext prepareRefresh
-INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@1b18235: startup date [Sat Nov 24 18:08:30 CET 2012]; root of context hierarchy
-lis 24, 2012 6:08:30 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
-INFO: Loading XML bean definitions from class path resource [application-context.xml]
-lis 24, 2012 6:08:31 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
-INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1ae0107: defining beans [dataSource,sessionFactory,userDao,scheduleDao,multimediaFileDao]; root of factory hierarchy
-lis 24, 2012 6:08:32 PM org.hibernate.cfg.Environment &lt;clinit&gt;
-INFO: Hibernate 3.2.6
-lis 24, 2012 6:08:32 PM org.hibernate.cfg.Environment &lt;clinit&gt;
-INFO: hibernate.properties not found
-lis 24, 2012 6:08:32 PM org.hibernate.cfg.Environment buildBytecodeProvider
-INFO: Bytecode provider name : cglib
-lis 24, 2012 6:08:32 PM org.hibernate.cfg.Environment &lt;clinit&gt;
-INFO: using JDK 1.4 java.sql.Timestamp handling
-lis 24, 2012 6:08:33 PM org.hibernate.cfg.HbmBinder bindRootPersistentClassCommonValues
-INFO: Mapping class: org.projekt.multimediaplayer.model.User -&gt; USER
-lis 24, 2012 6:08:33 PM org.hibernate.cfg.HbmBinder bindRootPersistentClassCommonValues
-INFO: Mapping class: org.projekt.multimediaplayer.model.Schedule -&gt; SCHEDULE
-lis 24, 2012 6:08:33 PM org.hibernate.cfg.HbmBinder bindRootPersistentClassCommonValues
-INFO: Mapping class: org.projekt.multimediaplayer.model.MultimediaFile -&gt; MULTIMEDIA_FILE
-lis 24, 2012 6:08:33 PM org.hibernate.cfg.HbmBinder bindCollectionSecondPass
-INFO: Mapping collection: org.projekt.multimediaplayer.model.User.userSchedules -&gt; SCHEDULE
-lis 24, 2012 6:08:33 PM org.hibernate.cfg.HbmBinder bindCollectionSecondPass
-INFO: Mapping collection: org.projekt.multimediaplayer.model.Schedule.scheduleMultimediaFiles -&gt; MULTIMEDIA_FILE
-lis 24, 2012 6:08:33 PM org.springframework.orm.hibernate3.LocalSessionFactoryBean buildSessionFactory
-INFO: Building new Hibernate SessionFactory
-lis 24, 2012 6:08:33 PM org.hibernate.connection.ConnectionProviderFactory newConnectionProvider
-INFO: Initializing connection provider: org.springframework.orm.hibernate3.LocalDataSourceConnectionProvider
-lis 24, 2012 6:08:33 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: RDBMS: SQLite, version: 3.7.2
-lis 24, 2012 6:08:33 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: JDBC driver: SQLiteJDBC, version: native
-lis 24, 2012 6:08:33 PM org.hibernate.dialect.Dialect &lt;init&gt;
-INFO: Using dialect: com.applerao.hibernatesqlite.dialect.SQLiteDialect
-lis 24, 2012 6:08:33 PM org.hibernate.transaction.TransactionFactoryFactory buildTransactionFactory
-INFO: Transaction strategy: org.springframework.orm.hibernate3.SpringTransactionFactory
-lis 24, 2012 6:08:34 PM org.hibernate.transaction.TransactionManagerLookupFactory getTransactionManagerLookup
-INFO: No TransactionManagerLookup configured (in JTA environment, use of read-write or transactional second-level cache is not recommended)
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Automatic flush during beforeCompletion(): disabled
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Automatic session close at end of transaction: disabled
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Scrollable result sets: disabled
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: JDBC3 getGeneratedKeys(): disabled
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Connection release mode: auto
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Default batch fetch size: 1
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Generate SQL with comments: disabled
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Order SQL updates by primary key: disabled
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Order SQL inserts for batching: disabled
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory createQueryTranslatorFactory
-INFO: Query translator: org.hibernate.hql.ast.ASTQueryTranslatorFactory
-lis 24, 2012 6:08:34 PM org.hibernate.hql.ast.ASTQueryTranslatorFactory &lt;init&gt;
-INFO: Using ASTQueryTranslatorFactory
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Query language substitutions: {}
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: JPA-QL strict compliance: disabled
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Second-level cache: enabled
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Query cache: disabled
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory createCacheProvider
-INFO: Cache provider: org.hibernate.cache.NoCacheProvider
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Optimize cache for minimal puts: disabled
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Structured second-level cache entries: disabled
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Statistics: disabled
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Deleted entity synthetic identifier rollback: disabled
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Default entity-mode: pojo
-lis 24, 2012 6:08:34 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Named query checking : enabled
-lis 24, 2012 6:08:34 PM org.hibernate.impl.SessionFactoryImpl &lt;init&gt;
-INFO: building session factory
-lis 24, 2012 6:08:34 PM org.hibernate.impl.SessionFactoryObjectFactory addInstance
-INFO: Not binding factory to JNDI, no JNDI name configured
-lis 24, 2012 6:08:34 PM org.hibernate.event.def.DefaultDeleteEventListener deleteTransientEntity
-INFO: handling transient entity in delete processing
-</system-err>
-  </testcase>
+  <testcase time="1.862" classname="org.projekt.multimediaplayer.test.persistence.MultimediaFileTest" name="runTests"/>
 </testsuite>

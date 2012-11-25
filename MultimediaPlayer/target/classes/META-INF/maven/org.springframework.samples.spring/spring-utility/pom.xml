@@ -13,13 +13,25 @@
 	</properties>	
 	
 	<repositories>
-	<repository>
- 	 <id>hibernatesqlite-maven</id>
- 	 <url>https://hibernate-sqlite.googlecode.com/svn/trunk/mavenrepo</url>
-	</repository>
+		   <repository>
+ 	 	   <id>hibernatesqlite-maven</id>
+ 		   <url>https://hibernate-sqlite.googlecode.com/svn/trunk/mavenrepo</url>
+		</repository>
+	
+		<repository> 
+			<id>caprica</id>
+			<name>Caprica Software</name>
+			<url>http://www.capricasoftware.co.uk/repo</url> 
+		</repository>
 	</repositories>
 	
 	<dependencies>
+	
+		<dependency>
+			<groupId>uk.co.caprica</groupId> 
+			<artifactId>vlcj</artifactId> 
+			<version>2.1.0</version> 
+		</dependency>
 
 
 		<dependency>

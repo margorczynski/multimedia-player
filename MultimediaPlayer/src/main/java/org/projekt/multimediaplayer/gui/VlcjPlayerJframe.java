@@ -1,6 +1,7 @@
 package org.projekt.multimediaplayer.gui;
 
 import java.awt.Dimension;
+
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,7 +37,7 @@ public class VlcjPlayerJframe extends JFrame
 	{
 
 		// dowi¹zanie bibliotek z programu VLC
-		NativeLibrary.addSearchPath("libvlc", "C:/Program Files/VideoLAN/VLC");
+		NativeLibrary.addSearchPath("libvlc", "D:/VLC64/");
 
 		// Init JFrame elements
 		this.setLocation(100, 100);

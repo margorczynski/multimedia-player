@@ -10,11 +10,9 @@ public class testVlcjPlayer
 	 */
 	public static void main(String[] args)
 	{
-
 		JFrame frame = new VlcjPlayerJframe();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-
 	}
 
 }
