@@ -55,13 +55,10 @@ public final class Schedule
 		this.scheduleMultimediaFiles = scheduleMultimediaFiles;
 	}
 
+	
 	private int id;
-	
 	private String description;
-	
 	private boolean active;
-	
 	private User user;
-
 	private Set<MultimediaFile> scheduleMultimediaFiles = new HashSet<MultimediaFile>();
 }

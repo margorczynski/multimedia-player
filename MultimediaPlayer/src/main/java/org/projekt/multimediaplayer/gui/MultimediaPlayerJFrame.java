@@ -193,7 +193,6 @@ public class MultimediaPlayerJFrame extends JFrame
 			public void actionPerformed(ActionEvent arg0)
 			{
 
-				System.out.println( "no i tak");
 				if (newUserDialog == null) newUserDialog = new AddNewUserJDialog(thisFrame);
 				newUserDialog.setVisible(true);
 			}
@@ -203,7 +202,9 @@ public class MultimediaPlayerJFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-
+				if (deleteUserDialog == null) deleteUserDialog = new DeleteUserJDialog(thisFrame);
+				deleteUserDialog.setVisible(true);
+				
 			}
 		});
 
@@ -211,7 +212,9 @@ public class MultimediaPlayerJFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-
+				if (showHarmonogramDialog == null) showHarmonogramDialog = new ShowHarmonogramsDialog(thisFrame);
+				showHarmonogramDialog.setVisible(true);
+				
 			}
 		});
 
@@ -266,6 +269,8 @@ public class MultimediaPlayerJFrame extends JFrame
 
 	// JDialog
 	AddNewUserJDialog newUserDialog;
+	DeleteUserJDialog deleteUserDialog;
+	ShowHarmonogramsDialog showHarmonogramDialog;
 
 	JFrame thisFrame;
 
