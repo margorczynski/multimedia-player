@@ -445,9 +445,13 @@ public class MultimediaPlayerJPanel extends JPanel
 				mediaPlayer.enableOverlay(false);
 				if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(MultimediaPlayerJPanel.this))
 				{
-					mediaPlayer.playMedia(fileChooser.getSelectedFile().getAbsolutePath());
+					MediaList mediaList = mediaPlayerFactory.newMediaList();
+					mediaList.addMedia(fileChooser.getSelectedFile().getAbsolutePath());
+					mediaListPlayer.setMediaList(mediaList);
+					mediaListPlayer.setMediaPlayer(mediaPlayer);
+					mediaListPlayer.playNext();
 				}
-				mediaPlayer.enableOverlay(true);		
+				mediaPlayer.enableOverlay(true);
 			}
 		});
 

@@ -16,6 +16,8 @@ import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
 
+import org.projekt.multimediaplayer.model.*;
+
 import com.sun.jna.NativeLibrary;
 
 public class MultimediaPlayerJFrame extends JFrame
@@ -26,6 +28,7 @@ public class MultimediaPlayerJFrame extends JFrame
 
 		initComponents();
 		initMenus();
+		//disableButtonsWhenLogOut();
 		initMenuActionListener();
 		thisFrame = this;
 	}
@@ -147,12 +150,14 @@ public class MultimediaPlayerJFrame extends JFrame
 		jMenuItemCreateHarmo = new JMenuItem("Utworz harmonogram");
 		jMenuItemDeleteCurrentHarm = new JMenuItem("Usuñ bierz¹cy harmonogram");
 		jMenuItemAddNewMediaToHarm = new JMenuItem("Dodaj nowy element do harmonogramu");
+		jMenuItemChooseActivHarm = new JMenuItem("Wybierz aktywny harmonogram");
 
 		jMenuHarmonogram.add(jMenuItemShowHarmo);
 		jMenuHarmonogram.add(jMenuItemCreateHarmo);
 		jMenuHarmonogram.add(jMenuItemDeleteCurrentHarm);
 		jMenuHarmonogram.add(jMenuItemAddNewMediaToHarm);
-
+		jMenuHarmonogram.add(jMenuItemChooseActivHarm);
+		
 		// jMenuPomoc
 		jMenuItemAboutProgram = new JMenuItem("O programie");
 
@@ -168,15 +173,21 @@ public class MultimediaPlayerJFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-
+				mediaPlayerComponent.release();
+				System.exit(0);
 			}
 		});
+
+		// * * * * * * U S E R
 
 		jMenuItemLogIn.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
+				if (jDialogLogIn == null) jDialogLogIn = new JDialogLogIn(thisFrame);
+				jDialogLogIn.setVisible(true);
 
+				// TODO logowanie
 			}
 		});
 
@@ -184,6 +195,9 @@ public class MultimediaPlayerJFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
+				// TODO Wyloguj wynuluj zmienna
+
+				disableButtonsWhenLogOut();
 
 			}
 		});
@@ -193,7 +207,7 @@ public class MultimediaPlayerJFrame extends JFrame
 			public void actionPerformed(ActionEvent arg0)
 			{
 
-				if (newUserDialog == null) newUserDialog = new AddNewUserJDialog(thisFrame);
+				if (newUserDialog == null) newUserDialog = new JDialogCreateNewUser(thisFrame);
 				newUserDialog.setVisible(true);
 			}
 		});
@@ -202,19 +216,20 @@ public class MultimediaPlayerJFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				if (deleteUserDialog == null) deleteUserDialog = new DeleteUserJDialog(thisFrame);
+				if (deleteUserDialog == null) deleteUserDialog = new JDialogDeleteUser(thisFrame);
 				deleteUserDialog.setVisible(true);
-				
+
 			}
 		});
 
+		// * * * * * * H A R M O N O G R A M
 		jMenuItemShowHarmo.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				if (showHarmonogramDialog == null) showHarmonogramDialog = new ShowHarmonogramsDialog(thisFrame);
+				if (showHarmonogramDialog == null) showHarmonogramDialog = new JDialogShowHarmonograms(thisFrame);
 				showHarmonogramDialog.setVisible(true);
-				
+
 			}
 		});
 
@@ -223,6 +238,8 @@ public class MultimediaPlayerJFrame extends JFrame
 			public void actionPerformed(ActionEvent arg0)
 			{
 
+				if (jDialogCreateNewHarm == null) jDialogCreateNewHarm = new JDialogCreateNewHarm(thisFrame);
+				jDialogCreateNewHarm.setVisible(true);
 			}
 		});
 
@@ -230,55 +247,101 @@ public class MultimediaPlayerJFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-
+				// TODO usuñ bierz¹cy harmonogram, pobierz uzytkownika z okna g³ownego, usun z niego harmonogram i powiazane z nim pliki, aktualizuj BD
+				// wyswietl okienko z dostepnymi harmonogramami
+				
 			}
 		});
 
+		// Dodaj plik multimedialny
 		jMenuItemAddNewMediaToHarm.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
 
+				Schedule test = new Schedule();
+				if (addMultimediaFileJDialog == null) addMultimediaFileJDialog = new JDialogAddMultimediaFile(thisFrame, test);
+				addMultimediaFileJDialog.setVisible(true);
+
 			}
 		});
 
+		jMenuItemChooseActivHarm.addActionListener( new ActionListener()
+		{
+			
+			public void actionPerformed(ActionEvent arg0)
+			{
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+	}
+
+	public void disableButtonsWhenLogIn()
+	{
+		jMenuItemLogIn.setEnabled(false);
+		jMenuItemLogOut.setEnabled(true);
+
+		jMenuItemShowHarmo.setEnabled(true);
+		jMenuItemCreateHarmo.setEnabled(true);
+		jMenuItemDeleteCurrentHarm.setEnabled(true);
+		jMenuItemAddNewMediaToHarm.setEnabled(true);
+		jMenuItemChooseActivHarm.setEnabled(true);
+	}
+
+	public void disableButtonsWhenLogOut()
+	{
+
+		jMenuItemLogIn.setEnabled(true);
+		jMenuItemLogOut.setEnabled(false);
+
+		jMenuItemShowHarmo.setEnabled(false);
+		jMenuItemCreateHarmo.setEnabled(false);
+		jMenuItemDeleteCurrentHarm.setEnabled(false);
+		jMenuItemAddNewMediaToHarm.setEnabled(false);
+		jMenuItemChooseActivHarm.setEnabled(false);
 	}
 
 	// Menu var
-	JMenuBar menuBar;
+	private JMenuBar menuBar;
 
-	JMenu jMenuFile;
-	JMenu jMenuUzytkownik;
-	JMenu jMenuHarmonogram;
-	JMenu jMenuHelp;
+	private JMenu jMenuFile;
+	private JMenu jMenuUzytkownik;
+	private JMenu jMenuHarmonogram;
+	private JMenu jMenuHelp;
 
-	JMenuItem jMenuItemZamknij;
+	private JMenuItem jMenuItemZamknij;
 
-	JMenuItem jMenuItemLogIn;
-	JMenuItem jMenuItemLogOut;
-	JMenuItem jMenuItemCreateAccount;
-	JMenuItem jMenuItemDeleteAccount;
+	private JMenuItem jMenuItemLogIn;
+	private JMenuItem jMenuItemLogOut;
+	private JMenuItem jMenuItemCreateAccount;
+	private JMenuItem jMenuItemDeleteAccount;
 
-	JMenuItem jMenuItemShowHarmo;
-	JMenuItem jMenuItemCreateHarmo;
-	JMenuItem jMenuItemDeleteCurrentHarm;
-	JMenuItem jMenuItemAddNewMediaToHarm;
+	private JMenuItem jMenuItemShowHarmo;
+	private JMenuItem jMenuItemCreateHarmo;
+	private JMenuItem jMenuItemDeleteCurrentHarm;
+	private JMenuItem jMenuItemAddNewMediaToHarm;
+	private JMenuItem jMenuItemChooseActivHarm;
 
-	JMenuItem jMenuItemAboutProgram;
+	private JMenuItem jMenuItemAboutProgram;
 	// End Menu var
 
 	// JDialog
-	AddNewUserJDialog newUserDialog;
-	DeleteUserJDialog deleteUserDialog;
-	ShowHarmonogramsDialog showHarmonogramDialog;
+	private JDialogCreateNewUser newUserDialog;
+	private JDialogDeleteUser deleteUserDialog;
+	private JDialogShowHarmonograms showHarmonogramDialog;
+	private JDialogAddMultimediaFile addMultimediaFileJDialog;
+	private JDialogLogIn jDialogLogIn;
+	private JDialogCreateNewHarm jDialogCreateNewHarm;
 
-	JFrame thisFrame;
+	private JFrame thisFrame;
 
-	MediaPlayerFactory mediaPlayerFactory;
-	EmbeddedMediaPlayerComponent mediaPlayerComponent;
-	EmbeddedMediaPlayer mediaPlayer;
-	FullScreenStrategy fullScreenStrategy;
-	
+	private MediaPlayerFactory mediaPlayerFactory;
+	private EmbeddedMediaPlayerComponent mediaPlayerComponent;
+	private EmbeddedMediaPlayer mediaPlayer;
+	private FullScreenStrategy fullScreenStrategy;
+
 	private static int WINDOW_WIDTH = 700;
 	private static int WINDOW_HEIGHT = 700;
 

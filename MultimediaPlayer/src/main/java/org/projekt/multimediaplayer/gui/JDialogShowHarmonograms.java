@@ -16,10 +16,10 @@ import org.projekt.multimediaplayer.model.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class ShowHarmonogramsDialog extends JDialog
+public class JDialogShowHarmonograms extends JDialog
 {
 
-	public ShowHarmonogramsDialog(JFrame owner)
+	public JDialogShowHarmonograms(JFrame owner)
 	{
 		super(owner, "Podgl¹d harmonogramu");
 
@@ -31,7 +31,7 @@ public class ShowHarmonogramsDialog extends JDialog
 
 	public void loadData()
 	{
-		// TODO Uzupe³niæ dane ;)
+		// TODO Metoda sprawdza czy / jaki uzytkownik jest zalogowany i pobiera jego harmonogramy 
 
 	}
 
@@ -51,7 +51,11 @@ public class ShowHarmonogramsDialog extends JDialog
 
 			public void actionPerformed(ActionEvent e)
 			{
-				// TODO Auto-generated method stub
+				//TODO dodaj nowy plik do harmonogramu
+				
+				
+				
+				
 
 			}
 		});
@@ -61,7 +65,7 @@ public class ShowHarmonogramsDialog extends JDialog
 
 			public void actionPerformed(ActionEvent e)
 			{
-				// TODO Auto-generated method stub
+				// TODO Dodaj nowy harmonogram
 
 			}
 		});
@@ -71,7 +75,7 @@ public class ShowHarmonogramsDialog extends JDialog
 
 			public void actionPerformed(ActionEvent e)
 			{
-				// TODO Auto-generated method stub
+				// TODO Usun harmonogram / plik multimedialny 
 
 			}
 		});

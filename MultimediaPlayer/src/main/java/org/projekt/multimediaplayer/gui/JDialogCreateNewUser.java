@@ -6,18 +6,24 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JOptionPane.*;
+import java.util.List;
+
 import javax.swing.*;
 
+import org.projekt.multimediaplayer.dao.UserDao;
 import org.projekt.multimediaplayer.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class DeleteUserJDialog extends JDialog
+
+
+
+public class JDialogCreateNewUser extends JDialog
 {
 
-	public DeleteUserJDialog(JFrame owner)
+	public JDialogCreateNewUser(JFrame owner)
 	{
-		super(owner, "Usuñ konto ");
+		super(owner, "Dodaj nowego u¿ytkownika");
 
 		initComponents();
 
@@ -71,38 +77,35 @@ public class DeleteUserJDialog extends JDialog
 		labelName = new JLabel("U¿ytkownik:");
 		labelPassword = new JLabel("Has³o:");
 
-		buttonAddUser = new JButton("Usuñ");
+		buttonAddUser = new JButton("Dodaj");
 		buttonCancel = new JButton("Anuluj");
 
-
-		
-		
 		buttonAddUser.addActionListener(new ActionListener()
 		{
 
 			public void actionPerformed(ActionEvent e)
 			{
+				
 				if ( (userName.getText() != "") && (userPassword.getPassword() != null) )
 				{
-					newUser = new User();
-					newUser.setUsername(userName.getText());
-					newUser.setPassword(userPassword.getPassword().toString());
-							
-					if ( JOptionPane.showConfirmDialog(thisFrame,(Object)"Czy jesteœ pewien ze chcesz usun¹æ to konto \" "+userName.getText()+"\" ?","Usuwanie konta",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION )
-					{
-						//TODO sprawdz czy ten u¿ytkownik którego chcesz usun¹æ jest zalogowany 
-						// jesli jest zalogowany to go wyloguj i usun konto
-						// w przeciwnym razie usun konto tylko 
-						
-						
-						// Usuniêcie zosta³o zakoñczone zamknij okno
-						thisFrame.setVisible(false);
+					
+					
+					//TODO Dodaj nowego u¿ytkownika do BD\
+					
+//					newUser = new User();
+//					newUser.setUsername(userName.getText());
+//					newUser.setPassword(userPassword.getPassword().toString());
+//				
+//				    userDao.saveUser(newUser);
+//				    
+//				    List <User> listaUzytkownikow = userDao.findUsers(newUser.getUsername());
+//				    
+//				    System.out.println(listaUzytkownikow.get(0).getUsername());
+//				    
+//				    userDao.deleteUser(newUser);
 
-					}
-					
-					
-					
 				}
+				
 
 			}
 		});
@@ -118,8 +121,10 @@ public class DeleteUserJDialog extends JDialog
 		});
 
 	}
-
-	JDialog thisFrame = this;
+	
+	private final ApplicationContext appContext = new ClassPathXmlApplicationContext("application-context.xml");
+	private final UserDao userDao = (UserDao) appContext.getBean("userDao");
+	
 	JLabel labelHeadline;
 
 	JTextField userName;
