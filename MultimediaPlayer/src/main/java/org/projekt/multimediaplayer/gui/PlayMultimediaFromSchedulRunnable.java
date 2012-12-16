@@ -16,8 +16,6 @@ import org.projekt.multimediaplayer.model.MultimediaFile;
 import org.projekt.multimediaplayer.model.Schedule;
 import org.projekt.multimediaplayer.model.User;
 
-import com.apple.mrj.macos.carbon.Timer;
-import com.sun.xml.internal.ws.Closeable;
 
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListItem;

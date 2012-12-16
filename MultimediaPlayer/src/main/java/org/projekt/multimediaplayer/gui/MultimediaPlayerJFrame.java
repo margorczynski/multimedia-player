@@ -3,14 +3,18 @@ package org.projekt.multimediaplayer.gui;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
+import static java.awt.SystemTray.getSystemTray;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.awt.image.ImageProducer;
 import java.util.List;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
@@ -29,6 +33,19 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.sun.jna.NativeLibrary;
 
+import java.awt.AWTException;
+import java.awt.Image;
+import java.awt.SystemTray;
+import java.awt.Toolkit;
+import java.awt.TrayIcon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+
 public class MultimediaPlayerJFrame extends JFrame
 {
 	public MultimediaPlayerJFrame()
@@ -39,15 +56,55 @@ public class MultimediaPlayerJFrame extends JFrame
 		disableButtonsWhenLogOut();
 		initMenuActionListener();
 		thisFrame = this;
-		ImageIcon icon=new ImageIcon("multimedia/bm.png");
-		this.setIconImage(icon.getImage());
+		
 
 	}
 
+	public void initIconsAndTry()
+	{
+		ImageIcon icon = new ImageIcon("multimedia/greenBig.png");
+		this.setIconImage(icon.getImage());
 
+		if (SystemTray.isSupported())
+		{
+
+			ImageIcon iconT = new ImageIcon("multimedia/green16.png");
+			final TrayIcon iconTray = new TrayIcon(iconT.getImage());
+			iconTray.setToolTip("Odtwrzacz multimedialny");
+			iconTray.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					MultimediaPlayerJFrame.this.setVisible(true);
+					MultimediaPlayerJFrame.this.setExtendedState(MultimediaPlayerJFrame.NORMAL);
+					getSystemTray().remove(iconTray);
+				}
+
+			});
+
+			addWindowListener(new WindowAdapter()
+			{
+				@Override
+				public void windowIconified(WindowEvent e)
+				{
+					MultimediaPlayerJFrame.this.setVisible(false);
+					try
+					{
+						getSystemTray().add(iconTray);
+					}
+					catch (AWTException e1)
+					{
+						e1.printStackTrace();
+					}
+				}
+
+			});
+		}
+	}
 	public void initComponents()
 	{
-
+		initIconsAndTry();
+		
 		Configuration config = (Configuration) appContext.getBean("config");
 		config.createDefaultConfigurationFile();
 		config.loadConfigurationFromFile();
@@ -69,9 +126,8 @@ public class MultimediaPlayerJFrame extends JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 
-
 		multimediaPlayerJPanel = new MultimediaPlayerJPanel(this);// ,
-																													// mediaPlayerComponent);
+																	// mediaPlayerComponent);
 		this.add(multimediaPlayerJPanel);
 	}
 
@@ -113,7 +169,6 @@ public class MultimediaPlayerJFrame extends JFrame
 		jMenuItemShowHarmo = new JMenuItem("Poka¿ harmonogramy");
 		jMenuItemCreateHarmo = new JMenuItem("Utworz harmonogram");
 		jMenuItemAddNewMediaToHarm = new JMenuItem("Dodaj nowy element do harmonogramu");
-		
 
 		jMenuHarmonogram.add(jMenuItemShowHarmo);
 		jMenuHarmonogram.add(jMenuItemCreateHarmo);
@@ -133,7 +188,7 @@ public class MultimediaPlayerJFrame extends JFrame
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				
+
 				multimediaPlayerJPanel.releaseMultimediaVlcj();
 				System.exit(0);
 			}
@@ -253,7 +308,6 @@ public class MultimediaPlayerJFrame extends JFrame
 			}
 		});
 
-
 	}
 
 	public User refreshUser(String userName)
@@ -280,9 +334,8 @@ public class MultimediaPlayerJFrame extends JFrame
 
 	public void refreshActiveSchedule()
 	{
-		String  currentActiveHarmName = "empty";
-		if(activeSchedule != null)
-			 currentActiveHarmName = activeSchedule.getName();
+		String currentActiveHarmName = "empty";
+		if (activeSchedule != null) currentActiveHarmName = activeSchedule.getName();
 
 		System.out.println("Odswiezony aktywny harmonogram w mainFrame");
 		refreshLogInUser();
@@ -317,25 +370,24 @@ public class MultimediaPlayerJFrame extends JFrame
 			System.out.println("Nie ma zalogowanego uzytkownika !!! ");
 		}
 
-
 		if (activeSchedule != null)
 		{
 			if (!currentActiveHarmName.equals(activeSchedule.getName()))
 			{
-				if(playerThread != null)
+				if (playerThread != null)
 				{
 					playerThread = null;
 					runnableSchedu = null;
-					
+
 					System.gc();
-					
-					runnableSchedu = new PlayMultimediaFromSchedulRunnable(this,multimediaPlayerJPanel, activeSchedule, logInUser);
+
+					runnableSchedu = new PlayMultimediaFromSchedulRunnable(this, multimediaPlayerJPanel, activeSchedule, logInUser);
 					playerThread = new Thread(runnableSchedu);
 					playerThread.start();
 				}
-				else 
+				else
 				{
-					runnableSchedu = new PlayMultimediaFromSchedulRunnable(this,multimediaPlayerJPanel, activeSchedule, logInUser);
+					runnableSchedu = new PlayMultimediaFromSchedulRunnable(this, multimediaPlayerJPanel, activeSchedule, logInUser);
 					playerThread = new Thread(runnableSchedu);
 					playerThread.start();
 				}
@@ -391,26 +443,25 @@ public class MultimediaPlayerJFrame extends JFrame
 
 	public void suspendThread()
 	{
-		if(playerThread.isAlive())
-			runnableSchedu.closeThreadIfEnd();
+		if (playerThread.isAlive()) runnableSchedu.closeThreadIfEnd();
 		System.gc();
 	}
-	
+
 	public void runRunnableSched()
 	{
 		playerThread = null;
 		playerThread = new Thread(runnableSchedu);
 		playerThread.start();
 	}
+
 	public MultimediaPlayerJPanel getMultimediaPanel()
 	{
-		return  multimediaPlayerJPanel ;
+		return multimediaPlayerJPanel;
 	}
-	
-	
+
 	public Thread playerThread = null;
 	private PlayMultimediaFromSchedulRunnable runnableSchedu = null;
-	
+
 	private MultimediaPlayerJPanel multimediaPlayerJPanel = null;
 	// Menu var
 	private JMenuBar menuBar;
