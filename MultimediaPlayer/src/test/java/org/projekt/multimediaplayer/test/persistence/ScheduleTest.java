@@ -1,6 +1,5 @@
 package org.projekt.multimediaplayer.test.persistence;
 
-import static org.junit.Assert.assertFalse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

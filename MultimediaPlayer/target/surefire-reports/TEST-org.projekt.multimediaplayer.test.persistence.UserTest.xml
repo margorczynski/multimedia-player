@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.1" errors="1" skipped="0" tests="1" name="org.projekt.multimediaplayer.test.persistence.UserTest">
+<testsuite failures="0" time="0.586" errors="0" skipped="0" tests="1" name="org.projekt.multimediaplayer.test.persistence.UserTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jre7\bin"/>
@@ -26,7 +26,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 7"/>
-    <property name="classworlds.conf" value="D:\SEMESTR V\PrgoramowanieZdarzeniowe\.metadata\.plugins\org.eclipse.m2e.core\launches\m2conf5371942131091101484.tmp"/>
+    <property name="classworlds.conf" value="D:\SEMESTR V\PrgoramowanieZdarzeniowe\.metadata\.plugins\org.eclipse.m2e.core\launches\m2conf4749573493922337286.tmp"/>
     <property name="sun.jnu.encoding" value="Cp1250"/>
     <property name="java.library.path" value="C:\Program Files\Java\jre7\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\NVIDIA Corporation\PhysX\Common;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Windows Live\Shared;C:\Program Files\Common Files\Ulead Systems\MPEG;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\Java\jdk1.7.0_04\bin;C:\Program Files\QuickTime\QTSystem\;C:\Eclipse_Juno\eclipse\Spring\apache-maven-3.0.4\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;M2_HOME\bin;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
@@ -60,144 +60,5 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86"/>
   </properties>
-  <testcase time="0.1" classname="org.projekt.multimediaplayer.test.persistence.UserTest" name="runTests">
-    <error message="Cannot find class [org.projekt.multimediaplayer.main.Configuration] for bean with name &apos;config&apos; defined in class path resource [application-context.xml]; nested exception is java.lang.ClassNotFoundException: org.projekt.multimediaplayer.main.Configuration" type="org.springframework.beans.factory.CannotLoadBeanClassException">org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [org.projekt.multimediaplayer.main.Configuration] for bean with name &apos;config&apos; defined in class path resource [application-context.xml]; nested exception is java.lang.ClassNotFoundException: org.projekt.multimediaplayer.main.Configuration
-	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveBeanClass(AbstractBeanFactory.java:1261)
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.predictBeanType(AbstractAutowireCapableBeanFactory.java:576)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.isFactoryBean(AbstractBeanFactory.java:1330)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.isFactoryBean(AbstractBeanFactory.java:896)
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:566)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:895)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:425)
-	at org.springframework.context.support.ClassPathXmlApplicationContext.&lt;init&gt;(ClassPathXmlApplicationContext.java:139)
-	at org.springframework.context.support.ClassPathXmlApplicationContext.&lt;init&gt;(ClassPathXmlApplicationContext.java:83)
-	at org.projekt.multimediaplayer.test.persistence.UserTest.&lt;init&gt;(UserTest.java:65)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
-	at java.lang.reflect.Constructor.newInstance(Unknown Source)
-	at org.junit.runners.BlockJUnit4ClassRunner.createTest(BlockJUnit4ClassRunner.java:202)
-	at org.junit.runners.BlockJUnit4ClassRunner$1.runReflectiveCall(BlockJUnit4ClassRunner.java:251)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
-	at org.junit.runners.BlockJUnit4ClassRunner.methodBlock(BlockJUnit4ClassRunner.java:248)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:76)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
-	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
-	at org.apache.maven.surefire.junit4.JUnit4TestSet.execute(JUnit4TestSet.java:53)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:123)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:104)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:164)
-	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:110)
-	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:175)
-	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcessWhenForked(SurefireStarter.java:107)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:68)
-Caused by: java.lang.ClassNotFoundException: org.projekt.multimediaplayer.main.Configuration
-	at java.net.URLClassLoader$1.run(Unknown Source)
-	at java.net.URLClassLoader$1.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.net.URLClassLoader.findClass(Unknown Source)
-	at java.lang.ClassLoader.loadClass(Unknown Source)
-	at sun.misc.Launcher$AppClassLoader.loadClass(Unknown Source)
-	at java.lang.ClassLoader.loadClass(Unknown Source)
-	at org.springframework.util.ClassUtils.forName(ClassUtils.java:257)
-	at org.springframework.beans.factory.support.AbstractBeanDefinition.resolveBeanClass(AbstractBeanDefinition.java:408)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doResolveBeanClass(AbstractBeanFactory.java:1282)
-	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveBeanClass(AbstractBeanFactory.java:1253)
-	... 37 more
-</error>
-    <system-err>lis 28, 2012 3:33:48 PM org.springframework.context.support.AbstractApplicationContext prepareRefresh
-INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@e53ece: startup date [Wed Nov 28 15:33:48 CET 2012]; root of context hierarchy
-lis 28, 2012 3:33:48 PM org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
-INFO: Loading XML bean definitions from class path resource [application-context.xml]
-lis 28, 2012 3:33:48 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
-INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@b63623: defining beans [dataSource,sessionFactory,userDao,scheduleDao,multimediaFileDao,config]; root of factory hierarchy
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.HbmBinder bindRootPersistentClassCommonValues
-INFO: Mapping class: org.projekt.multimediaplayer.model.User -&gt; USER
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.HbmBinder bindRootPersistentClassCommonValues
-INFO: Mapping class: org.projekt.multimediaplayer.model.Schedule -&gt; SCHEDULE
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.HbmBinder bindRootPersistentClassCommonValues
-INFO: Mapping class: org.projekt.multimediaplayer.model.MultimediaFile -&gt; MULTIMEDIA_FILE
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.HbmBinder bindCollectionSecondPass
-INFO: Mapping collection: org.projekt.multimediaplayer.model.User.userSchedules -&gt; SCHEDULE
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.HbmBinder bindCollectionSecondPass
-INFO: Mapping collection: org.projekt.multimediaplayer.model.Schedule.scheduleMultimediaFiles -&gt; MULTIMEDIA_FILE
-lis 28, 2012 3:33:48 PM org.springframework.orm.hibernate3.LocalSessionFactoryBean buildSessionFactory
-INFO: Building new Hibernate SessionFactory
-lis 28, 2012 3:33:48 PM org.hibernate.connection.ConnectionProviderFactory newConnectionProvider
-INFO: Initializing connection provider: org.springframework.orm.hibernate3.LocalDataSourceConnectionProvider
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: RDBMS: SQLite, version: 3.7.2
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: JDBC driver: SQLiteJDBC, version: native
-lis 28, 2012 3:33:48 PM org.hibernate.dialect.Dialect &lt;init&gt;
-INFO: Using dialect: com.applerao.hibernatesqlite.dialect.SQLiteDialect
-lis 28, 2012 3:33:48 PM org.hibernate.transaction.TransactionFactoryFactory buildTransactionFactory
-INFO: Transaction strategy: org.springframework.orm.hibernate3.SpringTransactionFactory
-lis 28, 2012 3:33:48 PM org.hibernate.transaction.TransactionManagerLookupFactory getTransactionManagerLookup
-INFO: No TransactionManagerLookup configured (in JTA environment, use of read-write or transactional second-level cache is not recommended)
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Automatic flush during beforeCompletion(): disabled
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Automatic session close at end of transaction: disabled
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Scrollable result sets: disabled
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: JDBC3 getGeneratedKeys(): disabled
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Connection release mode: auto
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Default batch fetch size: 1
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Generate SQL with comments: disabled
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Order SQL updates by primary key: disabled
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Order SQL inserts for batching: disabled
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory createQueryTranslatorFactory
-INFO: Query translator: org.hibernate.hql.ast.ASTQueryTranslatorFactory
-lis 28, 2012 3:33:48 PM org.hibernate.hql.ast.ASTQueryTranslatorFactory &lt;init&gt;
-INFO: Using ASTQueryTranslatorFactory
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Query language substitutions: {}
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: JPA-QL strict compliance: disabled
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Second-level cache: enabled
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Query cache: disabled
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory createCacheProvider
-INFO: Cache provider: org.hibernate.cache.NoCacheProvider
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Optimize cache for minimal puts: disabled
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Structured second-level cache entries: disabled
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Statistics: disabled
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Deleted entity synthetic identifier rollback: disabled
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Default entity-mode: pojo
-lis 28, 2012 3:33:48 PM org.hibernate.cfg.SettingsFactory buildSettings
-INFO: Named query checking : enabled
-lis 28, 2012 3:33:48 PM org.hibernate.impl.SessionFactoryImpl &lt;init&gt;
-INFO: building session factory
-lis 28, 2012 3:33:48 PM org.hibernate.impl.SessionFactoryObjectFactory addInstance
-INFO: Not binding factory to JNDI, no JNDI name configured
-lis 28, 2012 3:33:48 PM org.springframework.beans.factory.support.DefaultSingletonBeanRegistry destroySingletons
-INFO: Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@b63623: defining beans [dataSource,sessionFactory,userDao,scheduleDao,multimediaFileDao,config]; root of factory hierarchy
-lis 28, 2012 3:33:48 PM org.springframework.orm.hibernate3.AbstractSessionFactoryBean destroy
-INFO: Closing Hibernate SessionFactory
-lis 28, 2012 3:33:48 PM org.hibernate.impl.SessionFactoryImpl close
-INFO: closing
-</system-err>
-  </testcase>
+  <testcase time="0.586" classname="org.projekt.multimediaplayer.test.persistence.UserTest" name="runTests"/>
 </testsuite>

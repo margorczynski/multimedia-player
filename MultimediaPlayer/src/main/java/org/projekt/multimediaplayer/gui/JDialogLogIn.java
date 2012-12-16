@@ -1,30 +1,25 @@
 package org.projekt.multimediaplayer.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.security.acl.Owner;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.*;
 
 import org.projekt.multimediaplayer.dao.UserDao;
+import org.projekt.multimediaplayer.model.Schedule;
 import org.projekt.multimediaplayer.model.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-
-
 
 public class JDialogLogIn extends JDialog
 {
 
 	public JDialogLogIn(JFrame owner)
 	{
-		super(owner, windowTitle);
+				super(owner,windowTitle,ModalityType.APPLICATION_MODAL);
 
 		windowOwner = (MultimediaPlayerJFrame) owner;
 		initComponents();
@@ -84,25 +79,49 @@ public class JDialogLogIn extends JDialog
 
 		buttonLogIn.addActionListener(new ActionListener()
 		{
-
+			
 			public void actionPerformed(ActionEvent e)
 			{
-				char [] pass = userPassword.getPassword();
-				
-				if ( ! ((userName.getText().isEmpty()) || (pass.length == 0)) )
+				isLogIn = false;
+				char[] pass = userPassword.getPassword();
+
+				if ((!(userName.getText().isEmpty()) && !(pass.length == 0)))
 				{
+					loginUser = new User();
+					loginUser.setUsername(userName.getText());
+					loginUser.setPassword(pass);
+
+					List<User> listaUzytkownikow = userDao.findUsers(loginUser.getUsername());
+
+					//czy jest uzytkownik za ktorego chcemy sie zalogowac
+					if (listaUzytkownikow.size() != 0)
+					{
 					
-					
-					//TODO  Logowanie - Sprawdzic w BD czy taki uzytkownik istnieje i czy jego has³o siê zgadza
-					//Utwórz instancje zalogowanego uzytkownika przenies ja do glwonego okna JFrame,
-					// Po zalogowaniu pobraæ jego aktywny harmonogram
-					// Za³adowaæ pliki z harmonogramu
-					// Odliczaæ czas do zakoñczenia.
-					
-					windowOwner.disableButtonsWhenLogIn();
-					setVisible(false);
+						//czy haslo sie zgadza
+						if (listaUzytkownikow.get(0).getPassword().equals(loginUser.getPassword()))
+						{
+							JOptionPane.showMessageDialog(JDialogLogIn.this, "Zalogowano !!", "Logowanie !", JOptionPane.INFORMATION_MESSAGE);
+							isLogIn = true;
+							windowOwner.disableButtonsWhenLogIn();
+							setVisible(false);
+						}
+
+						else
+						{
+							JOptionPane.showMessageDialog(JDialogLogIn.this, "Podane has³o nie pasuje do u¿ytkownika !!", "B³¹d has³a !", JOptionPane.WARNING_MESSAGE);
+							loginUser = null;
+						}
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(JDialogLogIn.this, "Nie znaleziono podanego u¿ytkownika !", "Nie ma takiego u¿ytkownika", JOptionPane.WARNING_MESSAGE);
+						loginUser = null;
+					}
 				}
-				
+				else 
+				{
+					JOptionPane.showMessageDialog(JDialogLogIn.this, "Musisz podaæ login i has³o !", "Uzupe³nij dane", JOptionPane.WARNING_MESSAGE);
+				}
 
 			}
 		});
@@ -112,12 +131,12 @@ public class JDialogLogIn extends JDialog
 
 			public void actionPerformed(ActionEvent e)
 			{
+				
 				clearEditText();
 				setVisible(false);
 			}
 		});
-		
-		
+
 		clearEditText();
 
 		JPanel mainPanel = new JPanel();
@@ -139,8 +158,25 @@ public class JDialogLogIn extends JDialog
 		this.setContentPane(mainPanel);
 
 	}
-	
 
+	public User getLogInUser()
+	{
+		return loginUser;
+	}
+
+	public boolean isLogInOk()
+	{
+		return isLogIn;
+	}
+	
+	public void setIsLogInFalse()
+	{
+		isLogIn = false;
+	}
+	private final ApplicationContext appContext = new ClassPathXmlApplicationContext("application-context.xml");
+	private final UserDao userDao = (UserDao) appContext.getBean("userDao");
+
+	private boolean isLogIn = false;
 	MultimediaPlayerJFrame windowOwner;
 	JLabel labelHeadline;
 
@@ -153,6 +189,6 @@ public class JDialogLogIn extends JDialog
 	JButton buttonLogIn;
 	JButton buttonCancel;
 
-	private static String windowTitle="Logowaine";
-	User newUser;
+	private static String windowTitle = "Logowaine";
+	User loginUser = null;
 }

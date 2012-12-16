@@ -1,40 +1,50 @@
 package org.projekt.multimediaplayer.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputMethodEvent;
 import java.awt.event.InputMethodListener;
 import java.io.File;
 import java.io.IOException;
-import java.text.FieldPosition;
+import java.sql.Time;
 import java.text.NumberFormat;
-import java.text.ParsePosition;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.StringTokenizer;
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 
-import org.projekt.multimediaplayer.dao.UserDao;
+import org.projekt.multimediaplayer.dao.MultimediaFileDao;
+import org.projekt.multimediaplayer.model.MultimediaFile;
 import org.projekt.multimediaplayer.model.Schedule;
 import org.projekt.multimediaplayer.model.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import uk.co.caprica.vlcj.filter.swing.SwingFileFilterFactory;
+import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.medialist.MediaListItem;
+import uk.co.caprica.vlcj.player.MediaDetails;
+import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
 public class JDialogAddMultimediaFile extends JDialog
 {
 
 	public JDialogAddMultimediaFile(JFrame owner, Schedule schedule)
 	{
-		super(owner, windowTitle);
+		super(owner, windowTitle, ModalityType.APPLICATION_MODAL);
 
-		this.schedule = schedule;
+		this.activeSchedule = schedule;
 		this.owner = owner;
 
 		initComponents();
@@ -44,8 +54,16 @@ public class JDialogAddMultimediaFile extends JDialog
 
 	}
 
+	public void setSchedule(Schedule s)
+	{
+		activeSchedule = s;
+	}
+
 	public void setDefault()
 	{
+		newMultimediaFile = null;
+		fileTimeLengthMilis = -10;
+
 		labelFileName.setText("Nazwa pliku");
 		labelFileSize.setText("Rozmiar");
 		labelFileType.setText("Typ");
@@ -56,6 +74,7 @@ public class JDialogAddMultimediaFile extends JDialog
 		textFileType.setText("Wybierz plik ... ");
 		textFileLength.setText("Wybierz plik ... ");
 
+		textFilePatch.setText("Wybierz plik");
 		labelFileInfo.setText("Informacje o pliku");
 		labelDisplayInfo.setText("Informacje dotycz¹ce wyœwietlenia");
 		labelFileSeqNo.setText("Pozycja na liscie");
@@ -133,7 +152,7 @@ public class JDialogAddMultimediaFile extends JDialog
 		labelFileInfo.setText("Informacje o pliku");
 		labelDisplayInfo.setText("Informacje dotycz¹ce wyœwietlenia");
 		labelFileSeqNo.setText("Pozycja na liscie");
-		labelFileDelay.setText("OpoŸnienie odtwarzania");
+		labelFileDelay.setText("OpoŸnienie odtwarzania (sek)");
 		textFileDelay.setText("0");
 
 		middlePanel.add(labelFileInfo, new GBC(0, 0, 2, 1).setAnchor(GBC.CENTER).setInsets(5, 5, 10, 0));
@@ -143,16 +162,15 @@ public class JDialogAddMultimediaFile extends JDialog
 		middlePanel.add(labelFileType, new GBC(0, 3).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
 		middlePanel.add(labelFileLength, new GBC(0, 4).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
 		middlePanel.add(labelDisplayInfo, new GBC(0, 5, 2, 1).setAnchor(GBC.CENTER).setInsets(20, 5, 10, 0));
-		middlePanel.add(labelFileSeqNo, new GBC(0, 6).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
-		middlePanel.add(labelFileDelay, new GBC(0, 7).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
+
+		middlePanel.add(labelFileDelay, new GBC(0, 6).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
 
 		middlePanel.add(textFileName, new GBC(1, 1).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
 		middlePanel.add(textFileSize, new GBC(1, 2).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
 		middlePanel.add(textFileType, new GBC(1, 3).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
 		middlePanel.add(textFileLength, new GBC(1, 4).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
 
-		middlePanel.add(textFileSeqNo, new GBC(1, 6).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
-		middlePanel.add(textFileDelay, new GBC(1, 7).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
+		middlePanel.add(textFileDelay, new GBC(1, 6).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
 
 		mainPanel.add(middlePanel, BorderLayout.CENTER);
 
@@ -173,15 +191,11 @@ public class JDialogAddMultimediaFile extends JDialog
 
 			public void inputMethodTextChanged(InputMethodEvent arg0)
 			{
-
 				openFile();
-
 			}
 
 			public void caretPositionChanged(InputMethodEvent arg0)
 			{
-				// TODO Auto-generated method stub
-
 			}
 		});
 
@@ -201,8 +215,33 @@ public class JDialogAddMultimediaFile extends JDialog
 
 			public void actionPerformed(ActionEvent arg0)
 			{
-				// TODO Auto-generated method stub
 
+				if (newMultimediaFile != null && fileTimeLengthMilis > 0)
+				{
+
+					if (activeSchedule != null)
+					{
+						MultimediaFile multimediaFile = new MultimediaFile();
+						multimediaFile.setFilename(newMultimediaFile.getName());
+						multimediaFile.setSchedule(activeSchedule);
+						multimediaFile.setPath(newMultimediaFile.getAbsolutePath());
+						multimediaFile.setSize(newMultimediaFile.length());
+						multimediaFile.setLength(fileTimeLengthMilis);
+						multimediaFile.setPlayDelay(Integer.parseInt(textFileDelay.getText()));
+						multimediaFile.setType(textFileType.getText());
+
+						multimediaFileDao.saveMultimediaFile(multimediaFile);
+						System.out.println("Plik zosta³ dodany do hamonogramu !");
+						JOptionPane.showMessageDialog(JDialogAddMultimediaFile.this, "Plik zosta³ dodany prawidlowo", "Dodawanie pliku", JOptionPane.INFORMATION_MESSAGE);
+					}
+					else 
+					{
+						JOptionPane.showMessageDialog(JDialogAddMultimediaFile.this, "Plik nie zosta³ dodany poniewa¿ nie ma aktywnego ¿adnego harmonogramu !!!", "Dodawanie pliku", JOptionPane.INFORMATION_MESSAGE);
+
+					}
+					setDefault();
+					setVisible(false);
+				}
 			}
 		});
 
@@ -211,13 +250,14 @@ public class JDialogAddMultimediaFile extends JDialog
 
 			public void actionPerformed(ActionEvent arg0)
 			{
-				setVisible(false);
 				setDefault();
+				setVisible(false);
 			}
 		});
 
 		buttonSave.setText("Zapisz");
 		buttonCancel.setText("Anuluj");
+
 		JPanel buttonPanel = new JPanel();
 
 		buttonPanel.add(buttonSave);
@@ -227,7 +267,6 @@ public class JDialogAddMultimediaFile extends JDialog
 
 		this.setContentPane(mainPanel);
 		pack();
-
 	}
 
 	public void openFile()
@@ -256,14 +295,62 @@ public class JDialogAddMultimediaFile extends JDialog
 
 			textFileSize.setText(formatSize + "Mb");
 
-			// TODO 'Dodaj plik' / Dla pliku utworzyc mediaPlayerList czy jakos tak i
-			// zczytaæ ile trwa i wypisaæ
+			MediaPlayerFactory mediaPlayerFactory2 = new MediaPlayerFactory();
+			EmbeddedMediaPlayer mediaPlayer = mediaPlayerFactory2.newEmbeddedMediaPlayer();
+			mediaPlayer.playMedia(newMultimediaFile.getAbsolutePath());
 
-			// TODO AddFile / Z Schedule przeliczyc sobie ile jest rekordow i
-			// wpisaæ ostatni numer + 1;
+			fileTimeLengthMilis = mediaPlayer.getLength();
+			while (fileTimeLengthMilis <= 0)
+			{
+				fileTimeLengthMilis = mediaPlayer.getLength();
+			}
+			mediaPlayer.stop();
+			mediaPlayer.release();
 
+			textFileLength.setText(getTimeFromMilis(fileTimeLengthMilis));
+
+			StringTokenizer stringTokenizer = new StringTokenizer(newMultimediaFile.getName(), ".");
+			stringTokenizer.nextToken();
+			String rozszerzenie = stringTokenizer.nextToken();
+
+			boolean thisIsIt = false;
+
+			for (String string : videoExtent)
+			{
+				if (rozszerzenie.trim().toLowerCase().equals(string.trim().toLowerCase()))
+				{
+					thisIsIt = true;
+					textFileType.setText("Video");
+					break;
+				}
+			}
+			if (!thisIsIt)
+			{
+				for (String string : audioExtent)
+				{
+					if (rozszerzenie.trim().toLowerCase().equals(string.trim().toLowerCase()))
+					{
+						thisIsIt = true;
+						textFileType.setText("Audio");
+						break;
+					}
+				}
+			}
+			if (!thisIsIt)
+			{
+				textFileType.setText("Unidentified");
+			}
 		}
 	}
+
+	private String getTimeFromMilis(long millis)
+	{
+		String s = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis), TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+		return s;
+	}
+
+	String[] videoExtent = { "AVI", "BDMV", "BMK", "BSF", "flv", "HDMOV", "m2ts", "m4v", "MJP", "MJPG", "mkv", "MOOV", "mov", "mp2v", "MP4", "mpg", "mqv", "MTS", "qt", "rmp", "rmbv", "wmv" };
+	String[] audioExtent = { "AIF", "AIFF", "AIFC", "AIFR", "MIDI", "MID", "RMI", "MP2", "MPG", "MPE", "MPEG", "MPEG2", "MP3", "MPEG3", "OGG", "RA", "WAVE", "WAV", "WMA" };
 
 	private static String windowTitle = "Dodaj nowy plik";
 
@@ -290,12 +377,18 @@ public class JDialogAddMultimediaFile extends JDialog
 	private JTextField textFileSize;
 	private JTextField textFileType;
 
-	private File newMultimediaFile;
-	private Schedule schedule;
+	private File newMultimediaFile = null;
+
+	long fileTimeLengthMilis = -10;
+
+	private Schedule activeSchedule;
 	private JFrame owner;
 
 	private User newUser;
 
 	private JFileChooser fileChooser;
 
+	private final ApplicationContext appContext = new ClassPathXmlApplicationContext("application-context.xml");
+
+	private final MultimediaFileDao multimediaFileDao = (MultimediaFileDao) appContext.getBean("multimediaFileDao");
 }

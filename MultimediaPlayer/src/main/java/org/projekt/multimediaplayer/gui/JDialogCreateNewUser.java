@@ -1,9 +1,6 @@
 package org.projekt.multimediaplayer.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -14,9 +11,6 @@ import org.projekt.multimediaplayer.dao.UserDao;
 import org.projekt.multimediaplayer.model.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-
-
 
 public class JDialogCreateNewUser extends JDialog
 {
@@ -85,27 +79,29 @@ public class JDialogCreateNewUser extends JDialog
 
 			public void actionPerformed(ActionEvent e)
 			{
-				
-				if ( (userName.getText() != "") && (userPassword.getPassword() != null) )
+
+				if ((userName.getText() != "") && (userPassword.getPassword() != null))
 				{
-					
-					
-					//TODO Dodaj nowego u¿ytkownika do BD\
-					
-//					newUser = new User();
-//					newUser.setUsername(userName.getText());
-//					newUser.setPassword(userPassword.getPassword().toString());
-//				
-//				    userDao.saveUser(newUser);
-//				    
-//				    List <User> listaUzytkownikow = userDao.findUsers(newUser.getUsername());
-//				    
-//				    System.out.println(listaUzytkownikow.get(0).getUsername());
-//				    
-//				    userDao.deleteUser(newUser);
+
+					newUser = new User();
+
+					newUser.setUsername(userName.getText());
+					newUser.setPassword(userPassword.getPassword());
+					List<User> listaUzytkownikow = userDao.findUsers(newUser.getUsername());
+
+					if (listaUzytkownikow.size() == 0)
+					{
+						userDao.saveUser(newUser);
+						JOptionPane.showMessageDialog(JDialogCreateNewUser.this, "U¿ytkownik zosta³ dodany !", "Dodano u¿ytkownika", JOptionPane.INFORMATION_MESSAGE);
+						setVisible(false);
+						clearEditText();
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(JDialogCreateNewUser.this, "Taki u¿ytkownik ju¿ istnieje !", "Taki u¿ytkownik ju¿ istnieje", JOptionPane.WARNING_MESSAGE);
+					}
 
 				}
-				
 
 			}
 		});
@@ -119,12 +115,18 @@ public class JDialogCreateNewUser extends JDialog
 				setVisible(false);
 			}
 		});
-
 	}
-	
+
+	private String passToString(char[] a)
+	{
+		StringBuilder pas = new StringBuilder();
+		pas.append(a);
+		return pas.toString();
+	}
+
 	private final ApplicationContext appContext = new ClassPathXmlApplicationContext("application-context.xml");
 	private final UserDao userDao = (UserDao) appContext.getBean("userDao");
-	
+
 	JLabel labelHeadline;
 
 	JTextField userName;

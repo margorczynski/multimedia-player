@@ -2,6 +2,8 @@ package org.projekt.multimediaplayer.model;
 
 import java.util.Date;
 
+import sun.security.util.Length;
+
 public final class MultimediaFile
 {
 	public int getId()
@@ -24,24 +26,14 @@ public final class MultimediaFile
 		this.filename = filename;
 	}
 
-	public String getDescription()
+	public String getPath()
 	{
-		return description;
+		return path;
 	}
 
-	public void setDescription(String description)
+	public void setPath(String description)
 	{
-		this.description = description;
-	}
-
-	public Date getPlaybackDate()
-	{
-		return playbackDate;
-	}
-
-	public void setPlaybackDate(Date playbackDate)
-	{
-		this.playbackDate = playbackDate;
+		this.path = description;
 	}
 
 	public Schedule getSchedule()
@@ -54,13 +46,60 @@ public final class MultimediaFile
 		this.schedule = schedule;
 	}
 
+	public float getSize()
+	{
+		return size;
+	}
+
+	public long getLength()
+	{
+		return length;
+	}
+
+	public int getPlayDelay()
+	{
+		return playDelay;
+	}
+
+	public void setSize(float size)
+	{
+		this.size = size;
+	}
+
+	public void setLength(long length)
+	{
+		this.length = length;
+	}
+
+	public void setPlayDelay(int playDelay)
+	{
+		this.playDelay = playDelay;
+	}
+	
+	public String toString()
+	{
+		return getFilename();
+	}
+
+	
+	public String getType()
+	{
+		return type;
+	}
+
+	public void setType(String type)
+	{
+		this.type = type;
+	}
+
+
 	private int id;
-	
 	private String filename;
-	
-	private String description;
-	
-	private Date playbackDate;
-	
+	private String path;
 	private Schedule schedule;
+	private float size;
+	private long length;
+	private int playDelay;
+	private String type;
+
 }

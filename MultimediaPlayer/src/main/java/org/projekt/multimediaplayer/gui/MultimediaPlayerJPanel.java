@@ -22,27 +22,34 @@ package org.projekt.multimediaplayer.gui;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
+import java.io.File;
+import java.io.IOException;
+import java.text.AttributedCharacterIterator;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
@@ -51,16 +58,16 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 
+import sun.java2d.pipe.DrawImage;
 import uk.co.caprica.vlcj.binding.LibVlcConst;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.filter.swing.SwingFileFilterFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.medialist.MediaListItem;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
+import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
 public class MultimediaPlayerJPanel extends JPanel
@@ -96,18 +103,19 @@ public class MultimediaPlayerJPanel extends JPanel
 	private JPanel windowPanel;
 	private Canvas canvasMovie;
 	private MediaPlayerFactory mediaPlayerFactory;
-	private EmbeddedMediaPlayerComponent mediaPlayerComponent;
+	//private EmbeddedMediaPlayerComponent mediaPlayerComponent;
 
 	private JButton fullScreenButton;
 	private boolean mousePressedPlaying = false;
+	
+	//public MultimediaPlayerJPanel(EmbeddedMediaPlayer mediaPlayer, MediaListPlayer mediaListPlayer, MediaPlayerFactory mediaPlayerFactory, EmbeddedMediaPlayerComponent mediaPlayerComponent)
 
-	public MultimediaPlayerJPanel(EmbeddedMediaPlayer mediaPlayer, MediaListPlayer mediaListPlayer, MediaPlayerFactory mediaPlayerFactory, EmbeddedMediaPlayerComponent mediaPlayerComponent)
+	public MultimediaPlayerJPanel(EmbeddedMediaPlayer mediaPlayer, MediaListPlayer mediaListPlayer, MediaPlayerFactory mediaPlayerFactory)//, EmbeddedMediaPlayerComponent mediaPlayerComponent)
 	{
 		this.mediaPlayer = mediaPlayer;
 		this.mediaListPlayer = mediaListPlayer;
 		this.mediaPlayerFactory = mediaPlayerFactory;
-		this.mediaPlayerComponent = mediaPlayerComponent;
-
+		//this.mediaPlayerComponent = mediaPlayerComponent;
 		createUI();
 
 		executorService.scheduleAtFixedRate(new UpdateRunnable(mediaPlayer), 0L, 1L, TimeUnit.SECONDS);
@@ -226,13 +234,17 @@ public class MultimediaPlayerJPanel extends JPanel
 		// TODO Tutaj ustawimy jakieœ zdjêcie jednoznacznie okreslaj¹ce ze plik
 		// nie ma obrazu / albo nie zosta³ odczytany ( jak leci sama mp3 to
 		// jakos tak pusto jest, a jak bêdzie film to przykryje ten obrazek !);
+		
+
+		
 		canvasMovie = new Canvas();
 		canvasMovie.setBackground(Color.DARK_GRAY);
 		mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(canvasMovie));
 		add(canvasMovie, BorderLayout.CENTER);
 
+	
 		// TODO dopisaæ fullscrean
-		// GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(f);
+		// GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow();
 
 		//
 

@@ -34,6 +34,21 @@ public final class User
 	{
 		this.password = password;
 	}
+
+	// new
+	public void setPassword(char[] password)
+	{
+		StringBuilder pas = new StringBuilder();
+		pas.append(password);
+		this.password = pas.toString();
+	}
+
+	public boolean equalUsers(User newUser)
+	{
+		return ((this.username.equals(newUser.getUsername())) && (this.password.equals(newUser.getPassword())));
+	}
+	// /new
+	
 	
 	public Set<Schedule> getUserSchedules()
 	{
@@ -44,12 +59,10 @@ public final class User
 	{
 		this.userSchedules = userSchedules;
 	}
+	
 
 	private int id;
-	
 	private String username;
-	
 	private String password;
-	
 	private Set<Schedule> userSchedules = new HashSet<Schedule>();
 }

@@ -15,8 +15,13 @@
         </many-to-one>
 
         <property name="filename" column="FILENAME" />
-        <property name="description" column="DESCRIPTION" />
-        <property name="playbackDate" column="PLAYBACK_DATE" />
+        <property name="path" column="PATH" />
+        <property name="size" column="SIZE" />
+        <property name="length" column="LENGTH" />
+        <property name="playDelay" column="PLAY_DELAY" />
+        <property name="type" column="TYPE" />
+        
+        
     </class>
     
 </hibernate-mapping>

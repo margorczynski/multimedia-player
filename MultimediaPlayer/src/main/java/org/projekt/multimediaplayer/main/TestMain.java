@@ -8,7 +8,6 @@ import org.projekt.multimediaplayer.model.*;
 import org.projekt.multimediaplayer.dao.*;
 
 import java.util.List;
-import java.util.LinkedList;
 
 public final class TestMain
 {
@@ -36,6 +35,6 @@ public final class TestMain
 		}
 	
 
-		System.out.println("TEST");
+		System.out.println( );
 	}
 }

@@ -43,7 +43,7 @@ public final class MultimediaFileTest
 		
 		testMultimediaFile.setFilename("JUnit Test Filename");
 		
-		testMultimediaFile.setPlaybackDate(new Date());
+		//testMultimediaFile.setPlaybackDate(new Date());
 	}
 	
 	@Test

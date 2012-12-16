@@ -3,23 +3,29 @@
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="org.projekt.multimediaplayer.model" default-access="field">
+<hibernate-mapping package="org.projekt.multimediaplayer.model"
+	default-access="field">
 
-    <class name="Schedule" table="SCHEDULE">
-        <id name="id" column="SCHEDULE_ID">
-            <generator class="native"/>
-        </id>
-        
-        <many-to-one name="user" class="org.projekt.multimediaplayer.model.User" fetch="select">
-            <column name="USER_ID" not-null="true" />
-        </many-to-one>
+	<class name="Schedule" table="SCHEDULE">
+		<id name="id" column="SCHEDULE_ID">
+			<generator class="native" />
+		</id>
 
-        <property name="description" column="DESCRIPTION" />
-        <property name="active" column="ACTIVE" />
-        <set name="scheduleMultimediaFiles" lazy="false" inverse="false">
-            <key column="SCHEDULE_ID"/>
-            <one-to-many class="MultimediaFile"/>
-        </set>
-    </class>
-    
+		<many-to-one name="user"
+			class="org.projekt.multimediaplayer.model.User" fetch="select">
+			<column name="USER_ID" not-null="true" />
+		</many-to-one>
+
+		<property name="name" column="NAME" />
+		<property name="description" column="DESCRIPTION" />
+		<property name="active" column="ACTIVE" />
+		<property name="periodically" column="PERIODICALLY" />
+		<property name="startTime" column="START_TIME" />
+
+		<set name="scheduleMultimediaFiles" lazy="false" inverse="false">
+			<key column="SCHEDULE_ID" />
+			<one-to-many class="MultimediaFile" />
+		</set>
+	</class>
+
 </hibernate-mapping>
