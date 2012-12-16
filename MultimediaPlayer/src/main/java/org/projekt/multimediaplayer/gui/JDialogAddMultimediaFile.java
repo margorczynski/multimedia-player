@@ -2,6 +2,7 @@ package org.projekt.multimediaplayer.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,10 +47,13 @@ public class JDialogAddMultimediaFile extends JDialog
 
 		this.activeSchedule = schedule;
 		this.owner = owner;
+		Point point = owner.getLocationOnScreen();
+		this.setLocation((int)point.getX()+275, (int)point.getY()+155);
+		
 
 		initComponents();
 
-		setSize(530, 420);
+		setSize(530, 380);
 		setResizable(false);
 
 	}
@@ -76,10 +80,7 @@ public class JDialogAddMultimediaFile extends JDialog
 
 		textFilePatch.setText("Wybierz plik");
 		labelFileInfo.setText("Informacje o pliku");
-		labelDisplayInfo.setText("Informacje dotyczπce wyúwietlenia");
-		labelFileSeqNo.setText("Pozycja na liscie");
-		labelFileDelay.setText("Opoünienie odtwarzania");
-		textFileDelay.setText("0");
+
 		newMultimediaFile = null;
 	}
 
@@ -105,13 +106,11 @@ public class JDialogAddMultimediaFile extends JDialog
 		buttonSave = new JButton();
 		buttonCancel = new JButton();
 		labelFileInfo = new JLabel();
-		labelDisplayInfo = new JLabel();
-		labelFileSeqNo = new JLabel();
-		labelFileDelay = new JLabel();
-		textFileSeqNo = new JTextField();
-		textFileDelay = new JTextField();
 
-		textFileDelay.setColumns(15);
+		textFileSeqNo = new JTextField();
+
+
+		//textFileDelay.setColumns(15);
 		textFileLength.setColumns(15);
 		textFileName.setColumns(15);
 		textFilePatch.setColumns(15);
@@ -150,27 +149,19 @@ public class JDialogAddMultimediaFile extends JDialog
 		textFileLength.setText("Wybierz plik ... ");
 
 		labelFileInfo.setText("Informacje o pliku");
-		labelDisplayInfo.setText("Informacje dotyczπce wyúwietlenia");
-		labelFileSeqNo.setText("Pozycja na liscie");
-		labelFileDelay.setText("Opoünienie odtwarzania (sek)");
-		textFileDelay.setText("0");
-
 		middlePanel.add(labelFileInfo, new GBC(0, 0, 2, 1).setAnchor(GBC.CENTER).setInsets(5, 5, 10, 0));
 
 		middlePanel.add(labelFileName, new GBC(0, 1).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
 		middlePanel.add(labelFileSize, new GBC(0, 2).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
 		middlePanel.add(labelFileType, new GBC(0, 3).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
 		middlePanel.add(labelFileLength, new GBC(0, 4).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
-		middlePanel.add(labelDisplayInfo, new GBC(0, 5, 2, 1).setAnchor(GBC.CENTER).setInsets(20, 5, 10, 0));
 
-		middlePanel.add(labelFileDelay, new GBC(0, 6).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
 
 		middlePanel.add(textFileName, new GBC(1, 1).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
 		middlePanel.add(textFileSize, new GBC(1, 2).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
 		middlePanel.add(textFileType, new GBC(1, 3).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
 		middlePanel.add(textFileLength, new GBC(1, 4).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
 
-		middlePanel.add(textFileDelay, new GBC(1, 6).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
 
 		mainPanel.add(middlePanel, BorderLayout.CENTER);
 
@@ -227,12 +218,12 @@ public class JDialogAddMultimediaFile extends JDialog
 						multimediaFile.setPath(newMultimediaFile.getAbsolutePath());
 						multimediaFile.setSize(newMultimediaFile.length());
 						multimediaFile.setLength(fileTimeLengthMilis);
-						multimediaFile.setPlayDelay(Integer.parseInt(textFileDelay.getText()));
 						multimediaFile.setType(textFileType.getText());
 
 						multimediaFileDao.saveMultimediaFile(multimediaFile);
 						System.out.println("Plik zosta≥ dodany do hamonogramu !");
 						JOptionPane.showMessageDialog(JDialogAddMultimediaFile.this, "Plik zosta≥ dodany prawidlowo", "Dodawanie pliku", JOptionPane.INFORMATION_MESSAGE);
+						((MultimediaPlayerJFrame)owner).getMultimediaPanel().addNewMediaToPlayInHarm(multimediaFile.getPath());
 					}
 					else 
 					{
@@ -359,17 +350,13 @@ public class JDialogAddMultimediaFile extends JDialog
 	private JButton buttonOpen;
 	private JButton buttonSave;
 
-	private JLabel labelDisplayInfo;
-	private JLabel labelFileDelay;
 	private JLabel labelFileInfo;
 	private JLabel labelFileLength;
 	private JLabel labelFileName;
 	private JLabel labelFilePatch;
-	private JLabel labelFileSeqNo;
 	private JLabel labelFileSize;
 	private JLabel labelFileType;
 
-	private JTextField textFileDelay;
 	private JTextField textFileLength;
 	private JTextField textFileName;
 	private JTextField textFilePatch;

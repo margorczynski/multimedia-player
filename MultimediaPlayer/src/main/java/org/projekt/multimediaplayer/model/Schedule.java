@@ -6,7 +6,7 @@ import java.util.Set;
 
 import sun.security.util.Cache.EqualByteArray;
 
-public final class Schedule
+public final class Schedule implements Cloneable
 {
 	public int getId()
 	{
@@ -100,6 +100,19 @@ public final class Schedule
 		
 	}
 	
+	public Schedule clone()
+	{
+		Schedule newSchedule = new Schedule();
+		newSchedule.setActive(this.isActive());
+		newSchedule.setDescription(this.getDescription());
+		newSchedule.setId(this.getId());
+		newSchedule.setName(this.getName());
+		newSchedule.setPeriodically(this.isPeriodically());
+		newSchedule.setScheduleMultimediaFiles(this.getScheduleMultimediaFiles());
+		newSchedule.setStartTime(this.getStartTime());
+		newSchedule.setUser(this.getUser());
+		return newSchedule;
+	}
 	
 	
 	

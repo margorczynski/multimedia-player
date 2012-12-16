@@ -1,6 +1,7 @@
 package org.projekt.multimediaplayer.gui;
 
 import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.security.acl.Owner;
@@ -28,9 +29,11 @@ public class JDialogCreateNewHarm extends JDialog
 	public JDialogCreateNewHarm(MultimediaPlayerJFrame owner)//, User user, Schedule activeSchedule)
 	{
 		super(owner, windowTitle, ModalityType.APPLICATION_MODAL);
-		//this.user = user;
+
 		this.ownerFrame = owner;
-		//this.activeSchedule = activeSchedule;
+		Point point = owner.getLocationOnScreen();
+		this.setLocation((int)point.getX()+200, (int)point.getY()+55);
+
 		initComponents();
 		setSize(480, 525);
 		setResizable(false);
@@ -155,9 +158,6 @@ public class JDialogCreateNewHarm extends JDialog
 						if (listSchedule.size() == 0)
 						{
 
-							// Dodany nowy harmonogram jest harmonogramem
-							// aktywnym
-							// usun status aktywny w pozostalych harmonogramach
 
 							if (harm.isActive())
 							{
@@ -227,8 +227,6 @@ public class JDialogCreateNewHarm extends JDialog
 
 	private SpinnerDateModel spinerDateModel;
 
-	//private User user;
-	//private Schedule activeSchedule;
 
 	private final ApplicationContext appContext = new ClassPathXmlApplicationContext("application-context.xml");
 	private final ScheduleDao scheduleDao = (ScheduleDao) appContext.getBean("scheduleDao");

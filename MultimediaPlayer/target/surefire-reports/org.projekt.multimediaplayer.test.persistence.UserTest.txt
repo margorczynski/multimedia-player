@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: org.projekt.multimediaplayer.test.persistence.UserTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.586 sec
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.056 sec

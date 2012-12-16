@@ -1,6 +1,7 @@
 package org.projekt.multimediaplayer.gui;
 
 import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -20,7 +21,10 @@ public class JDialogCreateNewUser extends JDialog
 		super(owner, "Dodaj nowego u¿ytkownika");
 
 		initComponents();
-
+		
+		Point point = owner.getLocationOnScreen();
+		this.setLocation((int)point.getX()+400, (int)point.getY()+200);
+		
 		arrangeDialog();
 
 		setSize(300, 250);
@@ -127,16 +131,16 @@ public class JDialogCreateNewUser extends JDialog
 	private final ApplicationContext appContext = new ClassPathXmlApplicationContext("application-context.xml");
 	private final UserDao userDao = (UserDao) appContext.getBean("userDao");
 
-	JLabel labelHeadline;
+	private JLabel labelHeadline;
 
-	JTextField userName;
-	JPasswordField userPassword;
+	private JTextField userName;
+	private JPasswordField userPassword;
 
-	JLabel labelName;
-	JLabel labelPassword;
+	private JLabel labelName;
+	private JLabel labelPassword;
 
-	JButton buttonAddUser;
-	JButton buttonCancel;
+	private JButton buttonAddUser;
+	private JButton buttonCancel;
 
-	User newUser;
+	private User newUser;
 }

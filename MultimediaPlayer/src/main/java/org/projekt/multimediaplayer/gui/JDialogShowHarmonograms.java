@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +12,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.text.NumberFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -34,38 +36,38 @@ import org.projekt.multimediaplayer.dao.UserDao;
 import org.projekt.multimediaplayer.model.MultimediaFile;
 import org.projekt.multimediaplayer.model.Schedule;
 import org.projekt.multimediaplayer.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class JDialogShowHarmonograms extends JDialog
 {
-
 	public JDialogShowHarmonograms(MultimediaPlayerJFrame owner)
 	{
 		super(owner, "Podgl¹d harmonogramu", ModalityType.APPLICATION_MODAL);
 		ownerFrame = owner;
+		Point point = owner.getLocationOnScreen();
+		this.setLocation((int)point.getX()+150, (int)point.getY()+55);
+		
 		initComponents();
 		initActionLisnerButtons();
 		setSize(770, 610);
 		setResizable(false);
 	}
 
-
 	public void setDefault()
 	{
-		// DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("BRAK");
-		// treeModel = new DefaultTreeModel(rootNode);
-		// treeHarmonogram.setModel(treeModel);
-
 		editHarmonogramName.setText(" ");
 		editHarmonogramDescript.setText(" ");
 		editHarmonogramActive.setText(" ");
+		// editHarmonogramStartDate.setText(" ");
 		editFileName.setText(" ");
-		editFileDescript.setText(" ");
+		editFilePath.setText(" ");
 		editSize.setText(" ");
 		// editSequence.setText(" ");
 		editFileLength.setText(" ");
 		editFileFormat.setText(" ");
+		spinerDateModel.setValue(new Date());
 	}
 
 	public void initActionLisnerButtons()
@@ -142,11 +144,13 @@ public class JDialogShowHarmonograms extends JDialog
 							{
 								multimediaDao.deleteMultimediaFile(mf);
 							}
-							scheduleDao.deleteSchedule(scheduleNode);
 
+							ownerFrame.getMultimediaPanel().deleteActiveSchedule();
+							ownerFrame.suspendThread();
+
+							scheduleDao.deleteSchedule(scheduleNode);
 						}
 
-						// harmonogram aktywny wyrzuc jakis blad czy cos
 						else
 						{
 							if (JOptionPane.showConfirmDialog(thisFrame, (Object) "Chcesz usun¹c aktywny harmonogram ! Aktywnym harmonogramem stanie siê kolejny z listy ( je¿eli nie ma wiecej harmonogramów zostanie Ci mo¿liwoœæ tylko odtwarzania wybranych plików )", "Usuwñ harmonogram", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
@@ -157,6 +161,7 @@ public class JDialogShowHarmonograms extends JDialog
 									multimediaDao.deleteMultimediaFile(mf);
 								}
 								scheduleDao.deleteSchedule(scheduleNode);
+								ownerFrame.getMultimediaPanel().deleteActiveSchedule();
 
 								ownerFrame.refreshLogInUser();
 
@@ -179,9 +184,21 @@ public class JDialogShowHarmonograms extends JDialog
 				else if (node instanceof MultimediaFile)
 				{
 					MultimediaFile multiNode = (MultimediaFile) node;
-					if (JOptionPane.showConfirmDialog(thisFrame, (Object) "Czy jesteœ pewien ze chcesz usun¹æ harmonogram: \"" + multiNode.getFilename() + "\"  ?", "Usuñ plik", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+					if (JOptionPane.showConfirmDialog(thisFrame, (Object) "Czy jesteœ pewien ze chcesz usun¹æ ten plik: \"" + multiNode.getFilename() + "\"  ?", "Usuñ plik", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
 					{
-						multimediaDao.deleteMultimediaFile((MultimediaFile) node);
+
+						DefaultMutableTreeNode parent = (DefaultMutableTreeNode) selectNode.getParent();
+						Schedule parentSchedule = (Schedule) parent.getUserObject();
+
+						if (parentSchedule.isActive())
+						{
+							ownerFrame.getMultimediaPanel().deleteFileFromActiveList(((MultimediaFile) node).getFilename());
+							multimediaDao.deleteMultimediaFile((MultimediaFile) node);
+						}
+						else
+						{
+							multimediaDao.deleteMultimediaFile((MultimediaFile) node);
+						}
 					}
 				}
 				ownerFrame.refreshLogInUser();
@@ -189,6 +206,157 @@ public class JDialogShowHarmonograms extends JDialog
 			}
 		});
 
+		setActivThisButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				TreePath path = treeHarmonogram.getSelectionPath();
+				if (path == null) return;
+				DefaultMutableTreeNode selectNode = (DefaultMutableTreeNode) path.getLastPathComponent();
+				Object node = selectNode.getUserObject();
+
+				if (node instanceof Schedule)
+				{
+					Schedule scheduleNode = (Schedule) node;
+					if (JOptionPane.showConfirmDialog(thisFrame, (Object) "Czy jesteœ pewien ze chcesz uruchomiæ : \"" + scheduleNode.getName() + "\" ?", "Uruchom harmonogram", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+					{
+						if (scheduleNode.isActive())
+						{
+							boolean a = ownerFrame.playerThread.isAlive();
+							System.out.println(a);
+							ownerFrame.refreshActiveSchedule();
+							ownerFrame.runRunnableSched();
+						}
+						else
+						{
+							if (ownerFrame.getActiveShedule() != null)
+							{
+								Schedule activeSchedule = ownerFrame.getActiveShedule();
+								activeSchedule.setActive(false);
+								scheduleDao.updateSchedule(activeSchedule);
+
+								scheduleNode.setActive(true);
+								scheduleDao.updateSchedule(scheduleNode);
+
+								ownerFrame.refreshActiveSchedule();
+								buildContentOfTree();
+							}
+							else 
+							{
+								scheduleNode.setActive(true);
+								scheduleDao.updateSchedule(scheduleNode);
+
+								ownerFrame.refreshActiveSchedule();
+								buildContentOfTree();
+							}
+						}
+					}
+				}
+			}
+		});
+
+		saveChangeButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				TreePath path = treeHarmonogram.getSelectionPath();
+				if (path == null) return;
+				DefaultMutableTreeNode selectNode = (DefaultMutableTreeNode) path.getLastPathComponent();
+				Object nodeUser = selectNode.getUserObject();
+
+				if (nodeUser instanceof Schedule)
+				{
+					Schedule treeSchedule = (Schedule) nodeUser;
+					// czy cos sie zmienilo
+					if (!treeSchedule.getName().equals(editHarmonogramName.getText()))
+					{
+						List<Schedule> findSched = scheduleDao.findShedule(editHarmonogramName.getText());
+
+						if (findSched.size() == 0 || findSched == null)
+						{
+							treeSchedule.setName(editHarmonogramName.getText());
+							treeSchedule.setDescription(editHarmonogramDescript.getText());
+							treeSchedule.setStartTime(spinerDateModel.getDate());
+							scheduleDao.updateSchedule(treeSchedule);
+
+							if (treeSchedule.isActive())
+							{
+								ownerFrame.refreshActiveSchedule();
+							}
+							buildContentOfTree();
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(thisFrame, "Harmonogram o takie nazwie ju¿ istnieje !", "B³¹d", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+					else if (!treeSchedule.getDescription().equals(editHarmonogramDescript.getText()) || !treeSchedule.getStartTime().equals(spinerDateModel.getDate()))
+					{
+						treeSchedule.setDescription(editHarmonogramDescript.getText());
+						treeSchedule.setStartTime(spinerDateModel.getDate());
+
+						scheduleDao.updateSchedule(treeSchedule);
+
+						if (treeSchedule.isActive())
+						{
+							ownerFrame.refreshActiveSchedule();
+						}
+						buildContentOfTree();
+					}
+				}
+
+				else if (nodeUser instanceof MultimediaFile)
+				{
+					DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) selectNode.getParent();
+					Object parentUser = parentNode.getUserObject();
+
+					// rodzic pliku
+					if (parentUser instanceof Schedule)
+					{
+
+						Schedule treeSchedule = (Schedule) parentUser;
+						// czy cos sie zmienilo
+						if (!treeSchedule.getName().equals(editHarmonogramName.getText()))
+						{
+							List<Schedule> findSched = scheduleDao.findShedule(editHarmonogramName.getText());
+
+							if (findSched.size() == 0 || findSched == null)
+							{
+								treeSchedule.setName(editHarmonogramName.getText());
+								treeSchedule.setDescription(editHarmonogramDescript.getText());
+								treeSchedule.setStartTime(spinerDateModel.getDate());
+								scheduleDao.updateSchedule(treeSchedule);
+
+								if (treeSchedule.isActive())
+								{
+									ownerFrame.refreshActiveSchedule();
+								}
+								buildContentOfTree();
+							}
+
+							else
+							{
+								JOptionPane.showMessageDialog(thisFrame, "Harmonogram o takie nazwie ju¿ istnieje !", "B³¹d", JOptionPane.ERROR_MESSAGE);
+							}
+
+						}
+						else if (!treeSchedule.getDescription().equals(editHarmonogramDescript.getText()) || !treeSchedule.getStartTime().equals(spinerDateModel.getDate()))
+						{
+							treeSchedule.setDescription(editHarmonogramDescript.getText());
+							treeSchedule.setStartTime(spinerDateModel.getDate());
+
+							scheduleDao.updateSchedule(treeSchedule);
+
+							if (treeSchedule.isActive())
+							{
+								ownerFrame.refreshActiveSchedule();
+							}
+							buildContentOfTree();
+						}
+					}
+				}
+			}
+		});
 	}
 
 	public void initComponents()
@@ -207,32 +375,38 @@ public class JDialogShowHarmonograms extends JDialog
 		labelHarmonogramName = new JLabel("Nazwa harmonogramu: ");
 		labelHarmonogramDescript = new JLabel("Opis harmonogramu: ");
 		labelHarmonogramActive = new JLabel("Aktywny: ");
+		labelHarmonogramStartDate = new JLabel("Data startu: ");
 
 		editHarmonogramName = new JTextField(" ");
 		editHarmonogramName.setColumns(15);
-		editHarmonogramName.setEditable(false);
+		// editHarmonogramName.setEditable(false);
 
 		editHarmonogramDescript = new JTextField(" ");
 		editHarmonogramDescript.setColumns(15);
-		editHarmonogramDescript.setEditable(false);
+		// editHarmonogramDescript.setEditable(false);
 
 		editHarmonogramActive = new JTextField(" ");
 		editHarmonogramActive.setColumns(15);
 		editHarmonogramActive.setEditable(false);
 
+		spinerDateModel = new SpinnerDateModel();
+		spinnerHarmonogramStartDate = new JSpinner(spinerDateModel);
+
 		// GBC(kolumna, wiersz, ile kolumn, ile wierszy)
 		harmonogramPanel.add(labelHarmonogramName, new GBC(0, 0).setAnchor(GBC.EAST).setInsets(10, 15, 0, 0));
 		harmonogramPanel.add(labelHarmonogramDescript, new GBC(0, 1).setAnchor(GBC.EAST).setInsets(10, 15, 0, 0));
 		harmonogramPanel.add(labelHarmonogramActive, new GBC(0, 2).setAnchor(GBC.EAST).setInsets(10, 15, 0, 0));
+		harmonogramPanel.add(labelHarmonogramStartDate, new GBC(0, 3).setAnchor(GBC.EAST).setInsets(10, 15, 0, 0));
 
 		harmonogramPanel.add(editHarmonogramName, new GBC(1, 0).setAnchor(GBC.EAST).setInsets(10, 15, 0, 0));
 		harmonogramPanel.add(editHarmonogramDescript, new GBC(1, 1).setAnchor(GBC.EAST).setInsets(10, 15, 0, 0));
 		harmonogramPanel.add(editHarmonogramActive, new GBC(1, 2).setAnchor(GBC.EAST).setInsets(10, 15, 0, 0));
+		harmonogramPanel.add(spinnerHarmonogramStartDate, new GBC(1, 3).setAnchor(GBC.WEST).setInsets(10, 15, 0, 0));
 
 		// * * M u l t i m e d i a
 		filePanel = new JPanel(new GridBagLayout());
 		labelFileName = new JLabel("Nazwa pliku: ");
-		labelFileDescript = new JLabel("Opis: ");
+		labelFilePath = new JLabel("Œcie¿ka: ");
 		labelSize = new JLabel("Rozmiar: ");
 		// labelSequence = new JLabel("Kolejnoœæ: ");
 		labelFileLength = new JLabel("D³ugoœæ: ");
@@ -242,9 +416,10 @@ public class JDialogShowHarmonograms extends JDialog
 		editFileName.setColumns(15);
 		editFileName.setEditable(false);
 
-		editFileDescript = new JTextField(" ");
-		editFileDescript.setColumns(15);
-		editFileDescript.setEditable(false);
+		editFilePath = new JTextField(" ");
+		editFilePath.setColumns(15);
+		editFilePath.setEditable(false);
+
 		editSize = new JTextField(" ");
 		editSize.setColumns(15);
 		editSize.setEditable(false);
@@ -258,18 +433,14 @@ public class JDialogShowHarmonograms extends JDialog
 		editFileFormat.setEditable(false);
 
 		filePanel.add(labelFileName, new GBC(0, 0).setAnchor(GBC.EAST).setInsets(10, 15, 0, 0));
-		filePanel.add(labelFileDescript, new GBC(0, 1).setAnchor(GBC.EAST).setInsets(10, 15, 0, 0));
+		filePanel.add(labelFilePath, new GBC(0, 1).setAnchor(GBC.EAST).setInsets(10, 15, 0, 0));
 		filePanel.add(labelSize, new GBC(0, 2).setAnchor(GBC.EAST).setInsets(10, 15, 0, 0));
-		// filePanel.add(labelSequence, new GBC(0,
-		// 3).setAnchor(GBC.EAST).setInsets(10, 15, 0, 0));
 		filePanel.add(labelFileLength, new GBC(0, 3).setAnchor(GBC.EAST).setInsets(10, 15, 0, 0));
 		filePanel.add(labelFileFormat, new GBC(0, 4).setAnchor(GBC.EAST).setInsets(10, 15, 0, 0));
 
 		filePanel.add(editFileName, new GBC(1, 0).setAnchor(GBC.WEST).setInsets(10, 15, 0, 0));
-		filePanel.add(editFileDescript, new GBC(1, 1).setAnchor(GBC.WEST).setInsets(10, 15, 0, 0));
+		filePanel.add(editFilePath, new GBC(1, 1).setAnchor(GBC.WEST).setInsets(10, 15, 0, 0));
 		filePanel.add(editSize, new GBC(1, 2).setAnchor(GBC.WEST).setInsets(10, 15, 0, 0));
-		// filePanel.add(editSequence, new GBC(1,
-		// 3).setAnchor(GBC.WEST).setInsets(10, 15, 0, 0));
 		filePanel.add(editFileLength, new GBC(1, 3).setAnchor(GBC.WEST).setInsets(10, 15, 0, 0));
 		filePanel.add(editFileFormat, new GBC(1, 4).setAnchor(GBC.WEST).setInsets(10, 15, 0, 0));
 
@@ -283,11 +454,15 @@ public class JDialogShowHarmonograms extends JDialog
 		addNewMediaButton = new JButton(" Dodaj plik ");
 		addNewHarmonogramButton = new JButton(" Dodaj harmonogram ");
 		deleteHarmMediaButton = new JButton(" Usun ");
+		setActivThisButton = new JButton("Uruchom harmonogram");
+		saveChangeButton = new JButton("Zapisz");
 
 		buttonsPanel.add(addNewMediaButton, new GBC(0, 0).setAnchor(GBC.EAST).setInsets(20, 15, 0, 0));
 		buttonsPanel.add(addNewHarmonogramButton, new GBC(1, 0).setAnchor(GBC.EAST).setInsets(20, 15, 0, 0));
 		buttonsPanel.add(deleteHarmMediaButton, new GBC(2, 0).setAnchor(GBC.EAST).setInsets(20, 15, 0, 0));
-		buttonsPanel.add(closeButton, new GBC(3, 0).setAnchor(GBC.EAST).setInsets(20, 15, 0, 0));
+		buttonsPanel.add(setActivThisButton, new GBC(3, 0).setAnchor(GBC.EAST).setInsets(20, 15, 0, 0));
+		buttonsPanel.add(saveChangeButton, new GBC(4, 0).setAnchor(GBC.EAST).setInsets(20, 15, 0, 0));
+		buttonsPanel.add(closeButton, new GBC(5, 0).setAnchor(GBC.EAST).setInsets(20, 15, 0, 0));
 
 		mainPanel.add(labelHeadline, new GBC(0, 0, 2, 1).setAnchor(GBC.CENTER).setInsets(20, 15, 0, 0));
 		mainPanel.add(scrollPaneTree, new GBC(0, 1, 1, 2).setAnchor(GBC.EAST).setInsets(20, 15, 0, 0));
@@ -346,7 +521,7 @@ public class JDialogShowHarmonograms extends JDialog
 	public void setMultimediaFileInfo(MultimediaFile mf)
 	{
 		editFileName.setText(mf.getFilename());
-		editFileDescript.setText(mf.getPath());
+		editFilePath.setText(mf.getPath());
 		editFileLength.setText(getTimeFromMilis(mf.getLength()));
 
 		Locale locale = new Locale("pl", "PL");
@@ -361,7 +536,7 @@ public class JDialogShowHarmonograms extends JDialog
 	public void clearFileInfo()
 	{
 		editFileName.setText("");
-		editFileDescript.setText("");
+		editFilePath.setText("");
 		editFileLength.setText("");
 		editSize.setText("");
 	}
@@ -371,6 +546,8 @@ public class JDialogShowHarmonograms extends JDialog
 		editHarmonogramName.setText(schedule.getName());
 		editHarmonogramDescript.setText(schedule.getDescription());
 		editHarmonogramActive.setText(schedule.isActive() ? "Aktywny" : "Nie aktywny");
+
+		spinerDateModel.setValue(schedule.getStartTime());
 	}
 
 	private String getTimeFromMilis(long millis)
@@ -408,43 +585,49 @@ public class JDialogShowHarmonograms extends JDialog
 	MultimediaPlayerJFrame ownerFrame;
 
 	// Buttony
-	JButton closeButton;
-	JButton addNewMediaButton;
-	JButton addNewHarmonogramButton;
-	JButton deleteHarmMediaButton;
+	private JButton closeButton;
+	private 	JButton addNewMediaButton;
+	private JButton addNewHarmonogramButton;
+	private JButton deleteHarmMediaButton;
+	private JButton setActivThisButton;
+	private JButton saveChangeButton;
+
 	private JDialogShowHarmonograms thisFrame = this;
 	private JDialogCreateNewHarm jDialogCreateNewHarm;
 	// Drzewo
-	JTree treeHarmonogram = null;
-	JScrollPane scrollPaneTree;
-	DefaultTreeModel treeModel;
+	private JTree treeHarmonogram = null;
+	private JScrollPane scrollPaneTree;
+	private DefaultTreeModel treeModel;
 
 	// harmonogram
-	JPanel harmonogramPanel;
-	JLabel labelHeadline;
-	JLabel labelHarmonogramName;
-	JLabel labelHarmonogramDescript;
-	JLabel labelHarmonogramActive;
+	private JPanel harmonogramPanel;
+	private JLabel labelHeadline;
+	private JLabel labelHarmonogramName;
+	private JLabel labelHarmonogramDescript;
+	private JLabel labelHarmonogramActive;
+	private JLabel labelHarmonogramStartDate;
 
-	JTextField editHeadline;
-	JTextField editHarmonogramName;
-	JTextField editHarmonogramDescript;
-	JTextField editHarmonogramActive;
+	private JTextField editHeadline;
+	private JTextField editHarmonogramName;
+	private JTextField editHarmonogramDescript;
+	private JTextField editHarmonogramActive;
+	private JSpinner spinnerHarmonogramStartDate;
+	private SpinnerDateModel spinerDateModel;
 
 	// opis pliku
 
-	JPanel filePanel;
-	JLabel labelFileName;
-	JLabel labelFileDescript;
-	JLabel labelSize;
-	JLabel labelFileLength;
-	JLabel labelFileFormat;
+	private JPanel filePanel;
+	private JLabel labelFileName;
+	private JLabel labelFilePath;
+	private JLabel labelSize;
+	private JLabel labelFileLength;
+	private JLabel labelFileFormat;
 
-	JTextField editFileName;
-	JTextField editFileDescript;
-	JTextField editSize;
-	JTextField editFileLength;
-	JTextField editFileFormat;
+	private JTextField editFileName;
+	private JTextField editFilePath;
+	private JTextField editSize;
+	private JTextField editFileLength;
+	private JTextField editFileFormat;
 
 	User newUser;
 

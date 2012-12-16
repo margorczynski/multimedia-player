@@ -1,5 +1,6 @@
 package org.projekt.multimediaplayer.model;
 
+import java.util.Comparator;
 import java.util.Date;
 
 import sun.security.util.Length;
@@ -75,13 +76,12 @@ public final class MultimediaFile
 	{
 		this.playDelay = playDelay;
 	}
-	
+
 	public String toString()
 	{
 		return getFilename();
 	}
 
-	
 	public String getType()
 	{
 		return type;
@@ -92,7 +92,6 @@ public final class MultimediaFile
 		this.type = type;
 	}
 
-
 	private int id;
 	private String filename;
 	private String path;
@@ -101,5 +100,4 @@ public final class MultimediaFile
 	private long length;
 	private int playDelay;
 	private String type;
-
 }

@@ -1,6 +1,7 @@
 package org.projekt.multimediaplayer.gui;
 
 import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -19,11 +20,12 @@ public class JDialogLogIn extends JDialog
 
 	public JDialogLogIn(JFrame owner)
 	{
-				super(owner,windowTitle,ModalityType.APPLICATION_MODAL);
+		super(owner, windowTitle, ModalityType.APPLICATION_MODAL);
 
 		windowOwner = (MultimediaPlayerJFrame) owner;
 		initComponents();
-
+		Point point = owner.getLocationOnScreen();
+		this.setLocation((int) point.getX() + 400, (int) point.getY() + 200);
 		arrangeDialog();
 
 		setSize(300, 250);
@@ -79,7 +81,7 @@ public class JDialogLogIn extends JDialog
 
 		buttonLogIn.addActionListener(new ActionListener()
 		{
-			
+
 			public void actionPerformed(ActionEvent e)
 			{
 				isLogIn = false;
@@ -93,11 +95,11 @@ public class JDialogLogIn extends JDialog
 
 					List<User> listaUzytkownikow = userDao.findUsers(loginUser.getUsername());
 
-					//czy jest uzytkownik za ktorego chcemy sie zalogowac
+					// czy jest uzytkownik za ktorego chcemy sie zalogowac
 					if (listaUzytkownikow.size() != 0)
 					{
-					
-						//czy haslo sie zgadza
+
+						// czy haslo sie zgadza
 						if (listaUzytkownikow.get(0).getPassword().equals(loginUser.getPassword()))
 						{
 							JOptionPane.showMessageDialog(JDialogLogIn.this, "Zalogowano !!", "Logowanie !", JOptionPane.INFORMATION_MESSAGE);
@@ -118,7 +120,7 @@ public class JDialogLogIn extends JDialog
 						loginUser = null;
 					}
 				}
-				else 
+				else
 				{
 					JOptionPane.showMessageDialog(JDialogLogIn.this, "Musisz podaæ login i has³o !", "Uzupe³nij dane", JOptionPane.WARNING_MESSAGE);
 				}
@@ -131,7 +133,7 @@ public class JDialogLogIn extends JDialog
 
 			public void actionPerformed(ActionEvent e)
 			{
-				
+
 				clearEditText();
 				setVisible(false);
 			}
@@ -168,27 +170,28 @@ public class JDialogLogIn extends JDialog
 	{
 		return isLogIn;
 	}
-	
+
 	public void setIsLogInFalse()
 	{
 		isLogIn = false;
 	}
+
 	private final ApplicationContext appContext = new ClassPathXmlApplicationContext("application-context.xml");
 	private final UserDao userDao = (UserDao) appContext.getBean("userDao");
 
 	private boolean isLogIn = false;
-	MultimediaPlayerJFrame windowOwner;
-	JLabel labelHeadline;
+	private MultimediaPlayerJFrame windowOwner;
+	private JLabel labelHeadline;
 
-	JTextField userName;
-	JPasswordField userPassword;
+	private JTextField userName;
+	private JPasswordField userPassword;
 
-	JLabel labelName;
-	JLabel labelPassword;
+	private JLabel labelName;
+	private JLabel labelPassword;
 
-	JButton buttonLogIn;
-	JButton buttonCancel;
+	private JButton buttonLogIn;
+	private JButton buttonCancel;
 
 	private static String windowTitle = "Logowaine";
-	User loginUser = null;
+	private 	User loginUser = null;
 }

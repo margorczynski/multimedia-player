@@ -41,11 +41,14 @@ import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import java.text.AttributedCharacterIterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
+import javax.media.rtp.event.ActiveSendStreamEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -58,67 +61,46 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 
+import org.projekt.multimediaplayer.model.MultimediaFile;
+
 import sun.java2d.pipe.DrawImage;
 import uk.co.caprica.vlcj.binding.LibVlcConst;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.filter.swing.SwingFileFilterFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
+import uk.co.caprica.vlcj.medialist.MediaListItem;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
+import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
 
 public class MultimediaPlayerJPanel extends JPanel
 {
-	private static final long serialVersionUID = 1L;
-
-	private static final int SKIP_TIME_MS = 10 * 1000; // 10 sekund
-
-	private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-
-	private final EmbeddedMediaPlayer mediaPlayer;
-
-	private JLabel timeLabel;
-	// private JProgressBar positionProgressBar;
-	private JSlider positionSlider;
-	private JLabel chapterLabel;
-
-	private JButton previousChapterButton;
-	private JButton rewindButton;
-	private JButton stopButton;
-	private JButton pauseButton;
-	private JButton playButton;
-	private JButton fastForwardButton;
-	private JButton nextChapterButton;
-	private JButton ejectButton;
-
-	private JButton toggleMuteButton;
-	private JSlider volumeSlider;
-
-	private JFileChooser fileChooser;
-	// *****
-	private MediaListPlayer mediaListPlayer;
-	private JPanel windowPanel;
-	private Canvas canvasMovie;
-	private MediaPlayerFactory mediaPlayerFactory;
-	//private EmbeddedMediaPlayerComponent mediaPlayerComponent;
-
-	private JButton fullScreenButton;
-	private boolean mousePressedPlaying = false;
 	
-	//public MultimediaPlayerJPanel(EmbeddedMediaPlayer mediaPlayer, MediaListPlayer mediaListPlayer, MediaPlayerFactory mediaPlayerFactory, EmbeddedMediaPlayerComponent mediaPlayerComponent)
-
-	public MultimediaPlayerJPanel(EmbeddedMediaPlayer mediaPlayer, MediaListPlayer mediaListPlayer, MediaPlayerFactory mediaPlayerFactory)//, EmbeddedMediaPlayerComponent mediaPlayerComponent)
+	public MultimediaPlayerJPanel(MultimediaPlayerJFrame ownerFrame)
 	{
-		this.mediaPlayer = mediaPlayer;
-		this.mediaListPlayer = mediaListPlayer;
-		this.mediaPlayerFactory = mediaPlayerFactory;
-		//this.mediaPlayerComponent = mediaPlayerComponent;
+		this.ownerFrame = ownerFrame;
+
+		mediaPlayerFactory = new MediaPlayerFactory();
+
+		mediaListPlayer = mediaPlayerFactory.newMediaListPlayer();
+		activeMediaList = mediaPlayerFactory.newMediaList();
+		mediaListPlayer.setMediaList(activeMediaList);
+		mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
+		mediaListPlayer.setMediaPlayer(mediaPlayer);
+
 		createUI();
 
 		executorService.scheduleAtFixedRate(new UpdateRunnable(mediaPlayer), 0L, 1L, TimeUnit.SECONDS);
+	}
+
+	public MediaPlayerFactory getMediaFactory()
+	{
+		return mediaPlayerFactory;
+
 	}
 
 	private void createUI()
@@ -138,7 +120,6 @@ public class MultimediaPlayerJPanel extends JPanel
 		positionSlider.setValue(0);
 		positionSlider.setToolTipText("Position");
 
-		chapterLabel = new JLabel("00/00");
 
 		previousChapterButton = new JButton();
 		previousChapterButton.setIcon(new ImageIcon("multimedia/buttons_icons/control_start_blue.png"));
@@ -183,9 +164,9 @@ public class MultimediaPlayerJPanel extends JPanel
 		ejectButton.setIcon(new ImageIcon("multimedia/buttons_icons/control_eject_blue.png"));
 		ejectButton.setToolTipText("Load/eject media");
 
-		fullScreenButton = new JButton();
-		fullScreenButton.setIcon(new ImageIcon("multimedia/buttons_icons/image.png"));
-		fullScreenButton.setToolTipText("Toggle full-screen");
+	//	fullScreenButton = new JButton();
+	//	fullScreenButton.setIcon(new ImageIcon("multimedia/buttons_icons/image.png"));
+	//	fullScreenButton.setToolTipText("Toggle full-screen");
 
 		fileChooser = new JFileChooser();
 		fileChooser.setApproveButtonText("Play");
@@ -210,7 +191,6 @@ public class MultimediaPlayerJPanel extends JPanel
 		topPanel.setLayout(new BorderLayout(8, 0));
 		topPanel.add(timeLabel, BorderLayout.WEST);
 		topPanel.add(positionPanel, BorderLayout.CENTER);
-		topPanel.add(chapterLabel, BorderLayout.EAST);
 
 		add(topPanel, BorderLayout.NORTH);
 
@@ -225,29 +205,16 @@ public class MultimediaPlayerJPanel extends JPanel
 		buttonControlPanel.add(nextChapterButton);
 		buttonControlPanel.add(volumeSlider);
 		buttonControlPanel.add(toggleMuteButton);
-		buttonControlPanel.add(fullScreenButton);
+		//buttonControlPanel.add(fullScreenButton);
 		buttonControlPanel.add(ejectButton);
 
 		add(buttonControlPanel, BorderLayout.SOUTH);
 
-		// Dodanie kontenera zawierajacego odtwarzane wideo
-		// TODO Tutaj ustawimy jakieœ zdjêcie jednoznacznie okreslaj¹ce ze plik
-		// nie ma obrazu / albo nie zosta³ odczytany ( jak leci sama mp3 to
-		// jakos tak pusto jest, a jak bêdzie film to przykryje ten obrazek !);
-		
-
-		
 		canvasMovie = new Canvas();
 		canvasMovie.setBackground(Color.DARK_GRAY);
 		mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(canvasMovie));
+
 		add(canvasMovie, BorderLayout.CENTER);
-
-	
-		// TODO dopisaæ fullscrean
-		// GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow();
-
-		//
-
 	}
 
 	/**
@@ -288,11 +255,8 @@ public class MultimediaPlayerJPanel extends JPanel
 		}
 		long time = mediaPlayer.getTime();
 		int position = (int) (mediaPlayer.getPosition() * 1000.0f);
-		int chapter = mediaPlayer.getChapter();
-		int chapterCount = mediaPlayer.getChapterCount();
 		updateTime(time);
 		updatePosition(position);
-		updateChapter(chapter, chapterCount);
 	}
 
 	private void skip(int skipTime)
@@ -441,14 +405,6 @@ public class MultimediaPlayerJPanel extends JPanel
 			}
 		});
 
-		fullScreenButton.addActionListener(new ActionListener()
-		{
-
-			public void actionPerformed(ActionEvent e)
-			{
-				mediaPlayer.toggleFullScreen();
-			}
-		});
 
 		ejectButton.addActionListener(new ActionListener()
 		{
@@ -457,11 +413,19 @@ public class MultimediaPlayerJPanel extends JPanel
 				mediaPlayer.enableOverlay(false);
 				if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(MultimediaPlayerJPanel.this))
 				{
-					MediaList mediaList = mediaPlayerFactory.newMediaList();
-					mediaList.addMedia(fileChooser.getSelectedFile().getAbsolutePath());
-					mediaListPlayer.setMediaList(mediaList);
-					mediaListPlayer.setMediaPlayer(mediaPlayer);
-					mediaListPlayer.playNext();
+					if(mediaListPlayer.isPlaying())
+						mediaListPlayer.stop();
+					if(mediaPlayer.isPlaying())
+						mediaPlayer.stop();
+					
+					
+					
+					activeMediaList = null;
+					activeMediaList = mediaPlayerFactory.newMediaList();
+					activeMediaList.addMedia(fileChooser.getSelectedFile().getAbsolutePath());
+					mediaListPlayer.setMediaList(activeMediaList);
+					mediaListPlayer.play();
+									
 				}
 				mediaPlayer.enableOverlay(true);
 			}
@@ -469,6 +433,18 @@ public class MultimediaPlayerJPanel extends JPanel
 
 	}
 
+	public void disableButton()
+	{
+		ejectButton.setEnabled(false);
+	}
+	
+	public void enableButton()
+	{
+		ejectButton.setEnabled(true);
+	}
+	
+		
+	
 	private final class UpdateRunnable implements Runnable
 	{
 
@@ -484,18 +460,6 @@ public class MultimediaPlayerJPanel extends JPanel
 			final long time = mediaPlayer.getTime();
 			final int position = (int) (mediaPlayer.getPosition() * 1000.0f);
 
-			final int chapter = 1;
-			// TODO trzeba pobrac aktualny numer utworu z listy, przy otworzeniu
-			// kolejnego elementu
-			// bêdzie zlicza³ ? niewiem jeszcze
-			final int chapterCount = mediaListPlayer.getMediaList().size();
-
-			// final int chapter = mediaPlayer.getChapter();
-			// final int chapterCount = mediaPlayer.getChapterCount();
-
-			// Updates to user interface components must be executed on the
-			// Event
-			// Dispatch Thread
 			SwingUtilities.invokeLater(new Runnable()
 			{
 
@@ -506,7 +470,6 @@ public class MultimediaPlayerJPanel extends JPanel
 						// asd
 						updateTime(time);
 						updatePosition(position);
-						updateChapter(chapter, chapterCount);
 					}
 				}
 			});
@@ -521,20 +484,121 @@ public class MultimediaPlayerJPanel extends JPanel
 
 	private void updatePosition(int value)
 	{
-		// positionProgressBar.setValue(value);
 		positionSlider.setValue(value);
-	}
-
-	private void updateChapter(int chapter, int chapterCount)
-	{
-		String s = chapterCount != -1 ? (chapter + 1) + "/" + chapterCount : "-";
-		chapterLabel.setText(s);
-		chapterLabel.invalidate();
-		validate();
 	}
 
 	private void updateVolume(int value)
 	{
 		volumeSlider.setValue(value);
 	}
+
+	public void addNewMediaToPlayInHarm(String path)
+	{
+		activeMediaList.addMedia(path);
+	}
+
+	public void changeMediaList(LinkedList<MultimediaFile> lista, MediaListPlayerMode mode)
+	{
+	//	mediaPlayer.enableOverlay(false);
+		if (mediaListPlayer.isPlaying()) mediaListPlayer.stop();
+		if (mediaPlayer.isPlaying()) mediaPlayer.stop();
+
+	
+		
+		activeMediaList = null;
+		activeMediaList = mediaPlayerFactory.newMediaList();
+		
+		for(MultimediaFile item: lista)
+			activeMediaList.addMedia(item.getPath());
+
+		mediaListPlayer.setMediaList(activeMediaList);
+		mediaListPlayer.setMode(mode);
+
+		mediaListPlayer.play();
+			
+		ejectButton.setEnabled(false);
+		//mediaPlayer.enableOverlay(true);
+		// zablokuj otwieranie plików strza³eczka
+	}
+
+	public void deleteActiveSchedule()
+	{
+		if (mediaListPlayer.isPlaying()) mediaListPlayer.stop();
+		if (mediaPlayer.isPlaying()) mediaPlayer.stop();
+
+		activeMediaList = null;
+		activeMediaList = mediaPlayerFactory.newMediaList();
+	}
+
+	public void deleteFileFromActiveList(String name)
+	{
+		List<MediaListItem> lista = new LinkedList<MediaListItem>();
+		lista = activeMediaList.items();
+
+		int i = 0;
+		for (MediaListItem mListItem : lista)
+		{
+			if (mListItem.name().equals(name))
+			{
+				if (mediaListPlayer.isPlaying()) mediaListPlayer.stop();
+				if (mediaPlayer.isPlaying()) mediaPlayer.stop();
+
+				activeMediaList.removeMedia(i);
+
+				mediaListPlayer.playNext();
+				break;
+			}
+			i++;
+		}
+
+	}
+
+	public void releaseMultimediaVlcj()
+	{
+		if (mediaListPlayer.isPlaying()) mediaListPlayer.stop();
+		if (mediaPlayer.isPlaying()) mediaPlayer.stop();
+
+		activeMediaList.release();
+		mediaListPlayer.release();
+		mediaPlayer.release();
+		mediaPlayerFactory.release();
+	}
+	
+	
+	private static final long serialVersionUID = 1L;
+
+	private static final int SKIP_TIME_MS = 10 * 1000; // 10 sekund
+
+	private  ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+
+	private final EmbeddedMediaPlayer mediaPlayer;
+
+	private JLabel timeLabel;
+	// private JProgressBar positionProgressBar;
+	private JSlider positionSlider;
+
+	private JButton previousChapterButton;
+	private JButton rewindButton;
+	private JButton stopButton;
+	private JButton pauseButton;
+	private JButton playButton;
+	private JButton fastForwardButton;
+	private JButton nextChapterButton;
+	private JButton ejectButton;
+
+	private JButton toggleMuteButton;
+	private JSlider volumeSlider;
+
+	private JFileChooser fileChooser;
+	// *****
+	private MediaList activeMediaList;
+	private MediaListPlayer mediaListPlayer;
+	private JPanel windowPanel;
+	private Canvas canvasMovie;
+	private MediaPlayerFactory mediaPlayerFactory;
+
+	MultimediaPlayerJFrame ownerFrame;
+	//private JButton fullScreenButton;
+	private boolean mousePressedPlaying = false;
+
 }
