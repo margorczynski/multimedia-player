@@ -4,6 +4,9 @@ import org.projekt.multimediaplayer.gui.MultimediaPlayerJFrame;
 
 import javax.swing.JFrame;
 
+/*
+ * Punkt wejscia aplikacji
+ */
 public class MultimediaPlayerMain
 {
 

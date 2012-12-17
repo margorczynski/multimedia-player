@@ -130,7 +130,6 @@ public class MultimediaPlayerJFrame extends JFrame
 																	// mediaPlayerComponent);
 		
 		this.setLayout(new BorderLayout());
-		this.add(new CompPanel(), BorderLayout.NORTH);
 		this.add(multimediaPlayerJPanel, BorderLayout.CENTER);
 
 	}
