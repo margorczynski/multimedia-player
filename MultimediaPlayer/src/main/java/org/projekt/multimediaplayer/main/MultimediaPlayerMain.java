@@ -1,8 +1,10 @@
-package org.projekt.multimediaplayer.gui;
+package org.projekt.multimediaplayer.main;
+
+import org.projekt.multimediaplayer.gui.MultimediaPlayerJFrame;
 
 import javax.swing.JFrame;
 
-public class TestMultimediaPlayerWindow
+public class MultimediaPlayerMain
 {
 
 	/**

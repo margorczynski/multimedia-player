@@ -1,5 +1,7 @@
 package org.projekt.multimediaplayer.gui;
 
+import java.awt.BorderLayout;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -56,7 +58,6 @@ public class MultimediaPlayerJFrame extends JFrame
 		disableButtonsWhenLogOut();
 		initMenuActionListener();
 		thisFrame = this;
-		
 
 	}
 
@@ -106,7 +107,6 @@ public class MultimediaPlayerJFrame extends JFrame
 		initIconsAndTry();
 		
 		Configuration config = (Configuration) appContext.getBean("config");
-		config.createDefaultConfigurationFile();
 		config.loadConfigurationFromFile();
 
 		// dowi¹zanie bibliotek z programu VLC
@@ -128,7 +128,11 @@ public class MultimediaPlayerJFrame extends JFrame
 
 		multimediaPlayerJPanel = new MultimediaPlayerJPanel(this);// ,
 																	// mediaPlayerComponent);
-		this.add(multimediaPlayerJPanel);
+		
+		this.setLayout(new BorderLayout());
+		this.add(new CompPanel(), BorderLayout.NORTH);
+		this.add(multimediaPlayerJPanel, BorderLayout.CENTER);
+
 	}
 
 	public void initMenus()

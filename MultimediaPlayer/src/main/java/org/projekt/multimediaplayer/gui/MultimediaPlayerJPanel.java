@@ -20,6 +20,7 @@ package org.projekt.multimediaplayer.gui;
  */
 
 import java.awt.BorderLayout;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -209,7 +210,7 @@ public class MultimediaPlayerJPanel extends JPanel
 		buttonControlPanel.add(ejectButton);
 
 		add(buttonControlPanel, BorderLayout.SOUTH);
-
+		
 		canvasMovie = new Canvas();
 		canvasMovie.setBackground(Color.DARK_GRAY);
 		mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(canvasMovie));

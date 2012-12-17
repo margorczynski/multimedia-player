@@ -33,6 +33,7 @@ public final class Configuration
 			//settings.addContent(new Element("vlcLibPath32bit").setText("D:/VLC32"));
 			settings.addContent(new Element("vlcLibPath32bit").setText("C:/Program Files/VideoLAN/VLC"));
 			settings.addContent(new Element("vlcLibPath64bit").setText("D:/VLC64"));
+			settings.addContent(new Element("url").setText("http://wiadomosci.wp.pl/ver,rss,rss.xml"));
 	 
 			
 			XMLOutputter xmlOutput = new XMLOutputter();
@@ -56,6 +57,8 @@ public final class Configuration
 		
 		File configFile = new File("config.xml");
 		
+		if(!configFile.exists()) createDefaultConfigurationFile();
+		
 		try 
 		{ 
 			Document document = (Document) builder.build(configFile);
@@ -70,6 +73,8 @@ public final class Configuration
 			{
 				libLocation = rootNode.getChildText("vlcLibPath32bit");
 			}
+			
+			url = rootNode.getChildText("url");
 
 	 
 		  } 
@@ -87,6 +92,13 @@ public final class Configuration
 	{
 		return libLocation;
 	}
+	
+	public String getUrl()
+	{
+		return url;
+	}
 
 	private String libLocation;
+	
+	private String url;
 }
