@@ -115,7 +115,7 @@ public class MultimediaPlayerJFrame extends JFrame
 		// NativeLibrary.addSearchPath("libvlc", "D:/VLC64/");
 
 		// Krzysiek
-		System.out.println(config.getLibLocation());
+
 		NativeLibrary.addSearchPath("libvlc", config.getLibLocation());
 
 		// Init JFrame elements
@@ -153,7 +153,9 @@ public class MultimediaPlayerJFrame extends JFrame
 
 		// Init submenus items
 		// jMenuFile
+		jMenuItemRss = new JMenuItem("Rss");
 		jMenuItemZamknij = new JMenuItem("Zamknij");
+		jMenuFile.add(jMenuItemRss);
 		jMenuFile.add(jMenuItemZamknij);
 
 		// jMenuBD
@@ -186,6 +188,15 @@ public class MultimediaPlayerJFrame extends JFrame
 
 	public void initMenuActionListener()
 	{
+		
+		jMenuItemRss.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+
+				if(rssFrame == null) rssFrame = new RssFrame();
+			}
+		});
 
 		jMenuItemZamknij.addActionListener(new ActionListener()
 		{
@@ -465,6 +476,9 @@ public class MultimediaPlayerJFrame extends JFrame
 	public Thread playerThread = null;
 	private PlayMultimediaFromSchedulRunnable runnableSchedu = null;
 
+	RssFrame rssFrame;
+	
+	
 	private MultimediaPlayerJPanel multimediaPlayerJPanel = null;
 	// Menu var
 	private JMenuBar menuBar;
@@ -477,6 +491,7 @@ public class MultimediaPlayerJFrame extends JFrame
 	private JMenu jMenuHarmonogram;
 	private JMenu jMenuHelp;
 
+	private JMenuItem jMenuItemRss;
 	private JMenuItem jMenuItemZamknij;
 
 	private JMenuItem jMenuItemLogIn;

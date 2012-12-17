@@ -26,19 +26,31 @@ public final class RssReader
 		
 		XmlReader reader = null;
 		
+		int i = 0;
+		
 		try
 		{
+			System.out.println(config.getUrl());
+			
 			URL url  = new URL(config.getUrl());
 		
 			 
 	      reader = new XmlReader(url);
 	      SyndFeed feed = new SyndFeedInput().build(reader);
 	      
-	        SyndEntry entry = (SyndEntry) feed.getEntries().get(0);
-	        header = entry.getTitle();
+	      SyndEntry entry = (SyndEntry) feed.getEntries().get(0);
+	      
+	      while(entry != null && i < 10)
+	      {
+	        entry = (SyndEntry) feed.getEntries().get(i);
+	        headers[i] = entry.getTitle();
+	        
+	        i++;
+	      }
 	     }
 		 catch(Exception e)
 		 {
+				 
 			 e.printStackTrace();
 		 }
 	     finally 
@@ -56,12 +68,12 @@ public final class RssReader
 	    
 	}
 	
-	public String getHeader()
+	public String[] getHeaders()
 	{
-		return header;
+		return headers;
 	}
 
-	private String header;
+	private String[] headers = new String[10];
 	
 	private final ApplicationContext appContext = new ClassPathXmlApplicationContext("application-context.xml");
 }

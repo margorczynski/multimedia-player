@@ -92,7 +92,7 @@ public class MultimediaPlayerJPanel extends JPanel
 		mediaListPlayer.setMediaList(activeMediaList);
 		mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
 		mediaListPlayer.setMediaPlayer(mediaPlayer);
-
+		
 		createUI();
 
 		executorService.scheduleAtFixedRate(new UpdateRunnable(mediaPlayer), 0L, 1L, TimeUnit.SECONDS);
@@ -208,6 +208,7 @@ public class MultimediaPlayerJPanel extends JPanel
 		buttonControlPanel.add(toggleMuteButton);
 		//buttonControlPanel.add(fullScreenButton);
 		buttonControlPanel.add(ejectButton);
+		buttonControlPanel.add(new TextComponent("DSDAS"));
 
 		add(buttonControlPanel, BorderLayout.SOUTH);
 		

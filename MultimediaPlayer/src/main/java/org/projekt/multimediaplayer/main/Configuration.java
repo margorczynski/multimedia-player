@@ -30,10 +30,11 @@ public final class Configuration
 			Document doc = new Document(settings);
 			doc.setRootElement(settings);
 	 
+			settings.addContent(new Element("url").setText("http://wiadomosci.wp.pl/ver,rss,rss.xml"));
 			//settings.addContent(new Element("vlcLibPath32bit").setText("D:/VLC32"));
 			settings.addContent(new Element("vlcLibPath32bit").setText("C:/Program Files/VideoLAN/VLC"));
 			settings.addContent(new Element("vlcLibPath64bit").setText("D:/VLC64"));
-			settings.addContent(new Element("url").setText("http://wiadomosci.wp.pl/ver,rss,rss.xml"));
+			
 	 
 			
 			XMLOutputter xmlOutput = new XMLOutputter();
@@ -63,7 +64,9 @@ public final class Configuration
 		{ 
 			Document document = (Document) builder.build(configFile);
 			Element rootNode = document.getRootElement();
-
+			
+			url = rootNode.getChildText("url");
+			
 			//Checks the arch of the OS for the proper library path
 			if(System.getProperty("sun.arch.data.model").equals("64"))
 			{
@@ -74,7 +77,7 @@ public final class Configuration
 				libLocation = rootNode.getChildText("vlcLibPath32bit");
 			}
 			
-			url = rootNode.getChildText("url");
+			
 
 	 
 		  } 
