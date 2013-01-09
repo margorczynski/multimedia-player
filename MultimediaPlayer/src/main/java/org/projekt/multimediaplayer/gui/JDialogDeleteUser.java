@@ -1,5 +1,6 @@
 package org.projekt.multimediaplayer.gui;
 
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -8,13 +9,10 @@ import java.util.List;
 
 import javax.swing.*;
 
-import org.omg.CORBA.CharSeqHolder;
 import org.projekt.multimediaplayer.dao.UserDao;
 import org.projekt.multimediaplayer.model.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import sun.security.util.Password;
 
 public class JDialogDeleteUser extends JDialog
 {
@@ -40,17 +38,17 @@ public class JDialogDeleteUser extends JDialog
 		mainPanel.setLayout(new GridBagLayout());
 
 		// Naglowek
-		mainPanel.add(labelHeadline, new GBC(0, 0, 2, 1).setAnchor(GBC.CENTER));
+		mainPanel.add(labelHeadline, new GBC(0, 0, 2, 1).setAnchor(GridBagConstraints.CENTER));
 
-		mainPanel.add(labelName, new GBC(0, 2).setAnchor(GBC.EAST).setInsets(20, 15, 0, 0));
-		mainPanel.add(userName, new GBC(1, 2).setAnchor(GBC.WEST).setInsets(20, 15, 0, 0));
+		mainPanel.add(labelName, new GBC(0, 2).setAnchor(GridBagConstraints.EAST).setInsets(20, 15, 0, 0));
+		mainPanel.add(userName, new GBC(1, 2).setAnchor(GridBagConstraints.WEST).setInsets(20, 15, 0, 0));
 
-		mainPanel.add(labelPassword, new GBC(0, 4).setAnchor(GBC.EAST).setInsets(10, 15, 0, 0));
-		mainPanel.add(userPassword, new GBC(1, 4).setAnchor(GBC.WEST).setInsets(10, 15, 0, 0));
+		mainPanel.add(labelPassword, new GBC(0, 4).setAnchor(GridBagConstraints.EAST).setInsets(10, 15, 0, 0));
+		mainPanel.add(userPassword, new GBC(1, 4).setAnchor(GridBagConstraints.WEST).setInsets(10, 15, 0, 0));
 
 		// Przyciski
-		mainPanel.add(buttonAddUser, new GBC(0, 6).setAnchor(GBC.CENTER).setInsets(30, 20, 0, 0));
-		mainPanel.add(buttonCancel, new GBC(1, 6).setAnchor(GBC.CENTER).setInsets(30, 20, 0, 0));
+		mainPanel.add(buttonAddUser, new GBC(0, 6).setAnchor(GridBagConstraints.CENTER).setInsets(30, 20, 0, 0));
+		mainPanel.add(buttonCancel, new GBC(1, 6).setAnchor(GridBagConstraints.CENTER).setInsets(30, 20, 0, 0));
 
 		this.setContentPane(mainPanel);
 	}

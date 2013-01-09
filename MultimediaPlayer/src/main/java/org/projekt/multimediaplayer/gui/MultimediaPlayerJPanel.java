@@ -25,37 +25,24 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.io.File;
-import java.io.IOException;
-import java.text.AttributedCharacterIterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import javax.imageio.ImageIO;
-import javax.media.rtp.event.ActiveSendStreamEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
@@ -65,9 +52,7 @@ import javax.swing.filechooser.FileFilter;
 import org.projekt.multimediaplayer.main.RssReader;
 import org.projekt.multimediaplayer.model.MultimediaFile;
 
-import sun.java2d.pipe.DrawImage;
 import uk.co.caprica.vlcj.binding.LibVlcConst;
-import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.filter.swing.SwingFileFilterFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListItem;
@@ -75,7 +60,6 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
 
@@ -156,7 +140,7 @@ public class MultimediaPlayerJPanel extends JPanel
 		toggleMuteButton.setToolTipText("Toggle Mute");
 
 		volumeSlider = new JSlider();
-		volumeSlider.setOrientation(JSlider.HORIZONTAL);
+		volumeSlider.setOrientation(SwingConstants.HORIZONTAL);
 		volumeSlider.setMinimum(LibVlcConst.MIN_VOLUME);
 		volumeSlider.setMaximum(LibVlcConst.MAX_VOLUME);
 		volumeSlider.setPreferredSize(new Dimension(100, 40));
@@ -188,8 +172,6 @@ public class MultimediaPlayerJPanel extends JPanel
 		
 		for(String s : rr.getHeaders())
 		{
-			System.out.println(s);
-			
 			headers += s + "     ";
 		}
 		
@@ -205,7 +187,7 @@ public class MultimediaPlayerJPanel extends JPanel
 		JPanel compPanel = new JPanel();
 		compPanel.setLayout(new BorderLayout());
 		compPanel.add(textComponent, BorderLayout.CENTER);
-		JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 10, 3);
+		JSlider slider = new JSlider(SwingConstants.HORIZONTAL, 0, 10, 3);
 		slider.addChangeListener(new SliderListener());
 		slider.setMajorTickSpacing(10);
 		slider.setMinorTickSpacing(1);
@@ -257,7 +239,7 @@ public class MultimediaPlayerJPanel extends JPanel
 	private void setSliderBasedPosition()
 	{
 		if (!mediaPlayer.isSeekable()) { return; }
-		float positionValue = (float) positionSlider.getValue() / 1000.0f;
+		float positionValue = positionSlider.getValue() / 1000.0f;
 		// Avoid end of file freeze-up
 		if (positionValue > 0.99f)
 		{
@@ -606,7 +588,7 @@ public class MultimediaPlayerJPanel extends JPanel
 			
 	        if (!source.getValueIsAdjusting()) 
 	        {
-	             textComponent.setScrollSpeed((int)source.getValue());
+	             textComponent.setScrollSpeed(source.getValue());
 	        }
 		}
 	}

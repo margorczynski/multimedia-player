@@ -62,7 +62,7 @@ public final class Configuration
 		
 		try 
 		{ 
-			Document document = (Document) builder.build(configFile);
+			Document document = builder.build(configFile);
 			Element rootNode = document.getRootElement();
 			
 			url = rootNode.getChildText("url");

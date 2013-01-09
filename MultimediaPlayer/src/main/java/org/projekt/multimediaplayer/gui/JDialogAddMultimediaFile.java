@@ -1,23 +1,18 @@
 package org.projekt.multimediaplayer.gui;
 
 import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Point;
-import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputMethodEvent;
 import java.awt.event.InputMethodListener;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Time;
 import java.text.NumberFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
-import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.*;
@@ -31,12 +26,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import uk.co.caprica.vlcj.filter.swing.SwingFileFilterFactory;
-import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.medialist.MediaListItem;
-import uk.co.caprica.vlcj.player.MediaDetails;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
-import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 
 public class JDialogAddMultimediaFile extends JDialog
 {
@@ -127,10 +118,10 @@ public class JDialogAddMultimediaFile extends JDialog
 
 		// GBC(kolumna, wiersz, ile kolumn, ile wierszy)
 
-		fileChooserPanel.add(labelHeadline, new GBC(0, 0, 2, 1).setAnchor(GBC.CENTER).setInsets(5, 0, 0, 0));
-		fileChooserPanel.add(labelFilePatch, new GBC(0, 1).setAnchor(GBC.WEST).setInsets(2, 0, 0, 0));
-		fileChooserPanel.add(textFilePatch, new GBC(0, 2).setAnchor(GBC.WEST).setInsets(5, 0, 0, 0));
-		fileChooserPanel.add(buttonOpen, new GBC(1, 2).setAnchor(GBC.WEST).setInsets(5, 10, 0, 0));
+		fileChooserPanel.add(labelHeadline, new GBC(0, 0, 2, 1).setAnchor(GridBagConstraints.CENTER).setInsets(5, 0, 0, 0));
+		fileChooserPanel.add(labelFilePatch, new GBC(0, 1).setAnchor(GridBagConstraints.WEST).setInsets(2, 0, 0, 0));
+		fileChooserPanel.add(textFilePatch, new GBC(0, 2).setAnchor(GridBagConstraints.WEST).setInsets(5, 0, 0, 0));
+		fileChooserPanel.add(buttonOpen, new GBC(1, 2).setAnchor(GridBagConstraints.WEST).setInsets(5, 10, 0, 0));
 
 		mainPanel.add(fileChooserPanel, BorderLayout.NORTH);
 
@@ -149,18 +140,18 @@ public class JDialogAddMultimediaFile extends JDialog
 		textFileLength.setText("Wybierz plik ... ");
 
 		labelFileInfo.setText("Informacje o pliku");
-		middlePanel.add(labelFileInfo, new GBC(0, 0, 2, 1).setAnchor(GBC.CENTER).setInsets(5, 5, 10, 0));
+		middlePanel.add(labelFileInfo, new GBC(0, 0, 2, 1).setAnchor(GridBagConstraints.CENTER).setInsets(5, 5, 10, 0));
 
-		middlePanel.add(labelFileName, new GBC(0, 1).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
-		middlePanel.add(labelFileSize, new GBC(0, 2).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
-		middlePanel.add(labelFileType, new GBC(0, 3).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
-		middlePanel.add(labelFileLength, new GBC(0, 4).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
+		middlePanel.add(labelFileName, new GBC(0, 1).setAnchor(GridBagConstraints.WEST).setInsets(5, 5, 0, 0));
+		middlePanel.add(labelFileSize, new GBC(0, 2).setAnchor(GridBagConstraints.WEST).setInsets(5, 5, 0, 0));
+		middlePanel.add(labelFileType, new GBC(0, 3).setAnchor(GridBagConstraints.WEST).setInsets(5, 5, 0, 0));
+		middlePanel.add(labelFileLength, new GBC(0, 4).setAnchor(GridBagConstraints.WEST).setInsets(5, 5, 0, 0));
 
 
-		middlePanel.add(textFileName, new GBC(1, 1).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
-		middlePanel.add(textFileSize, new GBC(1, 2).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
-		middlePanel.add(textFileType, new GBC(1, 3).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
-		middlePanel.add(textFileLength, new GBC(1, 4).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
+		middlePanel.add(textFileName, new GBC(1, 1).setAnchor(GridBagConstraints.WEST).setInsets(5, 5, 0, 0));
+		middlePanel.add(textFileSize, new GBC(1, 2).setAnchor(GridBagConstraints.WEST).setInsets(5, 5, 0, 0));
+		middlePanel.add(textFileType, new GBC(1, 3).setAnchor(GridBagConstraints.WEST).setInsets(5, 5, 0, 0));
+		middlePanel.add(textFileLength, new GBC(1, 4).setAnchor(GridBagConstraints.WEST).setInsets(5, 5, 0, 0));
 
 
 		mainPanel.add(middlePanel, BorderLayout.CENTER);

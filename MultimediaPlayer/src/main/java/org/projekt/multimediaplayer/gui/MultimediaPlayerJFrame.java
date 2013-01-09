@@ -3,20 +3,15 @@ package org.projekt.multimediaplayer.gui;
 import java.awt.BorderLayout;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.Frame;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import static java.awt.SystemTray.getSystemTray;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import java.util.List;
 import java.util.Set;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
@@ -25,8 +20,6 @@ import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
-import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
-
 import org.projekt.multimediaplayer.dao.UserDao;
 import org.projekt.multimediaplayer.main.Configuration;
 import org.projekt.multimediaplayer.model.*;
@@ -36,17 +29,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.sun.jna.NativeLibrary;
 
 import java.awt.AWTException;
-import java.awt.Image;
-import java.awt.SystemTray;
-import java.awt.Toolkit;
-import java.awt.TrayIcon;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 
 public class MultimediaPlayerJFrame extends JFrame
 {
@@ -77,7 +61,7 @@ public class MultimediaPlayerJFrame extends JFrame
 				public void actionPerformed(ActionEvent e)
 				{
 					MultimediaPlayerJFrame.this.setVisible(true);
-					MultimediaPlayerJFrame.this.setExtendedState(MultimediaPlayerJFrame.NORMAL);
+					MultimediaPlayerJFrame.this.setExtendedState(Frame.NORMAL);
 					getSystemTray().remove(iconTray);
 				}
 
@@ -153,9 +137,7 @@ public class MultimediaPlayerJFrame extends JFrame
 
 		// Init submenus items
 		// jMenuFile
-		jMenuItemRss = new JMenuItem("Rss");
 		jMenuItemZamknij = new JMenuItem("Zamknij");
-		jMenuFile.add(jMenuItemRss);
 		jMenuFile.add(jMenuItemZamknij);
 
 		// jMenuBD
@@ -188,15 +170,6 @@ public class MultimediaPlayerJFrame extends JFrame
 
 	public void initMenuActionListener()
 	{
-		
-		jMenuItemRss.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent arg0)
-			{
-
-				if(rssFrame == null) rssFrame = new RssFrame();
-			}
-		});
 
 		jMenuItemZamknij.addActionListener(new ActionListener()
 		{
@@ -476,9 +449,6 @@ public class MultimediaPlayerJFrame extends JFrame
 	public Thread playerThread = null;
 	private PlayMultimediaFromSchedulRunnable runnableSchedu = null;
 
-	RssFrame rssFrame;
-	
-	
 	private MultimediaPlayerJPanel multimediaPlayerJPanel = null;
 	// Menu var
 	private JMenuBar menuBar;
@@ -491,7 +461,6 @@ public class MultimediaPlayerJFrame extends JFrame
 	private JMenu jMenuHarmonogram;
 	private JMenu jMenuHelp;
 
-	private JMenuItem jMenuItemRss;
 	private JMenuItem jMenuItemZamknij;
 
 	private JMenuItem jMenuItemLogIn;

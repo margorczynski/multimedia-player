@@ -1,24 +1,17 @@
 package org.projekt.multimediaplayer.gui;
 
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.security.acl.Owner;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.*;
 
-import java.text.*;
-
 import org.projekt.multimediaplayer.dao.ScheduleDao;
 import org.projekt.multimediaplayer.dao.UserDao;
 import org.projekt.multimediaplayer.model.Schedule;
-import org.projekt.multimediaplayer.model.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -102,22 +95,22 @@ public class JDialogCreateNewHarm extends JDialog
 
 		JScrollPane editHarmDescriptScrollPane = new JScrollPane(editHarmDescript);
 
-		mainPanel.add(labelHeadline, new GBC(0, 0, 2, 1).setAnchor(GBC.CENTER).setInsets(5, 5, 0, 0));
-		mainPanel.add(labelHarmonogramName, new GBC(0, 1).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
-		mainPanel.add(editHarmonogramName, new GBC(0, 2, 2, 1).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
-		mainPanel.add(labelHarmonogramDesript, new GBC(0, 3).setAnchor(GBC.WEST).setInsets(20, 5, 0, 0));
-		mainPanel.add(editHarmDescriptScrollPane, new GBC(0, 4, 2, 1).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
-		mainPanel.add(checkBoxActiv, new GBC(0, 5).setAnchor(GBC.WEST).setInsets(10, 5, 0, 0));
-		mainPanel.add(radioPlayInLoop, new GBC(0, 6).setAnchor(GBC.WEST).setInsets(10, 5, 0, 0));
-		mainPanel.add(radioOneTimePlay, new GBC(1, 6).setAnchor(GBC.WEST).setInsets(10, 5, 0, 0));
+		mainPanel.add(labelHeadline, new GBC(0, 0, 2, 1).setAnchor(GridBagConstraints.CENTER).setInsets(5, 5, 0, 0));
+		mainPanel.add(labelHarmonogramName, new GBC(0, 1).setAnchor(GridBagConstraints.WEST).setInsets(5, 5, 0, 0));
+		mainPanel.add(editHarmonogramName, new GBC(0, 2, 2, 1).setAnchor(GridBagConstraints.WEST).setInsets(5, 5, 0, 0));
+		mainPanel.add(labelHarmonogramDesript, new GBC(0, 3).setAnchor(GridBagConstraints.WEST).setInsets(20, 5, 0, 0));
+		mainPanel.add(editHarmDescriptScrollPane, new GBC(0, 4, 2, 1).setAnchor(GridBagConstraints.WEST).setInsets(5, 5, 0, 0));
+		mainPanel.add(checkBoxActiv, new GBC(0, 5).setAnchor(GridBagConstraints.WEST).setInsets(10, 5, 0, 0));
+		mainPanel.add(radioPlayInLoop, new GBC(0, 6).setAnchor(GridBagConstraints.WEST).setInsets(10, 5, 0, 0));
+		mainPanel.add(radioOneTimePlay, new GBC(1, 6).setAnchor(GridBagConstraints.WEST).setInsets(10, 5, 0, 0));
 
-		mainPanel.add(labelStartDate, new GBC(0, 7, 2, 1).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
+		mainPanel.add(labelStartDate, new GBC(0, 7, 2, 1).setAnchor(GridBagConstraints.WEST).setInsets(5, 5, 0, 0));
 
-		mainPanel.add(spinerStartDate, new GBC(0, 8).setAnchor(GBC.WEST).setInsets(5, 5, 0, 0));
+		mainPanel.add(spinerStartDate, new GBC(0, 8).setAnchor(GridBagConstraints.WEST).setInsets(5, 5, 0, 0));
 
 
-		mainPanel.add(buttonCreateHarm, new GBC(0, 11).setAnchor(GBC.CENTER).setInsets(20, 5, 25, 0));
-		mainPanel.add(buttonCancel, new GBC(1, 11).setAnchor(GBC.CENTER).setInsets(20, 5, 25, 0));
+		mainPanel.add(buttonCreateHarm, new GBC(0, 11).setAnchor(GridBagConstraints.CENTER).setInsets(20, 5, 25, 0));
+		mainPanel.add(buttonCancel, new GBC(1, 11).setAnchor(GridBagConstraints.CENTER).setInsets(20, 5, 25, 0));
 
 		this.setContentPane(mainPanel);
 		pack();

@@ -1,8 +1,6 @@
 package org.projekt.multimediaplayer.main;
 
 import java.net.URL;
-import java.util.Iterator;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
  

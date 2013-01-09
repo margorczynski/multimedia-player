@@ -3,24 +3,17 @@ package org.projekt.multimediaplayer.gui;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JOptionPane;
-import javax.swing.SwingWorker;
-
 import org.projekt.multimediaplayer.model.MultimediaFile;
 import org.projekt.multimediaplayer.model.Schedule;
 import org.projekt.multimediaplayer.model.User;
 
 
-import uk.co.caprica.vlcj.medialist.MediaList;
-import uk.co.caprica.vlcj.medialist.MediaListItem;
-import uk.co.caprica.vlcj.player.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
 
 public class PlayMultimediaFromSchedulRunnable implements Runnable

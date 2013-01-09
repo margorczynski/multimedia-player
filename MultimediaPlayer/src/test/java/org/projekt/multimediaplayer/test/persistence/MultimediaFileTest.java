@@ -12,7 +12,6 @@ import org.projekt.multimediaplayer.model.Schedule;
 import org.projekt.multimediaplayer.model.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import java.util.Date;
 
 public final class MultimediaFileTest
 {

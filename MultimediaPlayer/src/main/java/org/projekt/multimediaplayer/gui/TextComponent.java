@@ -1,13 +1,7 @@
 package org.projekt.multimediaplayer.gui;
 
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.event.*;
-import javax.swing.border.*;
-import javax.swing.BorderFactory;
-
 import javax.swing.SwingWorker;
 
 import java.awt.*;
@@ -25,16 +19,14 @@ public final class TextComponent extends JComponent
 		
 		visibleTextLabel.setFont(new Font("Serif", Font.ITALIC, 25));
 		
-		visibleTextLabel.setBackground(Color.MAGENTA);
-		
 		setSize(100, 100);
 
 		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() 
 		{
-		    public Void doInBackground() 
+		    @Override
+			public Void doInBackground() 
 		    {
 		        scrollText();
-		        System.out.println("EXIT");
 		        return null;
 		    }
 		};
@@ -79,6 +71,7 @@ public final class TextComponent extends JComponent
 		}
 	}
 	
+	@Override
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);

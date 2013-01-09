@@ -1,10 +1,5 @@
 package org.projekt.multimediaplayer.model;
 
-import java.util.Comparator;
-import java.util.Date;
-
-import sun.security.util.Length;
-
 public final class MultimediaFile
 {
 	public int getId()
@@ -77,6 +72,7 @@ public final class MultimediaFile
 		this.playDelay = playDelay;
 	}
 
+	@Override
 	public String toString()
 	{
 		return getFilename();
