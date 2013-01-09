@@ -62,6 +62,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 
+import org.projekt.multimediaplayer.main.RssReader;
 import org.projekt.multimediaplayer.model.MultimediaFile;
 
 import sun.java2d.pipe.DrawImage;
@@ -181,6 +182,19 @@ public class MultimediaPlayerJPanel extends JPanel
 
 	private void layoutControls()
 	{
+		RssReader rr = new RssReader();
+		
+		String headers = "";
+		
+		for(String s : rr.getHeaders())
+		{
+			System.out.println(s);
+			
+			headers += s + "     ";
+		}
+		
+		textComponent  = new TextComponent(headers);
+		
 		setBorder(new EmptyBorder(4, 4, 4, 4));
 		setLayout(new BorderLayout());
 
@@ -188,6 +202,17 @@ public class MultimediaPlayerJPanel extends JPanel
 		positionPanel.setLayout(new GridLayout(1, 1));
 		positionPanel.add(positionSlider);
 
+		JPanel compPanel = new JPanel();
+		compPanel.setLayout(new BorderLayout());
+		compPanel.add(textComponent, BorderLayout.CENTER);
+		JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 10, 3);
+		slider.addChangeListener(new SliderListener());
+		slider.setMajorTickSpacing(10);
+		slider.setMinorTickSpacing(1);
+		slider.setPaintTicks(true);
+		slider.setPaintLabels(true);
+		compPanel.add(slider, BorderLayout.EAST);
+		
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new BorderLayout(8, 0));
 		topPanel.add(timeLabel, BorderLayout.WEST);
@@ -196,19 +221,26 @@ public class MultimediaPlayerJPanel extends JPanel
 		add(topPanel, BorderLayout.NORTH);
 
 		JPanel buttonControlPanel = new JPanel();
-		buttonControlPanel.setLayout(new FlowLayout());
-		buttonControlPanel.add(previousChapterButton);
-		buttonControlPanel.add(rewindButton);
-		buttonControlPanel.add(stopButton);
-		buttonControlPanel.add(pauseButton);
-		buttonControlPanel.add(playButton);
-		buttonControlPanel.add(fastForwardButton);
-		buttonControlPanel.add(nextChapterButton);
-		buttonControlPanel.add(volumeSlider);
-		buttonControlPanel.add(toggleMuteButton);
+		JPanel buttonsPanel = new JPanel();
+		
+		buttonControlPanel.setLayout(new GridLayout(0, 1));
+		
+		buttonsPanel.setLayout(new FlowLayout());
+		buttonsPanel.add(previousChapterButton);
+		buttonsPanel.add(rewindButton);
+		buttonsPanel.add(stopButton);
+		buttonsPanel.add(pauseButton);
+		buttonsPanel.add(playButton);
+		buttonsPanel.add(fastForwardButton);
+		buttonsPanel.add(nextChapterButton);
+		buttonsPanel.add(volumeSlider);
+		buttonsPanel.add(toggleMuteButton);
 		//buttonControlPanel.add(fullScreenButton);
-		buttonControlPanel.add(ejectButton);
-		buttonControlPanel.add(new TextComponent("DSDAS"));
+		buttonsPanel.add(ejectButton);
+		
+		buttonControlPanel.add(buttonsPanel);
+		buttonControlPanel.add(compPanel);
+		
 
 		add(buttonControlPanel, BorderLayout.SOUTH);
 		
@@ -566,6 +598,19 @@ public class MultimediaPlayerJPanel extends JPanel
 		mediaPlayerFactory.release();
 	}
 	
+	class SliderListener implements ChangeListener
+	{
+		public void stateChanged(ChangeEvent e)
+		{
+			JSlider source = (JSlider)e.getSource();
+			
+	        if (!source.getValueIsAdjusting()) 
+	        {
+	             textComponent.setScrollSpeed((int)source.getValue());
+	        }
+		}
+	}
+	
 	
 	private static final long serialVersionUID = 1L;
 
@@ -578,6 +623,8 @@ public class MultimediaPlayerJPanel extends JPanel
 	private JLabel timeLabel;
 	// private JProgressBar positionProgressBar;
 	private JSlider positionSlider;
+	
+	private TextComponent textComponent;
 
 	private JButton previousChapterButton;
 	private JButton rewindButton;

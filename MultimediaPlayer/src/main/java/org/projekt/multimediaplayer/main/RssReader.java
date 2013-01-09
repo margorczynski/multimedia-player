@@ -24,14 +24,14 @@ public final class RssReader
 	{
 		Configuration config = (Configuration) appContext.getBean("config");
 		
+		config.loadConfigurationFromFile();
+		
 		XmlReader reader = null;
 		
 		int i = 0;
 		
 		try
 		{
-			System.out.println(config.getUrl());
-			
 			URL url  = new URL(config.getUrl());
 		
 			 
@@ -39,12 +39,11 @@ public final class RssReader
 	      SyndFeed feed = new SyndFeedInput().build(reader);
 	      
 	      SyndEntry entry = (SyndEntry) feed.getEntries().get(0);
-	      
+
 	      while(entry != null && i < 10)
 	      {
 	        entry = (SyndEntry) feed.getEntries().get(i);
 	        headers[i] = entry.getTitle();
-	        
 	        i++;
 	      }
 	     }
