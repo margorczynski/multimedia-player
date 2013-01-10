@@ -21,9 +21,10 @@ public final class RssReader
 	public RssReader()
 	{
 		Configuration config = (Configuration) appContext.getBean("config");
+
 		
 		config.loadConfigurationFromFile();
-		
+
 		XmlReader reader = null;
 		
 		int i = 0;
@@ -42,6 +43,8 @@ public final class RssReader
 	      {
 	        entry = (SyndEntry) feed.getEntries().get(i);
 	        headers[i] = entry.getTitle();
+
+
 	        i++;
 	      }
 	     }
