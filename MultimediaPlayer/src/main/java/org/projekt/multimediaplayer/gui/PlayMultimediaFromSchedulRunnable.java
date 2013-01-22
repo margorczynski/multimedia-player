@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 import org.projekt.multimediaplayer.model.MultimediaFile;
 import org.projekt.multimediaplayer.model.Schedule;
 import org.projekt.multimediaplayer.model.User;
@@ -20,8 +21,15 @@ public class PlayMultimediaFromSchedulRunnable implements Runnable
 {
 	public PlayMultimediaFromSchedulRunnable(MultimediaPlayerJFrame ownerFrame, MultimediaPlayerJPanel moviePanel, Schedule activeSchedule, User logInUser)
 	{
-		System.out.println("Powolano watek !");
 		this.moviePanel = moviePanel;
+		this.activeSchedule = activeSchedule;
+		this.logInUser = logInUser;
+		this.ownerFrame = ownerFrame;
+	}
+	
+	public PlayMultimediaFromSchedulRunnable(MultimediaPlayerBareJFrame ownerFrame, MultimediaPlayerBareJPanel movieBarePanel, Schedule activeSchedule, User logInUser)
+	{
+		this.movieBarePanel = movieBarePanel;
 		this.activeSchedule = activeSchedule;
 		this.logInUser = logInUser;
 		this.ownerFrame = ownerFrame;
@@ -39,8 +47,6 @@ public class PlayMultimediaFromSchedulRunnable implements Runnable
 
 		if (startTimeDate.compareTo(currentDate) <= 0)
 		{
-			System.out.println("Czas mina³");
-
 			if (JOptionPane.showConfirmDialog(ownerFrame, "Czas do odtworzenia harmonogramu min¹³ !\nCzy chesz odtworzyæ harmonogram mimo to ?", "Odtwarzanie", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
 			{
 				play = true;
@@ -48,7 +54,6 @@ public class PlayMultimediaFromSchedulRunnable implements Runnable
 		}
 		else
 		{
-			System.out.println("Czekam !!");
 			long toPlayDate = Math.abs(milisCurrent - milisStart);
 
 			if (JOptionPane.showConfirmDialog(ownerFrame, "Odtwarzanie zostanie uruchomione za (hh:mm:ss) : \"" + getTimeFromMilis(toPlayDate) + "\".\nCzy chesz zaczekaæ ?", "Odtwarzanie", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
@@ -117,10 +122,11 @@ public class PlayMultimediaFromSchedulRunnable implements Runnable
 	}
 
 	private boolean close = false;
-	private MultimediaPlayerJFrame ownerFrame = null;
+	private JFrame ownerFrame = null;
 	private User logInUser = null;
 	private Date startTimeDate = null;
 	private MultimediaPlayerJPanel moviePanel;
+	private MultimediaPlayerBareJPanel movieBarePanel;
 	private Schedule activeSchedule = null;
 	private List<MultimediaFile> sortMultimediaFiles = null;
 }

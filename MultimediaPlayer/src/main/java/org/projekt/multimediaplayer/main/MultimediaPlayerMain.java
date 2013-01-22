@@ -1,6 +1,7 @@
 package org.projekt.multimediaplayer.main;
 
 import org.projekt.multimediaplayer.gui.MultimediaPlayerJFrame;
+import org.projekt.multimediaplayer.gui.MultimediaPlayerBareJFrame;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -48,7 +49,7 @@ public class MultimediaPlayerMain
 		}
 		
 		
-		JFrame frame = new MultimediaPlayerJFrame();
+		JFrame frame = new MultimediaPlayerBareJFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}

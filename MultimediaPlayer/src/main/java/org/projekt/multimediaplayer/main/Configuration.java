@@ -31,9 +31,9 @@ public final class Configuration
 			doc.setRootElement(settings);
 	 
 			settings.addContent(new Element("url").setText("http://wiadomosci.wp.pl/ver,rss,rss.xml"));
-			//settings.addContent(new Element("vlcLibPath32bit").setText("D:/VLC32"));
 			settings.addContent(new Element("vlcLibPath32bit").setText("C:/Program Files/VideoLAN/VLC"));
 			settings.addContent(new Element("vlcLibPath64bit").setText("D:/VLC64"));
+			settings.addContent(new Element("defaultUsername").setText("defaultUser"));
 			
 	 
 			
@@ -77,7 +77,7 @@ public final class Configuration
 				libLocation = rootNode.getChildText("vlcLibPath32bit");
 			}
 			
-			
+			defaultUsername = rootNode.getChildText("defaultUsername");
 
 	 
 		  } 
@@ -101,7 +101,14 @@ public final class Configuration
 		return url;
 	}
 
+	public String getDefaultUsername()
+	{
+		return defaultUsername;
+	}
+
 	private String libLocation;
 	
 	private String url;
+	
+	private String defaultUsername;
 }

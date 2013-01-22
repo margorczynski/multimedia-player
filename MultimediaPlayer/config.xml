@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings>
-	<url>http://wiadomosci.wp.pl/ver,rss,rss.xml</url>
+  <url>http://wiadomosci.wp.pl/ver,rss,rss.xml</url>
   <vlcLibPath32bit>C:/Program Files/VideoLAN/VLC</vlcLibPath32bit>
   <vlcLibPath64bit>D:/VLC64</vlcLibPath64bit>
+  <defaultUsername>defaultUser</defaultUsername>
 </settings>
 
