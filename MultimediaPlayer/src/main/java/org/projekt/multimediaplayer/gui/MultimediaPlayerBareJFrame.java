@@ -120,14 +120,16 @@ public class MultimediaPlayerBareJFrame extends JFrame
 		
 		this.setLayout(new BorderLayout());
 		this.add(multimediaPlayerBareJPanel, BorderLayout.CENTER);
-		
+		refreshActiveSchedule();
 		runRunnableSched();
+		System.out.println("Bare frame end init");
 		//refreshActiveSchedule();
 
 	}
 
 	public User refreshUser(String userName)
 	{
+		System.out.println("Bare frame refresh user");
 		List<User> users = userDao.findUsers(userName);
 		if (users != null && users.size() != 0) return users.get(0);
 
@@ -136,6 +138,7 @@ public class MultimediaPlayerBareJFrame extends JFrame
 
 	public void refreshLogInUser()
 	{
+		System.out.println("Bare frame refresh login user");
 		System.out.println("Odswiezony uzytkownik bare");
 		if (logInUser != null)
 		{
@@ -150,6 +153,7 @@ public class MultimediaPlayerBareJFrame extends JFrame
 
 	public void refreshActiveSchedule()
 	{
+		System.out.println("Bare frame refresh active schedule");
 		String currentActiveHarmName = "empty";
 		if (activeSchedule != null) currentActiveHarmName = activeSchedule.getName();
 
@@ -196,13 +200,13 @@ public class MultimediaPlayerBareJFrame extends JFrame
 
 					System.gc();
 
-					runnableSchedu = new PlayMultimediaFromSchedulRunnable(this, multimediaPlayerBareJPanel, activeSchedule, logInUser);
+					runnableSchedu = new PlayMultimediaFromSchedulRunnableBare(this, multimediaPlayerBareJPanel, activeSchedule, logInUser);
 					playerThread = new Thread(runnableSchedu);
 					playerThread.start();
 				}
 				else
 				{
-					runnableSchedu = new PlayMultimediaFromSchedulRunnable(this, multimediaPlayerBareJPanel, activeSchedule, logInUser);
+					runnableSchedu = new PlayMultimediaFromSchedulRunnableBare(this, multimediaPlayerBareJPanel, activeSchedule, logInUser);
 					playerThread = new Thread(runnableSchedu);
 					playerThread.start();
 				}
@@ -238,9 +242,11 @@ public class MultimediaPlayerBareJFrame extends JFrame
 
 	public void runRunnableSched()
 	{
+		System.out.println("Bare frame run runnable");
 		playerThread = null;
 		playerThread = new Thread(runnableSchedu);
 		playerThread.start();
+		System.out.println("Bare frame run runnable end");
 	}
 
 	public MultimediaPlayerBareJPanel getMultimediaPanel()
@@ -249,7 +255,7 @@ public class MultimediaPlayerBareJFrame extends JFrame
 	}
 
 	public Thread playerThread = null;
-	private PlayMultimediaFromSchedulRunnable runnableSchedu = null;
+	private PlayMultimediaFromSchedulRunnableBare runnableSchedu = null;
 
 	private MultimediaPlayerBareJPanel multimediaPlayerBareJPanel = null;
 	// Menu var

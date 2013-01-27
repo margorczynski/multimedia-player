@@ -27,14 +27,6 @@ public class PlayMultimediaFromSchedulRunnable implements Runnable
 		this.ownerFrame = ownerFrame;
 	}
 	
-	public PlayMultimediaFromSchedulRunnable(MultimediaPlayerBareJFrame ownerFrame, MultimediaPlayerBareJPanel movieBarePanel, Schedule activeSchedule, User logInUser)
-	{
-		this.movieBarePanel = movieBarePanel;
-		this.activeSchedule = activeSchedule;
-		this.logInUser = logInUser;
-		this.ownerFrame = ownerFrame;
-	}
-
 	public void run()
 	{
 		Date currentDate = new Date();

@@ -57,6 +57,8 @@ public class MultimediaPlayerBareJPanel extends JPanel
 		mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
 		mediaListPlayer.setMediaPlayer(mediaPlayer);
 		
+		mediaListPlayer.stop();
+		
 		createUI();
 	}
 
@@ -128,6 +130,11 @@ public class MultimediaPlayerBareJPanel extends JPanel
 		mediaListPlayer.release();
 		mediaPlayer.release();
 		mediaPlayerFactory.release();
+	}
+	
+	public boolean isPlaying()
+	{
+		return mediaListPlayer.isPlaying();
 	}
 	
 	
