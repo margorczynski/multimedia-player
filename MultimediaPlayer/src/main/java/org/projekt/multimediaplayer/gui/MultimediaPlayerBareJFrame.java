@@ -17,11 +17,7 @@ import java.util.Set;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
-
 import org.projekt.multimediaplayer.dao.UserDao;
 import org.projekt.multimediaplayer.main.Configuration;
 import org.projekt.multimediaplayer.model.Schedule;

@@ -166,17 +166,6 @@ public class MultimediaPlayerJPanel extends JPanel
 
 	private void layoutControls()
 	{
-		RssReader rr = new RssReader();
-		
-		String headers = "";
-		
-		for(String s : rr.getHeaders())
-		{
-			headers += s + "     ";
-		}
-		
-		textComponent  = new TextComponent(headers);
-		
 		setBorder(new EmptyBorder(4, 4, 4, 4));
 		setLayout(new BorderLayout());
 

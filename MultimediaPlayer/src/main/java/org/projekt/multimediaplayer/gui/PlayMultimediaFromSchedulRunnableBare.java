@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 import org.projekt.multimediaplayer.model.MultimediaFile;
 import org.projekt.multimediaplayer.model.Schedule;
@@ -39,6 +38,7 @@ public class PlayMultimediaFromSchedulRunnableBare implements Runnable
 		boolean play = false;
 		close = false;
 		
+		LinkedList<MultimediaFile> multimediaList = new LinkedList<MultimediaFile>();
 
 		while(true)
 		{
@@ -62,10 +62,8 @@ public class PlayMultimediaFromSchedulRunnableBare implements Runnable
 				}
 				
 				// Odtwarzanie prawdziwe
-				if (play == true && close!=true && !movieBarePanel.isPlaying() && Math.abs(t1 - System.currentTimeMillis()) > 1000)
+				if (play == true && close!=true && !movieBarePanel.isPlaying() && !multimediaList.equals(movieBarePanel.getCurrentList()))
 				{
-					
-					LinkedList<MultimediaFile> multimediaList = new LinkedList<MultimediaFile>();
 					Set<MultimediaFile> multimediaFiles = activeSchedule.getScheduleMultimediaFiles();
 					for(MultimediaFile mf:multimediaFiles)
 					{

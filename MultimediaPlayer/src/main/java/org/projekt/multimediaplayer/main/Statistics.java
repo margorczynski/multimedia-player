@@ -79,7 +79,7 @@ public class Statistics
 	{
 		try
 		{
-			fileWriter = new FileWriter("statistics.txt");
+			fileWriter = new FileWriter("statistics.txt", true);
 			fileReader = new FileReader("statistics.txt");
 			
 			writer = new BufferedWriter(fileWriter);
@@ -129,6 +129,8 @@ public class Statistics
 	{
 		try
 		{
+			fileWriter = new FileWriter("statistics.txt", false);
+			
 			for(Map.Entry<String, String> entry : timesPlayedMap.entrySet())
 			{
 				writer.append(entry.getKey() + ":" + entry.getValue());

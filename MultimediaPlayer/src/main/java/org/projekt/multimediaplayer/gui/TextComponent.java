@@ -19,8 +19,7 @@ public final class TextComponent extends JComponent
 		
 		visibleTextLabel.setFont(new Font("Serif", Font.ITALIC, 25));
 		visibleTextLabel.setForeground(Color.white);
-		
-		setSize(100, 100);
+		visibleTextLabel.setBackground(Color.DARK_GRAY);
 
 		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() 
 		{
@@ -83,6 +82,11 @@ public final class TextComponent extends JComponent
 		
 		visibleTextLabel.paint(g);
 		
+	}
+	
+	public Dimension getPreferredSize()
+	{
+		return new Dimension(this.getParent().getWidth(), 30);
 	}
 
 	
