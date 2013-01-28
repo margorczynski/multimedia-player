@@ -20,7 +20,6 @@ package org.projekt.multimediaplayer.gui;
  */
 
 import java.awt.BorderLayout;
-
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -49,7 +48,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 
-import org.projekt.multimediaplayer.main.RssReader;
 import org.projekt.multimediaplayer.model.MultimediaFile;
 
 import uk.co.caprica.vlcj.binding.LibVlcConst;
@@ -65,8 +63,8 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
 
 public class MultimediaPlayerJPanel extends JPanel
 {
-	
-	public MultimediaPlayerJPanel(MultimediaPlayerJFrame ownerFrame)
+
+	public MultimediaPlayerJPanel(final MultimediaPlayerJFrame ownerFrame)
 	{
 		this.ownerFrame = ownerFrame;
 
@@ -77,7 +75,7 @@ public class MultimediaPlayerJPanel extends JPanel
 		mediaListPlayer.setMediaList(activeMediaList);
 		mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
 		mediaListPlayer.setMediaPlayer(mediaPlayer);
-		
+
 		createUI();
 
 		executorService.scheduleAtFixedRate(new UpdateRunnable(mediaPlayer), 0L, 1L, TimeUnit.SECONDS);
@@ -105,7 +103,6 @@ public class MultimediaPlayerJPanel extends JPanel
 		positionSlider.setMaximum(1000);
 		positionSlider.setValue(0);
 		positionSlider.setToolTipText("Position");
-
 
 		previousChapterButton = new JButton();
 		previousChapterButton.setIcon(new ImageIcon("multimedia/buttons_icons/control_start_blue.png"));
@@ -150,16 +147,17 @@ public class MultimediaPlayerJPanel extends JPanel
 		ejectButton.setIcon(new ImageIcon("multimedia/buttons_icons/control_eject_blue.png"));
 		ejectButton.setToolTipText("Load/eject media");
 
-	//	fullScreenButton = new JButton();
-	//	fullScreenButton.setIcon(new ImageIcon("multimedia/buttons_icons/image.png"));
-	//	fullScreenButton.setToolTipText("Toggle full-screen");
+		// fullScreenButton = new JButton();
+		// fullScreenButton.setIcon(new
+		// ImageIcon("multimedia/buttons_icons/image.png"));
+		// fullScreenButton.setToolTipText("Toggle full-screen");
 
 		fileChooser = new JFileChooser();
 		fileChooser.setApproveButtonText("Play");
 		fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newVideoFileFilter());
 		fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newAudioFileFilter());
 		fileChooser.addChoosableFileFilter(SwingFileFilterFactory.newPlayListFileFilter());
-		FileFilter defaultFilter = SwingFileFilterFactory.newMediaFileFilter();
+		final FileFilter defaultFilter = SwingFileFilterFactory.newMediaFileFilter();
 		fileChooser.addChoosableFileFilter(defaultFilter);
 		fileChooser.setFileFilter(defaultFilter);
 	}
@@ -169,33 +167,22 @@ public class MultimediaPlayerJPanel extends JPanel
 		setBorder(new EmptyBorder(4, 4, 4, 4));
 		setLayout(new BorderLayout());
 
-		JPanel positionPanel = new JPanel();
+		final JPanel positionPanel = new JPanel();
 		positionPanel.setLayout(new GridLayout(1, 1));
 		positionPanel.add(positionSlider);
 
-		JPanel compPanel = new JPanel();
-		compPanel.setLayout(new BorderLayout());
-		compPanel.add(textComponent, BorderLayout.CENTER);
-		JSlider slider = new JSlider(SwingConstants.HORIZONTAL, 0, 10, 3);
-		slider.addChangeListener(new SliderListener());
-		slider.setMajorTickSpacing(10);
-		slider.setMinorTickSpacing(1);
-		slider.setPaintTicks(true);
-		slider.setPaintLabels(true);
-		compPanel.add(slider, BorderLayout.EAST);
-		
-		JPanel topPanel = new JPanel();
+		final JPanel topPanel = new JPanel();
 		topPanel.setLayout(new BorderLayout(8, 0));
 		topPanel.add(timeLabel, BorderLayout.WEST);
 		topPanel.add(positionPanel, BorderLayout.CENTER);
 
 		add(topPanel, BorderLayout.NORTH);
 
-		JPanel buttonControlPanel = new JPanel();
-		JPanel buttonsPanel = new JPanel();
-		
+		final JPanel buttonControlPanel = new JPanel();
+		final JPanel buttonsPanel = new JPanel();
+
 		buttonControlPanel.setLayout(new GridLayout(0, 1));
-		
+
 		buttonsPanel.setLayout(new FlowLayout());
 		buttonsPanel.add(previousChapterButton);
 		buttonsPanel.add(rewindButton);
@@ -206,15 +193,13 @@ public class MultimediaPlayerJPanel extends JPanel
 		buttonsPanel.add(nextChapterButton);
 		buttonsPanel.add(volumeSlider);
 		buttonsPanel.add(toggleMuteButton);
-		//buttonControlPanel.add(fullScreenButton);
+		// buttonControlPanel.add(fullScreenButton);
 		buttonsPanel.add(ejectButton);
-		
+
 		buttonControlPanel.add(buttonsPanel);
-		buttonControlPanel.add(compPanel);
-		
 
 		add(buttonControlPanel, BorderLayout.SOUTH);
-		
+
 		canvasMovie = new Canvas();
 		canvasMovie.setBackground(Color.DARK_GRAY);
 		mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(canvasMovie));
@@ -251,20 +236,20 @@ public class MultimediaPlayerJPanel extends JPanel
 					// Half a second probably gets an iframe
 					Thread.sleep(500);
 				}
-				catch (InterruptedException e)
+				catch (final InterruptedException e)
 				{
 					// Don't care if unblocked early
 				}
 				mediaPlayer.pause();
 			}
 		}
-		long time = mediaPlayer.getTime();
-		int position = (int) (mediaPlayer.getPosition() * 1000.0f);
+		final long time = mediaPlayer.getTime();
+		final int position = (int) (mediaPlayer.getPosition() * 1000.0f);
 		updateTime(time);
 		updatePosition(position);
 	}
 
-	private void skip(int skipTime)
+	private void skip(final int skipTime)
 	{
 		// Only skip time if can handle time setting
 		if (mediaPlayer.getLength() > 0)
@@ -276,22 +261,22 @@ public class MultimediaPlayerJPanel extends JPanel
 
 	private void registerListeners()
 	{
-		// Ustawienie poziomu g³oœcnoœci
+		// Ustawienie poziomu gï¿½oï¿½cnoï¿½ci
 		mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter()
 		{
 			@Override
-			public void playing(MediaPlayer mediaPlayer)
+			public void playing(final MediaPlayer mediaPlayer)
 			{
 				updateVolume(mediaPlayer.getVolume());
 			}
 		});
 
-		// Ustawienie pozycji slidera odpowiedzialnego za aktualn¹ pozycjê
+		// Ustawienie pozycji slidera odpowiedzialnego za aktualnï¿½ pozycjï¿½
 		// odtwarzania
 		positionSlider.addMouseListener(new MouseAdapter()
 		{
 			@Override
-			public void mousePressed(MouseEvent e)
+			public void mousePressed(final MouseEvent e)
 			{
 				if (mediaPlayer.isPlaying())
 				{
@@ -306,7 +291,7 @@ public class MultimediaPlayerJPanel extends JPanel
 			}
 
 			@Override
-			public void mouseReleased(MouseEvent e)
+			public void mouseReleased(final MouseEvent e)
 			{
 				setSliderBasedPosition();
 				updateUIState();
@@ -316,17 +301,17 @@ public class MultimediaPlayerJPanel extends JPanel
 		// Poprzedni chapter
 		previousChapterButton.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(final ActionEvent e)
 			{
 				// mediaPlayer.previousChapter();
 				mediaListPlayer.playPrevious();
 			}
 		});
 
-		// Przewiñ
+		// Przewiï¿½
 		rewindButton.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(final ActionEvent e)
 			{
 				skip(-SKIP_TIME_MS);
 			}
@@ -335,7 +320,7 @@ public class MultimediaPlayerJPanel extends JPanel
 		// Stop
 		stopButton.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(final ActionEvent e)
 			{
 				// mediaPlayer.stop();
 				mediaListPlayer.stop();
@@ -345,7 +330,7 @@ public class MultimediaPlayerJPanel extends JPanel
 		// Pauza
 		pauseButton.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(final ActionEvent e)
 			{
 				// mediaPlayer.pause();
 				mediaListPlayer.pause();
@@ -356,7 +341,7 @@ public class MultimediaPlayerJPanel extends JPanel
 		playButton.addActionListener(new ActionListener()
 		{
 
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(final ActionEvent e)
 			{
 				// mediaPlayer.play();
 				mediaListPlayer.play();
@@ -367,20 +352,20 @@ public class MultimediaPlayerJPanel extends JPanel
 			}
 		});
 
-		// Przewiñ do przodu
+		// Przewiï¿½ do przodu
 		fastForwardButton.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(final ActionEvent e)
 			{
 				skip(SKIP_TIME_MS);
 			}
 		});
 
-		// Nastêpny utwór
+		// Nastï¿½pny utwï¿½r
 		nextChapterButton.addActionListener(new ActionListener()
 		{
 
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(final ActionEvent e)
 			{
 				// mediaPlayer.nextChapter();
 				mediaListPlayer.playNext();
@@ -391,7 +376,7 @@ public class MultimediaPlayerJPanel extends JPanel
 		// Wycisz
 		toggleMuteButton.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(final ActionEvent e)
 			{
 				mediaPlayer.mute();
 			}
@@ -401,36 +386,31 @@ public class MultimediaPlayerJPanel extends JPanel
 		volumeSlider.addChangeListener(new ChangeListener()
 		{
 
-			public void stateChanged(ChangeEvent e)
+			public void stateChanged(final ChangeEvent e)
 			{
-				JSlider source = (JSlider) e.getSource();
+				final JSlider source = (JSlider) e.getSource();
 				// if(!source.getValueIsAdjusting()) {
 				mediaPlayer.setVolume(source.getValue());
 				// }
 			}
 		});
 
-
 		ejectButton.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent e)
+			public void actionPerformed(final ActionEvent e)
 			{
 				mediaPlayer.enableOverlay(false);
 				if (JFileChooser.APPROVE_OPTION == fileChooser.showOpenDialog(MultimediaPlayerJPanel.this))
 				{
-					if(mediaListPlayer.isPlaying())
-						mediaListPlayer.stop();
-					if(mediaPlayer.isPlaying())
-						mediaPlayer.stop();
-					
-					
-					
+					if (mediaListPlayer.isPlaying()) mediaListPlayer.stop();
+					if (mediaPlayer.isPlaying()) mediaPlayer.stop();
+
 					activeMediaList = null;
 					activeMediaList = mediaPlayerFactory.newMediaList();
 					activeMediaList.addMedia(fileChooser.getSelectedFile().getAbsolutePath());
 					mediaListPlayer.setMediaList(activeMediaList);
 					mediaListPlayer.play();
-									
+
 				}
 				mediaPlayer.enableOverlay(true);
 			}
@@ -442,20 +422,18 @@ public class MultimediaPlayerJPanel extends JPanel
 	{
 		ejectButton.setEnabled(false);
 	}
-	
+
 	public void enableButton()
 	{
 		ejectButton.setEnabled(true);
 	}
-	
-		
-	
+
 	private final class UpdateRunnable implements Runnable
 	{
 
-		private final MediaPlayer mediaPlayer;
+		private final MediaPlayer	mediaPlayer;
 
-		private UpdateRunnable(MediaPlayer mediaPlayer)
+		private UpdateRunnable(final MediaPlayer mediaPlayer)
 		{
 			this.mediaPlayer = mediaPlayer;
 		}
@@ -481,49 +459,47 @@ public class MultimediaPlayerJPanel extends JPanel
 		}
 	}
 
-	private void updateTime(long millis)
+	private void updateTime(final long millis)
 	{
-		String s = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis), TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+		final String s = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis), TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
 		timeLabel.setText(s);
 	}
 
-	private void updatePosition(int value)
+	private void updatePosition(final int value)
 	{
 		positionSlider.setValue(value);
 	}
 
-	private void updateVolume(int value)
+	private void updateVolume(final int value)
 	{
 		volumeSlider.setValue(value);
 	}
 
-	public void addNewMediaToPlayInHarm(String path)
+	public void addNewMediaToPlayInHarm(final String path)
 	{
 		activeMediaList.addMedia(path);
 	}
 
-	public void changeMediaList(LinkedList<MultimediaFile> lista, MediaListPlayerMode mode)
+	public void changeMediaList(final LinkedList<MultimediaFile> lista, final MediaListPlayerMode mode)
 	{
-	//	mediaPlayer.enableOverlay(false);
+		// mediaPlayer.enableOverlay(false);
 		if (mediaListPlayer.isPlaying()) mediaListPlayer.stop();
 		if (mediaPlayer.isPlaying()) mediaPlayer.stop();
 
-	
-		
 		activeMediaList = null;
 		activeMediaList = mediaPlayerFactory.newMediaList();
-		
-		for(MultimediaFile item: lista)
+
+		for (final MultimediaFile item : lista)
 			activeMediaList.addMedia(item.getPath());
 
 		mediaListPlayer.setMediaList(activeMediaList);
 		mediaListPlayer.setMode(mode);
 
 		mediaListPlayer.play();
-			
+
 		ejectButton.setEnabled(false);
-		//mediaPlayer.enableOverlay(true);
-		// zablokuj otwieranie plików strza³eczka
+		// mediaPlayer.enableOverlay(true);
+		// zablokuj otwieranie plikï¿½w strzaï¿½eczka
 	}
 
 	public void deleteActiveSchedule()
@@ -535,13 +511,13 @@ public class MultimediaPlayerJPanel extends JPanel
 		activeMediaList = mediaPlayerFactory.newMediaList();
 	}
 
-	public void deleteFileFromActiveList(String name)
+	public void deleteFileFromActiveList(final String name)
 	{
 		List<MediaListItem> lista = new LinkedList<MediaListItem>();
 		lista = activeMediaList.items();
 
 		int i = 0;
-		for (MediaListItem mListItem : lista)
+		for (final MediaListItem mListItem : lista)
 		{
 			if (mListItem.name().equals(name))
 			{
@@ -568,57 +544,57 @@ public class MultimediaPlayerJPanel extends JPanel
 		mediaPlayer.release();
 		mediaPlayerFactory.release();
 	}
-	
+
 	class SliderListener implements ChangeListener
 	{
-		public void stateChanged(ChangeEvent e)
+		public void stateChanged(final ChangeEvent e)
 		{
-			JSlider source = (JSlider)e.getSource();
-			
-	        if (!source.getValueIsAdjusting()) 
-	        {
-	             textComponent.setScrollSpeed(source.getValue());
-	        }
+			final JSlider source = (JSlider) e.getSource();
+
+			if (!source.getValueIsAdjusting())
+			{
+				textComponent.setScrollSpeed(source.getValue());
+			}
 		}
 	}
-	
-	
-	private static final long serialVersionUID = 1L;
 
-	private static final int SKIP_TIME_MS = 10 * 1000; // 10 sekund
+	private static final long				serialVersionUID	= 1L;
 
-	private  ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+	private static final int				SKIP_TIME_MS		= 10 * 1000;									// 10
+																												// sekund
 
-	private final EmbeddedMediaPlayer mediaPlayer;
+	private final ScheduledExecutorService	executorService		= Executors.newSingleThreadScheduledExecutor();
 
-	private JLabel timeLabel;
+	private final EmbeddedMediaPlayer		mediaPlayer;
+
+	private JLabel							timeLabel;
 	// private JProgressBar positionProgressBar;
-	private JSlider positionSlider;
-	
-	private TextComponent textComponent;
+	private JSlider							positionSlider;
 
-	private JButton previousChapterButton;
-	private JButton rewindButton;
-	private JButton stopButton;
-	private JButton pauseButton;
-	private JButton playButton;
-	private JButton fastForwardButton;
-	private JButton nextChapterButton;
-	private JButton ejectButton;
+	private TextComponent					textComponent;
 
-	private JButton toggleMuteButton;
-	private JSlider volumeSlider;
+	private JButton							previousChapterButton;
+	private JButton							rewindButton;
+	private JButton							stopButton;
+	private JButton							pauseButton;
+	private JButton							playButton;
+	private JButton							fastForwardButton;
+	private JButton							nextChapterButton;
+	private JButton							ejectButton;
 
-	private JFileChooser fileChooser;
+	private JButton							toggleMuteButton;
+	private JSlider							volumeSlider;
+
+	private JFileChooser					fileChooser;
 	// *****
-	private MediaList activeMediaList;
-	private MediaListPlayer mediaListPlayer;
-	private JPanel windowPanel;
-	private Canvas canvasMovie;
-	private MediaPlayerFactory mediaPlayerFactory;
+	private MediaList						activeMediaList;
+	private final MediaListPlayer			mediaListPlayer;
+	private JPanel							windowPanel;
+	private Canvas							canvasMovie;
+	private final MediaPlayerFactory		mediaPlayerFactory;
 
-	MultimediaPlayerJFrame ownerFrame;
-	//private JButton fullScreenButton;
-	private boolean mousePressedPlaying = false;
+	MultimediaPlayerJFrame					ownerFrame;
+	// private JButton fullScreenButton;
+	private boolean							mousePressedPlaying	= false;
 
 }

@@ -5,12 +5,9 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.projekt.multimediaplayer.gui.MultimediaPlayerJFrame;
+import org.projekt.multimediaplayer.gui.MultimediaPlayerBareJFrame;
 
-/*
- * Punkt wejscia aplikacji
- */
-public class MultimediaPlayerMain
+public class MultimediaPlayerBareMain
 {
 
 	public static void main(final String[] args)
@@ -48,8 +45,10 @@ public class MultimediaPlayerMain
 			e.printStackTrace();
 		}
 
-		final JFrame frame = new MultimediaPlayerJFrame();
+		final JFrame frame = new MultimediaPlayerBareJFrame();
 
+		frame.pack();
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
