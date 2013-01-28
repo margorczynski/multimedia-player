@@ -18,6 +18,7 @@ public final class TextComponent extends JComponent
 		this.text = text + " ";
 		
 		visibleTextLabel.setFont(new Font("Serif", Font.ITALIC, 25));
+		visibleTextLabel.setForeground(Color.white);
 		
 		setSize(100, 100);
 

@@ -122,8 +122,6 @@ public class MultimediaPlayerBareJFrame extends JFrame
 		this.add(multimediaPlayerBareJPanel, BorderLayout.CENTER);
 		refreshActiveSchedule();
 		runRunnableSched();
-		System.out.println("Bare frame end init");
-		//refreshActiveSchedule();
 
 	}
 
@@ -138,8 +136,6 @@ public class MultimediaPlayerBareJFrame extends JFrame
 
 	public void refreshLogInUser()
 	{
-		System.out.println("Bare frame refresh login user");
-		System.out.println("Odswiezony uzytkownik bare");
 		if (logInUser != null)
 		{
 			List<User> users = userDao.findUsers(logInUser.getUsername());
@@ -153,7 +149,6 @@ public class MultimediaPlayerBareJFrame extends JFrame
 
 	public void refreshActiveSchedule()
 	{
-		System.out.println("Bare frame refresh active schedule");
 		String currentActiveHarmName = "empty";
 		if (activeSchedule != null) currentActiveHarmName = activeSchedule.getName();
 

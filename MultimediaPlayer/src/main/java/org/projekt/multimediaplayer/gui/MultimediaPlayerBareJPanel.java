@@ -9,6 +9,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,15 +32,19 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 
 import org.projekt.multimediaplayer.main.RssReader;
+import org.projekt.multimediaplayer.main.Statistics;
 import org.projekt.multimediaplayer.model.MultimediaFile;
 
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.LibVlcConst;
 import uk.co.caprica.vlcj.filter.swing.SwingFileFilterFactory;
 import uk.co.caprica.vlcj.medialist.MediaList;
 import uk.co.caprica.vlcj.medialist.MediaListItem;
+import uk.co.caprica.vlcj.player.list.MediaListPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
@@ -54,8 +60,23 @@ public class MultimediaPlayerBareJPanel extends JPanel
 		mediaListPlayer = mediaPlayerFactory.newMediaListPlayer();
 		activeMediaList = mediaPlayerFactory.newMediaList();
 		mediaListPlayer.setMediaList(activeMediaList);
-		mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer();
+		mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(new DefaultFullScreenStrategy(ownerFrame));
 		mediaListPlayer.setMediaPlayer(mediaPlayer);
+		
+		mediaListPlayer.addMediaListPlayerEventListener(new FileChangedListener());
+		
+		mediaPlayer.setFullScreen(false);
+		
+		ownerFrame.addKeyListener(new KeyAdapter()
+		{
+			public void keyPressed(KeyEvent e) 
+			{
+				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) System.exit(0);
+				
+				if(e.getKeyCode() == KeyEvent.VK_RIGHT) mediaListPlayer.playNext();
+			}
+			
+		});
 		
 		mediaListPlayer.stop();
 		
@@ -94,8 +115,14 @@ public class MultimediaPlayerBareJPanel extends JPanel
 		canvasMovie = new Canvas();
 		canvasMovie.setBackground(Color.DARK_GRAY);
 		mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(canvasMovie));
-
+		
+		JPanel panel = new JPanel();
+		
+		panel.add(textComponent);
+		
+		
 		add(canvasMovie, BorderLayout.CENTER);
+		add(panel, BorderLayout.SOUTH);
 	}
 	
 
@@ -135,6 +162,23 @@ public class MultimediaPlayerBareJPanel extends JPanel
 	public boolean isPlaying()
 	{
 		return mediaListPlayer.isPlaying();
+	}
+	
+	private class FileChangedListener extends MediaListPlayerEventAdapter
+	{
+		Statistics statistics = new Statistics();
+		
+		public void nextItem(MediaListPlayer mediaListPlayer,
+	            libvlc_media_t item,
+	            java.lang.String itemMrl)
+		{
+			String[] s = itemMrl.split("/");
+			String replaced = s[s.length-1].replaceAll("01%20", "");
+			replaced = replaced.replaceAll("%20", " ");
+			replaced = replaced.replaceAll("%27", "'");
+			
+			statistics.addPlay(replaced);
+		}
 	}
 	
 	

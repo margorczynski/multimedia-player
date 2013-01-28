@@ -39,12 +39,14 @@ public class PlayMultimediaFromSchedulRunnableBare implements Runnable
 		boolean play = false;
 		close = false;
 		
-		System.out.println("Run time: "+startTimeDate.compareTo(currentDate));
-		
-		System.out.println("Run entry");
 
 		while(true)
 		{
+				if(play && Math.abs(t1 - System.currentTimeMillis()) > 1000)
+				{
+					
+				}
+			
 				if(Math.abs(t1 - System.currentTimeMillis()) > 1000) currentDate = new Date();
 			
 				if(!play && Math.abs(t1 - System.currentTimeMillis()) > 1000)
@@ -60,9 +62,8 @@ public class PlayMultimediaFromSchedulRunnableBare implements Runnable
 				}
 				
 				// Odtwarzanie prawdziwe
-				if (play == true && close!=true && !movieBarePanel.isPlaying())
+				if (play == true && close!=true && !movieBarePanel.isPlaying() && Math.abs(t1 - System.currentTimeMillis()) > 1000)
 				{
-					System.out.println("Run if 2 k");
 					
 					LinkedList<MultimediaFile> multimediaList = new LinkedList<MultimediaFile>();
 					Set<MultimediaFile> multimediaFiles = activeSchedule.getScheduleMultimediaFiles();
@@ -84,7 +85,6 @@ public class PlayMultimediaFromSchedulRunnableBare implements Runnable
 							else return 0;
 						}
 					});
-					System.out.println("Run change");
 					movieBarePanel.changeMediaList(multimediaList, activeSchedule.isPeriodically()?MediaListPlayerMode.LOOP:MediaListPlayerMode.DEFAULT);
 				}
 		}
