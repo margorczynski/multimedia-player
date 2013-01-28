@@ -49,6 +49,7 @@ public class MultimediaPlayerMain
 		
 		
 		JFrame frame = new MultimediaPlayerBareJFrame();
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		//frame.setUndecorated(true);
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

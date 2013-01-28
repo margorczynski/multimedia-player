@@ -61,7 +61,7 @@ public final class TextComponent extends JComponent
 		        visibleTextLabel.setText(text.substring(0, 75));
 			
 				offset = (++offset) % (text.length()+1);
-
+				
 				repaint();
 			}
 		}
