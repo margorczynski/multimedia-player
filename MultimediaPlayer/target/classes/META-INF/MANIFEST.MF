@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
-Built-By: Krzysiek
-Build-Jdk: 1.7.0_10
+Built-By: Joseph
+Build-Jdk: 1.7.0_07
 Main-Class: com.mycompany.mypackage.MyMainClass
 Created-By: Maven Integration for Eclipse
 

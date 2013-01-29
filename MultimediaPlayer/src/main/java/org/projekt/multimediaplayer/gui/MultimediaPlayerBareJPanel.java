@@ -5,6 +5,8 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import javax.swing.JWindow;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -29,8 +31,10 @@ public class MultimediaPlayerBareJPanel extends JPanel
 	public MultimediaPlayerBareJPanel(MultimediaPlayerBareJFrame ownerFrame)
 	{
 		this.ownerFrame = ownerFrame;
+		
+		String[] args = {};
 
-		mediaPlayerFactory = new MediaPlayerFactory();
+		mediaPlayerFactory = new MediaPlayerFactory(args);
 
 		mediaListPlayer = mediaPlayerFactory.newMediaListPlayer();
 		activeMediaList = mediaPlayerFactory.newMediaList();
@@ -40,7 +44,9 @@ public class MultimediaPlayerBareJPanel extends JPanel
 		
 		mediaListPlayer.addMediaListPlayerEventListener(new FileChangedListener());
 		
-		mediaPlayer.setFullScreen(false);
+		mediaPlayer.setFullScreen(true);
+		
+		
 		
 		ownerFrame.addKeyListener(new KeyAdapter()
 		{
@@ -84,6 +90,19 @@ public class MultimediaPlayerBareJPanel extends JPanel
 		
 		
 		textComponent  = new TextComponent(headers);
+		
+		JWindow test = new JWindow();
+		JPanel paneltest = new JPanel();
+		TextComponent co = new TextComponent("TEST");
+		paneltest.add(co);
+		
+		test.getContentPane().add(paneltest,  BorderLayout.CENTER);  
+		
+		test.setSize(100,40);
+		
+		test.move(500, 500);
+		
+		test.setVisible(true);
 		
 		setBorder(new EmptyBorder(4, 4, 4, 4));
 		setLayout(new BorderLayout());

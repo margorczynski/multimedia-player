@@ -1,6 +1,12 @@
 package org.projekt.multimediaplayer.main;
 
+import java.awt.BorderLayout;
+import java.awt.GraphicsEnvironment;
+import java.awt.GraphicsDevice;
+
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JWindow;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -12,45 +18,18 @@ public class MultimediaPlayerBareMain
 
 	public static void main(final String[] args)
 	{
-
-		try
-		{
-			for (final LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
-			{
-				if ("Nimbus".equals(info.getName()))
-				{
-					UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		}
-		catch (final ClassNotFoundException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (final InstantiationException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (final IllegalAccessException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (final UnsupportedLookAndFeelException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 
 		final JFrame frame = new MultimediaPlayerBareJFrame();
+		
+		//gs.setFullScreenWindow(frame);
 
-		frame.pack();
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		frame.setDefaultLookAndFeelDecorated(false);
+		
+		
 	}
 
 }
