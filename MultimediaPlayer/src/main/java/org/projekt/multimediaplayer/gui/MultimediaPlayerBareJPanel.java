@@ -23,6 +23,7 @@ import uk.co.caprica.vlcj.player.list.MediaListPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.DefaultFullScreenStrategy;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
+import uk.co.caprica.vlcj.player.embedded.x.XFullScreenStrategy;
 import uk.co.caprica.vlcj.player.list.MediaListPlayer;
 import uk.co.caprica.vlcj.player.list.MediaListPlayerMode;
 
@@ -31,15 +32,13 @@ public class MultimediaPlayerBareJPanel extends JPanel
 	public MultimediaPlayerBareJPanel(MultimediaPlayerBareJFrame ownerFrame)
 	{
 		this.ownerFrame = ownerFrame;
-		
-		String[] args = {};
 
-		mediaPlayerFactory = new MediaPlayerFactory(args);
+		mediaPlayerFactory = new MediaPlayerFactory();
 
 		mediaListPlayer = mediaPlayerFactory.newMediaListPlayer();
 		activeMediaList = mediaPlayerFactory.newMediaList();
 		mediaListPlayer.setMediaList(activeMediaList);
-		mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(new DefaultFullScreenStrategy(ownerFrame));
+		mediaPlayer = mediaPlayerFactory.newEmbeddedMediaPlayer(new XFullScreenStrategy(ownerFrame));
 		mediaListPlayer.setMediaPlayer(mediaPlayer);
 		
 		mediaListPlayer.addMediaListPlayerEventListener(new FileChangedListener());
@@ -90,19 +89,6 @@ public class MultimediaPlayerBareJPanel extends JPanel
 		
 		
 		textComponent  = new TextComponent(headers);
-		
-		JWindow test = new JWindow();
-		JPanel paneltest = new JPanel();
-		TextComponent co = new TextComponent("TEST");
-		paneltest.add(co);
-		
-		test.getContentPane().add(paneltest,  BorderLayout.CENTER);  
-		
-		test.setSize(100,40);
-		
-		test.move(500, 500);
-		
-		test.setVisible(true);
 		
 		setBorder(new EmptyBorder(4, 4, 4, 4));
 		setLayout(new BorderLayout());
