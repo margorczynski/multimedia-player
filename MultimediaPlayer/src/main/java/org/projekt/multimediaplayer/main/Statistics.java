@@ -2,6 +2,7 @@ package org.projekt.multimediaplayer.main;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Date;
 
 import java.io.File;
 import java.io.BufferedReader;
@@ -33,13 +34,9 @@ public class Statistics
 	{
 		openAll();
 		
-		System.out.println("ADD1");
-		
 		int numberOfTimesPlayed = 0;
 		
 		Map<String, String> timesPlayedMap = readTimesPlayedMap(filename);
-		
-		System.out.println("ADD2");
 			
 		if(timesPlayedMap.get(filename) != null)
 		{
@@ -48,13 +45,10 @@ public class Statistics
 		
 		numberOfTimesPlayed++;
 		
-		System.out.println("ADD3");
-		
 		timesPlayedMap.put(filename, String.valueOf(numberOfTimesPlayed));
 		
 		saveTimesPlayedMap(timesPlayedMap);
-		
-		System.out.println("ADD4");
+
 		
 		closeAll();
 	}
@@ -95,27 +89,20 @@ public class Statistics
 	{
 		String line;
 		
-		System.out.println("READ1");
-		
 		Map<String, String> timesPlayedMap = new HashMap<String, String>();
-		
-		System.out.println("READ2");
 		
 		try
 		{
-			System.out.println("WHILE1");
 			line = reader.readLine();
 			System.out.println(line);
 			while(line != null)
 			{
-				System.out.println("WGHILE");
 				String[] pair = line.split(":");
 				
 				timesPlayedMap.put(pair[0], pair[1]);
 				
 				line = reader.readLine();
 			}
-			System.out.println("WHILE AFTER");
 		}
 		catch(IOException e)
 		{
@@ -133,7 +120,7 @@ public class Statistics
 			
 			for(Map.Entry<String, String> entry : timesPlayedMap.entrySet())
 			{
-				writer.append(entry.getKey() + ":" + entry.getValue());
+				writer.append(entry.getKey() + ":" + entry.getValue() + ":" + (new Date()).toString());
 				writer.newLine();
 			}
 		}

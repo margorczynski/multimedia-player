@@ -95,22 +95,19 @@ public class MultimediaPlayerBareJPanel extends JPanel
 		
 		
 		canvasMovie = new Canvas();
-		canvasMovie.setBackground(Color.DARK_GRAY);
+		canvasMovie.setBackground(Color.BLACK);
 		mediaPlayer.setVideoSurface(mediaPlayerFactory.newVideoSurface(canvasMovie));
 		
 		JPanel panel = new JPanel();
 		
-		panel.setBackground(Color.DARK_GRAY);
+		panel.setBackground(Color.BLACK);
 		
 		panel.setLayout(new BorderLayout());
 		
-		panel.add(textComponent, BorderLayout.CENTER);
+		//panel.add(textComponent, BorderLayout.CENTER);
 		
 		add(canvasMovie, BorderLayout.CENTER);
 		add(panel, BorderLayout.SOUTH);
-		
-		
-		canvasMovie.doLayout();
 		
 	}
 	
